@@ -1,0 +1,32 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  position: relative;
+
+  height: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo {
+  width: 80%;
+}
+
+.copyRight {
+  position: fixed;
+  bottom: 5%;
+
+  font-size: var(--font-size-small);
+}

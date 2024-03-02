@@ -1,13 +1,70 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "NIXGONM-Vb";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  /* fonts */
+  --font-main: "NIXGONM-Vb", sans-serif;
+  --font-sub: "Poppins", sans-serif;
+
+  /* colours */
+  --black: #000000;
+  --black-secondary: #3a3934;
+
+  --white: #ffffff;
+
+  --blue-primary: #7680e2;
+  --blue-secondary: #463bd5;
+
+  --red: #ff0000;
+  --yellow: #f7c977;
+  --green: #99bf40;
+
+  --blue-dark: #222888;
+
+  /* sizes */
+  --font-size-x-large: 32px;
+  --font-size-large: 24px;
+  --font-size-middle: 16px;
+  --font-size-small: 12px;
+  --font-size-x-small: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+
+  margin: 0;
+
+  font-family: var(--font-main);
+  font-size: var(--font-size-middle);
+}
+
+button {
+  font-family: var(--font-main);
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
 }

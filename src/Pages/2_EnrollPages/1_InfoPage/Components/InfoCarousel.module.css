@@ -1,0 +1,51 @@
+.infoCarousel {
+  position: relative;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+
+  list-style: none;
+}
+
+.infoCarouselItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.infoTitle {
+  font-size: var(--font-size-large);
+  color: var(--blue-dark);
+}
+
+.infoImage {
+  width: 70%;
+}
+
+.infoDescription {
+  margin-top: 32px;
+
+  width: 80%;
+
+  text-align: center;
+  color: var(--blue-dark);
+}
+
+.nextPageButton {
+  background-color: var(--blue-primary);
+
+  font-weight: 600;
+  color: var(--white);
+}
