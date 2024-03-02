@@ -1,0 +1,74 @@
+.quizModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  background-color: var(--blue-primary);
+
+  padding: 32px 24px;
+}
+
+.quizModalHeader {
+  font-size: var(--font-size-large);
+  color: var(--white);
+}
+
+.quizModalDescription {
+  font-size: var(--font-size-small);
+  color: var(--white);
+}
+
+.quizModalDescription .underLine {
+  text-decoration: underline;
+}
+
+.checkList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 0;
+  margin: 0;
+  margin-top: 24px;
+
+  list-style: none;
+}
+
+.checkListItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--white);
+
+  border-radius: 4px;
+
+  width: 16px;
+  height: 16px;
+}
+
+.checkBox.selected {
+  background-color: var(--yellow);
+}
+
+.checkBoxText {
+  color: var(--yellow);
+}
+
+.checkBoxText.selected {
+  text-decoration: underline;
+}
+
+.submitButton {
+  margin-top: 16px;
+
+  font-weight: 600;
+  color: var(--blue-primary);
+}

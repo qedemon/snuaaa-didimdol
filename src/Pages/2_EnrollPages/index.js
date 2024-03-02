@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 
 import InfoPage from "./1_InfoPage";
 import InfoQuizPage from "./2_InfoQuizPage";
+import LogoutButton from "../../Components/LogoutButton";
 
 const PageList = [<InfoPage />, <InfoQuizPage />];
 
@@ -26,6 +27,7 @@ export default function EnrollPage() {
         handleGotoNextPage,
       }}
     >
+      <LogoutButton />
       {PageList[pageIndex]}
     </EnrollPageIndexContext.Provider>
   );

@@ -1,11 +1,13 @@
 .spinner {
-  width: 1em;
-  height: 1em;
+  display: inline-block;
+
   border: 3px solid #fff;
   border-bottom-color: transparent;
   border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
+
+  width: calc(1em - 3px);
+  height: calc(1em - 3px);
+
   animation: rotation 1s linear infinite;
 }
 

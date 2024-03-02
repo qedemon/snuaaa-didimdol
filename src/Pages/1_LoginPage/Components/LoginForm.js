@@ -14,12 +14,14 @@ const containerAnimate = {
     height: "0%",
     padding: "16px 0",
     boxShadow: "0px 0px 0px 0px #463bd5",
+    cursor: "pointer",
   },
   after: {
     width: "100%",
     height: "70%",
     padding: "24px 32px",
     boxShadow: "0px -4px 20px -10px #463bd5",
+    cursor: "default",
   },
 };
 
@@ -51,6 +53,7 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(false);
     if (!loginData.id || !loginData.password) {
       setError(true);
       return;
@@ -93,7 +96,11 @@ function LoginForm() {
           로그인
         </Button>
         <p className={style.loginErrorMessage}>
-          {error ? loginError?.message : ""}
+          {error
+            ? loginError
+              ? loginError?.message
+              : "아이디 및 비밀번호를 입력해 주세요."
+            : ""}
         </p>
       </div>
     </form>

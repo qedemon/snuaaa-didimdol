@@ -1,0 +1,13 @@
+.logoutButton {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+
+  font-size: var(--font-size-middle);
+  font-weight: 600;
+  color: var(--blue-primary);
+
+  z-index: 1;
+
+  cursor: pointer;
+}

@@ -36,7 +36,7 @@
 .showPasswordButton {
   position: absolute;
   right: 16px;
-  bottom: calc(50% - 8px);
+  bottom: calc(50% - 12px);
 
   margin: 0;
 

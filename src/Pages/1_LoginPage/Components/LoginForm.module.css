@@ -88,9 +88,4 @@
 
 .loginFormHeader {
   font-size: var(--font-size-x-large);
-  line-height: 1.5em;
-}
-
-.loginFormSecondHeader {
-  line-height: 1.5em;
 }

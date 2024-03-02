@@ -1,3 +1,10 @@
+import LogoutButton from "../../../Components/LogoutButton";
+
 export default function DashboardPage() {
-  return <div>대시보드</div>;
+  return (
+    <div>
+      <LogoutButton />
+      대시보드
+    </div>
+  );
 }
