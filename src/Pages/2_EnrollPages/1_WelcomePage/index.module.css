@@ -1,0 +1,128 @@
+.welcomePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+
+  width: 100%;
+  height: 100%;
+}
+
+.welcomeImageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 80%;
+}
+
+.starsImage {
+  width: 70%;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  width: 80%;
+  height: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  color: var(--blue-dark);
+}
+
+.contentDivider {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content .large {
+  font-size: var(--font-size-large);
+}
+
+.content .yellow {
+  color: var(--yellow);
+}
+
+.content .red {
+  color: var(--red);
+}
+
+.content .green {
+  color: var(--green);
+}
+
+.content .lightblue {
+  color: var(--blue-secondary);
+}
+
+.content .bold {
+  font-weight: 600;
+}
+
+.content .underline {
+  text-decoration: underline;
+}
+
+.benefitList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.benefitListItem {
+  display: flex;
+  gap: 16px;
+}
+
+.benefitListItem p {
+  flex-grow: 1;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  min-height: 3em;
+}
+
+.buttonContainer div:first-child,
+.buttonContainer div:last-child {
+  flex-basis: 30px;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.nextPageButton {
+  background-color: var(--blue-primary);
+
+  font-weight: 600;
+  color: var(--white);
+}
+
+.caution {
+  margin-top: 20px;
+}

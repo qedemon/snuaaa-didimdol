@@ -12,7 +12,12 @@ function transformAnimate(index) {
   };
 }
 
-export default function InfoCarousel({ index, data, transition }) {
+export default function InfoCarousel({
+  index,
+  pictureIndex,
+  data,
+  transition,
+}) {
   const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
   const dataLength = data.length;
 
@@ -26,16 +31,23 @@ export default function InfoCarousel({ index, data, transition }) {
           animate={transformAnimate(idx - index)}
           transition={transition}
         >
-          <h1 className={style.infoTitle}>{el.title}</h1>
-          {el.pictures.map((picture, pictureIdx) => (
-            <img
-              className={style.infoImage}
-              key={pictureIdx}
-              src={picture}
-              alt={`${el.title} - ${pictureIdx + 1}번째 사진`}
-            />
-          ))}
-          <p className={style.infoDescription}>{el.description}</p>
+          <div className={style.infoCarouselContent}>
+            {el.title}
+            <ul className={style.pictureCarousel}>
+              {el.pictures.map((picture, pictureIdx) => (
+                <motion.li
+                  key={pictureIdx}
+                  className={style.pictureCarouselItem}
+                  initial={transformAnimate(pictureIdx)}
+                  animate={transformAnimate(pictureIdx - pictureIndex)}
+                  transition={transition}
+                >
+                  {picture}
+                </motion.li>
+              ))}
+            </ul>
+            {el.description}
+          </div>
           {idx === dataLength - 1 ? (
             <Button
               className={style.nextPageButton}

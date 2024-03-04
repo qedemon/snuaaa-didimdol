@@ -4,7 +4,7 @@ import { cubicBezier } from "framer-motion";
 import ButtonContainer from "./Components/ButtonContainer";
 import InfoCarousel from "./Components/InfoCarousel";
 
-import InfoData from "../../../Assets/Data/InfoData";
+import InfoData from "./Components/InfoData";
 import style from "./index.module.css";
 
 const duration = 1;
@@ -21,11 +21,13 @@ export default function InfoPage() {
     if (!moveState) {
       const nextPictureIndex = pictureIndex + 1;
       if (nextPictureIndex === InfoData[infoIndex].pictures.length) {
-        setPictureIndex(0);
         const nextInfoIndex = infoIndex + 1;
         if (nextInfoIndex < InfoData.length) {
           setInfoIndex(nextInfoIndex);
+          setPictureIndex(0);
         }
+      } else {
+        setPictureIndex(nextPictureIndex);
       }
 
       setMoveState(true);
@@ -44,6 +46,8 @@ export default function InfoPage() {
           setInfoIndex(nextInfoIndex);
           setPictureIndex(InfoData[nextInfoIndex].pictures.length - 1);
         }
+      } else {
+        setPictureIndex(nextPictureIndex);
       }
 
       setMoveState(true);
@@ -57,6 +61,7 @@ export default function InfoPage() {
     (index) => {
       if (!moveState) {
         setInfoIndex(index);
+        setPictureIndex(0);
 
         setMoveState(true);
         setTimeout(() => {
@@ -108,7 +113,12 @@ export default function InfoPage() {
 
   return (
     <div className={style.infoPage}>
-      <InfoCarousel index={infoIndex} data={InfoData} transition={transition} />
+      <InfoCarousel
+        index={infoIndex}
+        pictureIndex={pictureIndex}
+        data={InfoData}
+        transition={transition}
+      />
       <ButtonContainer
         index={infoIndex}
         length={InfoData.length}

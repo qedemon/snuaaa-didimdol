@@ -1,10 +1,18 @@
 import { createContext, useState } from "react";
 
-import InfoPage from "./1_InfoPage";
-import InfoQuizPage from "./2_InfoQuizPage";
+import WelcomePage from "./1_WelcomePage";
+import InfoPage from "./2_InfoPage";
+import InfoQuizPage from "./3_InfoQuizPage";
+import SelectPage from "./4_SelectPage";
+
 import LogoutButton from "../../Components/LogoutButton";
 
-const PageList = [<InfoPage />, <InfoQuizPage />];
+const PageList = [
+  <WelcomePage />,
+  <InfoPage />,
+  <InfoQuizPage />,
+  <SelectPage />,
+];
 
 const EnrollPageIndexContext = createContext({
   pageIndex: 0,
