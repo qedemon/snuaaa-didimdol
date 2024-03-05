@@ -1,11 +1,11 @@
 import { EnrollPageIndexContext } from "../..";
 import { useContext } from "react";
 
-import Modal from "../../../../Components/Modal";
-import Button from "../../../../Components/Button";
+import Modal from "@components/Modal";
+import Button from "@components/Button";
 
-import CharacterSuccess from "../../../../Assets/Images/CharacterSuccess.svg";
-import CharacterFail from "../../../../Assets/Images/CharacterFail.svg";
+import CharacterSuccess from "@images/CharacterSuccess.svg";
+import CharacterFail from "@images/CharacterFail.svg";
 import style from "./QuizResultModal.module.css";
 
 export function QuizSuccessModal() {

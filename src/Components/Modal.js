@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import Close from "../Assets/Images/Close.svg";
+import Close from "@images/Close.svg";
 import style from "./Modal.module.css";
 
 const windowVariants = {

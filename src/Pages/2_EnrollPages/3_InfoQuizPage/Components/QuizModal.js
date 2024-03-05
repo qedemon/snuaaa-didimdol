@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import Modal from "../../../../Components/Modal";
-import Button from "../../../../Components/Button";
+import Modal from "@components/Modal";
+import Button from "@components/Button";
 
-import Check from "../../../../Assets/Images/Check.svg";
+import Check from "@images/Check.svg";
 import style from "./QuizModal.module.css";
 
 const checkList = [

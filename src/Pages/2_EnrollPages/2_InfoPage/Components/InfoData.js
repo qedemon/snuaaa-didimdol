@@ -1,8 +1,8 @@
-import InfoCardFirst from "../../../../Assets/Images/InfoCardFirst.svg";
-import InfoCardSecond from "../../../../Assets/Images/InfoCardSecond.svg";
-import InfoCardThird from "../../../../Assets/Images/InfoCardThird.svg";
-import InfoCardFourth from "../../../../Assets/Images/InfoCardFourth.svg";
-import TestPicture from "../../../../Assets/Images/TestPicture.png";
+import InfoCardFirst from "@images/InfoCardFirst.svg";
+import InfoCardSecond from "@images/InfoCardSecond.svg";
+import InfoCardThird from "@images/InfoCardThird.svg";
+import InfoCardFourth from "@images/InfoCardFourth.svg";
+import TestPicture from "@images/TestPicture.png";
 
 import style from "./InfoData.module.css";
 

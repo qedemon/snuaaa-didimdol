@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../Connections/NovaConnection";
+import axios from "@connections/NovaConnection";
 
-import { deleteToken, setToken } from "../Utils/Cookie";
+import { deleteToken, setToken } from "@utils/Cookie";
 
 const INVALID_USER = {
   valid: false,

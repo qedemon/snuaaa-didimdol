@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import Button from "../../../Components/Button";
+import Button from "@components/Button";
 
-import CharactersBig from "../../../Assets/Images/CharactersBig.svg";
-import CheckCircle from "../../../Assets/Images/CheckCircle.svg";
+import CharactersBig from "@images/CharactersBig.svg";
+import CheckCircle from "@images/CheckCircle.svg";
 import style from "./index.module.css";
 import QuizModal from "./Components/QuizModal";
 import { QuizFailModal, QuizSuccessModal } from "./Components/QuizResultModal";

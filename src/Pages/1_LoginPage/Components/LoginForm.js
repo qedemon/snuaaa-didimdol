@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useAsync from "../../../Hooks/useAsync";
-import { useAuth } from "../../../Contexts/AuthContext";
+import useAsync from "@hooks/useAsync";
+import { useAuth } from "@contexts/AuthContext";
 import { motion } from "framer-motion";
 
-import Button from "../../../Components/Button";
-import Input from "../../../Components/Input";
+import Button from "@components/Button";
+import Input from "@components/Input";
 
 import style from "./LoginForm.module.css";
 
@@ -12,7 +12,7 @@ const containerAnimate = {
   before: {
     width: "175px",
     height: "0%",
-    padding: "16px 0",
+    padding: "16px 0pz",
     boxShadow: "0px 0px 0px 0px #463bd5",
     cursor: "pointer",
   },
@@ -22,6 +22,7 @@ const containerAnimate = {
     padding: "24px 32px",
     boxShadow: "0px -4px 20px -10px #463bd5",
     cursor: "default",
+    transform: "translateY(calc(25dvh + 32px))",
   },
 };
 

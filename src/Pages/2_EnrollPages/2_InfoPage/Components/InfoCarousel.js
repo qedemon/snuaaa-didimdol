@@ -2,7 +2,7 @@ import { EnrollPageIndexContext } from "../..";
 import { useContext } from "react";
 import { motion } from "framer-motion";
 
-import Button from "../../../../Components/Button";
+import Button from "@components/Button";
 
 import style from "./InfoCarousel.module.css";
 

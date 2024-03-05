@@ -16,6 +16,7 @@
 
 .infoCarouselItem {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 24px;
@@ -45,6 +46,7 @@
   padding: 0;
 
   width: 100%;
+  max-width: 400px;
   height: 250px;
 
   overflow: hidden;
@@ -62,9 +64,6 @@
 }
 
 .nextPageButton {
-  position: fixed;
-  bottom: 10%;
-
   background-color: var(--blue-primary);
 
   font-weight: 600;

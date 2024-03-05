@@ -1,11 +1,11 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@contexts/AuthContext";
 
-import DashboardPage from "./Pages/3_MainPages/DashboardPage";
-import EnrollPage from "./Pages/2_EnrollPages";
-import LoginPage from "./Pages/1_LoginPage";
+import DashboardPage from "@pages/3_MainPages/DashboardPage";
+import EnrollPage from "@pages/2_EnrollPages";
+import LoginPage from "@pages/1_LoginPage";
 
 import "./App.css";
-import { AuthProvider } from "./Contexts/AuthContext";
 
 function App() {
   return (

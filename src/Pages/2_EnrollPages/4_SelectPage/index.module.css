@@ -1,0 +1,121 @@
+.selectPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0 5%;
+  padding-top: 60px;
+}
+
+.header {
+  color: var(--blue-dark);
+}
+
+.header .yellow {
+  color: var(--yellow);
+}
+
+.caution {
+  font-size: var(--font-size-small);
+  color: var(--red);
+}
+
+.timeTableContainer {
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.timeTableItem {
+  background-color: var(--yellow);
+
+  border: 0;
+  border-radius: 9999px;
+  padding: 5px 10px;
+
+  font-weight: 600;
+  color: var(--white);
+}
+
+.timeTableItem.selected {
+  background-color: var(--blue-dark);
+}
+
+.classContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  margin-top: 16px;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.classItem {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+}
+
+.week {
+  font-weight: 600;
+  font-size: var(--font-size-small);
+}
+
+.classButton {
+  border: none;
+  border-radius: 8px;
+
+  width: 100%;
+  aspect-ratio: 3 / 4;
+
+  font-size: var(--font-size-middle);
+  color: var(--white);
+}
+
+.classItem:nth-child(1) > .classButton {
+  background-color: var(--orange);
+}
+
+.classItem:nth-child(2) > .classButton {
+  background-color: var(--blue-primary);
+}
+
+.classItem:nth-child(3) > .classButton {
+  background-color: var(--sky-blue);
+}
+
+.classItem:nth-child(4) > .classButton {
+  background-color: var(--tangerine);
+}
+
+.classItem:nth-child(5) > .classButton {
+  background-color: var(--green);
+}
+
+.classItem .classButton.disabled {
+  background-color: var(--gray);
+}
+
+.classItem .classButton.selected {
+  box-shadow: 0px 5px 4px 0px #00000040;
+}
+
+.selectionContainer {
+  margin-top: 56px;
+}
+
+.selectionDescription {
+  text-align: center;
+}
+
+.selectionDescription .bold {
+  font-weight: 600;
+}

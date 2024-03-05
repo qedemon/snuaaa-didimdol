@@ -5,13 +5,13 @@ import InfoPage from "./2_InfoPage";
 import InfoQuizPage from "./3_InfoQuizPage";
 import SelectPage from "./4_SelectPage";
 
-import LogoutButton from "../../Components/LogoutButton";
+import LogoutButton from "@components/LogoutButton";
 
 const PageList = [
+  <SelectPage />,
   <WelcomePage />,
   <InfoPage />,
   <InfoQuizPage />,
-  <SelectPage />,
 ];
 
 const EnrollPageIndexContext = createContext({

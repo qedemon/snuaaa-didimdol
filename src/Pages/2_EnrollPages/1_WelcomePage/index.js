@@ -3,13 +3,13 @@ import { EnrollPageIndexContext } from "..";
 import { useContext, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 
-import Button from "../../../Components/Button";
+import Button from "@components/Button";
 
-import LeftCircleButton from "../../../Assets/Images/LeftCircleButton.svg";
-import RightCircleButton from "../../../Assets/Images/RightCircleButton.svg";
-import CharactersWelcome from "../../../Assets/Images/CharactersWelcome.json";
-import StarsImage from "../../../Assets/Images/Stars.svg";
-import CheckCircle from "../../../Assets/Images/CheckCircle.svg";
+import LeftCircleButton from "@images/LeftCircleButton.svg";
+import RightCircleButton from "@images/RightCircleButton.svg";
+import CharactersWelcome from "@images/CharactersWelcome.json";
+import StarsImage from "@images/Stars.svg";
+import CheckCircle from "@images/CheckCircle.svg";
 import style from "./index.module.css";
 
 const transitionTime = 3;
@@ -96,14 +96,19 @@ export default function WelcomePage() {
               >
                 <div className={style.contentDivider}>
                   <p>
-                    디딤돌(신입생 프로그램)은 신입회원이 동아리에 새로 가입하여{" "}
+                    디딤돌(신입생 프로그램)은 신입회원이
+                    <br />
+                    동아리에 새로 가입하여
+                    <br />
                     <span className={`${style.red} ${style.bold}`}>
                       동아리 사람들과 함께 친해지고
-                    </span>{" "}
+                    </span>
+                    <br />
                     <span className={`${style.green} ${style.bold}`}>
                       별과 관측장비에 대해 배우고 사용해보며
                     </span>
-                    , 동아리에 적응하는 신입생 대상 프로그램입니다.
+                    ,<br />
+                    동아리에 적응하는 신입생 대상 프로그램입니다.
                   </p>
                   <p className={style.bold}>
                     디딤돌을 완료하면

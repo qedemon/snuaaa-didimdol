@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { cubicBezier, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Contexts/AuthContext";
+import { useAuth } from "@contexts/AuthContext";
 
+import Logo from "@components/Logo";
 import LoginForm from "./Components/LoginForm";
-import Logo from "../../Components/Logo";
 
-import StarsImage from "../../Assets/Images/Stars.svg";
+import StarsImage from "@images/Stars.svg";
 import style from "./index.module.css";
 
-const mainAnimate = {
+const logoAnimate = {
   before: {
-    bottom: "0%",
+    transform: "translateY(0)",
   },
   after: {
-    bottom: "-10%",
+    transform: "translateY(-20dvh)",
   },
 };
 
@@ -52,12 +52,13 @@ export default function LoginPage() {
   }, [user, navigate]);
 
   return (
-    <motion.div
-      className={style.loginPage}
-      animate={formState ? mainAnimate.after : mainAnimate.before}
-    >
+    <div className={style.loginPage}>
       <div />
-      <div className={style.logoContainer}>
+      <motion.div
+        className={style.logoContainer}
+        animate={formState ? logoAnimate.after : logoAnimate.before}
+        transition={transition}
+      >
         <motion.img
           src={StarsImage}
           alt="stars"
@@ -66,7 +67,8 @@ export default function LoginPage() {
           transition={transition}
         />
         <Logo className={style.logo} />
-      </div>
+      </motion.div>
+      <div />
       <LoginForm
         onClick={handleClick}
         formState={formState}
@@ -74,6 +76,6 @@ export default function LoginPage() {
       />
       <p className={style.copyRight}>AAApp2024</p>
       <div />
-    </motion.div>
+    </div>
   );
 }

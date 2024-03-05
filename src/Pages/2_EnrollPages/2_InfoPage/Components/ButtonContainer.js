@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
-import LeftCircleButton from "../../../../Assets/Images/LeftCircleButton.svg";
-import RightCircleButton from "../../../../Assets/Images/RightCircleButton.svg";
+import LeftCircleButton from "@images/LeftCircleButton.svg";
+import RightCircleButton from "@images/RightCircleButton.svg";
 import style from "./ButtonContainer.module.css";
 
 function buttonColorAnimate(condition) {
