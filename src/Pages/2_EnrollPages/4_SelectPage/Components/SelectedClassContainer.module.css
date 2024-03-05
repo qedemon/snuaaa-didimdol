@@ -1,0 +1,81 @@
+.selectionItemWrapper {
+  position: absolute;
+
+  padding: 8px 0;
+
+  width: 100%;
+}
+
+.selectionItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  background-color: var(--blue-primary);
+
+  border-radius: 24px;
+
+  padding: 8px 16px;
+
+  width: 100%;
+
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.selectionOrder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 8px;
+
+  color: var(--white);
+}
+
+.selectionInfo {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.selectionTitle {
+  font-weight: 600;
+  color: var(--white);
+}
+
+.selectionKeywords {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selectionKeyword {
+  font-size: var(--font-size-small);
+
+  border: 1px solid var(--white);
+  border-radius: 8px;
+
+  padding: 2px 8px;
+
+  color: var(--white);
+}
+
+.cancelButton {
+  position: absolute;
+  left: 0;
+  top: -2px;
+
+  cursor: pointer;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+
+  padding-right: 8px;
+}

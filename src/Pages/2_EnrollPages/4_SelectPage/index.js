@@ -5,6 +5,8 @@ import axios from "@connections/NovaConnection";
 import ClassDetailContainer from "./Components/ClassDetailContainer";
 
 import style from "./index.module.css";
+import SelectedClassContainer from "./Components/SelectedClassContainer";
+import { AnimatePresence } from "framer-motion";
 
 const timeTable = [
   ["3:30", "6:30"],
@@ -59,6 +61,17 @@ export default function SelectPage() {
     const nextSelectedClasses = selectedClasses.filter(
       (el) => el !== selectedClass
     );
+    setSelectedClasses(nextSelectedClasses);
+  };
+
+  const handleMoveClass = (index, isDownward) => {
+    const nextSelectedClasses = [...selectedClasses];
+    const classToMove = nextSelectedClasses.splice(index, 1)[0];
+    if (isDownward) {
+      nextSelectedClasses.splice(index + 1, 0, classToMove);
+    } else {
+      nextSelectedClasses.splice(index - 1, 0, classToMove);
+    }
     setSelectedClasses(nextSelectedClasses);
   };
 
@@ -123,7 +136,27 @@ export default function SelectPage() {
 
             <div className={style.selectionContainer}>
               {selectedClasses.length > 0 ? (
-                <div>{selectedClasses.map((el) => el.title)}</div>
+                <>
+                  <p className={style.selectionHeader}>디딤돌 조 선택 현황</p>
+                  <div className={style.selectionList}>
+                    <AnimatePresence>
+                      {selectedClasses.map((el, idx) => (
+                        <SelectedClassContainer
+                          key={el._id}
+                          index={idx + 1}
+                          data={el}
+                          onDelete={() => {
+                            deleteSelectedClasses(el);
+                          }}
+                          onMove={(isDownward) => {
+                            handleMoveClass(idx, isDownward);
+                          }}
+                          modifiable
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                </>
               ) : (
                 <div className={style.selectionDescription}>
                   아직 선택한 디딤돌 조가 없습니다.
@@ -148,7 +181,7 @@ export default function SelectPage() {
             insertSelectedClasses(selectedClass);
           }}
           inputCondition={
-            selectedClasses.length < 3 &&
+            selectedClasses.length >= 3 ||
             selectedClasses.includes(selectedClass)
           }
         />

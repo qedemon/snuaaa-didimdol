@@ -110,6 +110,10 @@
 
 .selectionContainer {
   margin-top: 56px;
+  padding: 0 16px;
+
+  width: 100%;
+  max-width: 400px;
 }
 
 .selectionDescription {
@@ -118,4 +122,19 @@
 
 .selectionDescription .bold {
   font-weight: 600;
+}
+
+.selectionHeader {
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
+.selectionList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  position: relative;
+
+  margin-top: 10px;
 }
