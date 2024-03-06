@@ -9,6 +9,7 @@ import { useCallback, useRef, useState } from "react";
 import useAsync from "@/Hooks/useAsync";
 
 async function findId(name, email, log){
+    log(`아이디를 찾는 중...`)
     const response = await axios.get(`/user/findId/${name}/${email}`, false);
     if(response?.data?.user){
         log(`아이디는 "${response.data.user.id}"입니다.`);
@@ -18,23 +19,38 @@ async function findId(name, email, log){
     }
 }
 
+async function resetPassword(id, name, email, log){
+    log(`비밀번호 초기화를 요청중...`);
+    const response = await axios.post("/user/resetPassword", {id, name, email}, false);
+    if(response?.data?.sendEmail){
+        log("이메일을 보냈습니다.");
+    }
+    else{
+        log("비밀번호 초기화 실패");
+    }
+}
+
 function FindIdForm({onChange}){
     return (
         <>
-            <label className={loginFormStyle.loginLabel}>이름</label>
-            <Input
-                className={loginFormStyle.loginInput}
-                name="name"
-                placeholder="이름"
-                onChange={onChange}
-            />
-            <label className={loginFormStyle.loginLabel}>이메일</label>
-            <Input
-                className={loginFormStyle.loginInput}
-                name="email"
-                placeholder="E-mail"
-                onChange={onChange}
-            />
+            <div className={style.inputContainer}>
+                <label className={style.loginLabel}>이름</label>
+                <Input
+                    className={`${loginFormStyle.loginInput} ${style.input}`}
+                    name="name"
+                    placeholder="이름"
+                    onChange={onChange}
+                />
+            </div>
+            <div className={style.inputContainer}>
+                <label className={style.loginLabel}>이메일</label>
+                <Input
+                    className={`${loginFormStyle.loginInput} ${style.input}`}
+                    name="email"
+                    placeholder="E-mail"
+                    onChange={onChange}
+                />
+            </div>
         </>
     )
 }
@@ -42,27 +58,33 @@ function FindIdForm({onChange}){
 function FindPasswordForm({onChange}){
     return (
         <>
-            <label className={loginFormStyle.loginLabel}>이름</label>
-            <Input
-                className={loginFormStyle.loginInput}
-                name="id"
-                placeholder="ID"
-                onChange={onChange}
-            />
-            <label className={loginFormStyle.loginLabel}>이름</label>
-            <Input
-                className={loginFormStyle.loginInput}
-                name="name"
-                placeholder="이름"
-                onChange={onChange}
-            />
-            <label className={loginFormStyle.loginLabel}>이메일</label>
-            <Input
-                className={loginFormStyle.loginInput}
-                name="email"
-                placeholder="E-mail"
-                onChange={onChange}
-            />
+            <div className={style.inputContainer}>
+                <label className={style.loginLabel}>아이디</label>
+                <Input
+                    className={`${loginFormStyle.loginInput} ${style.input}`}
+                    name="id"
+                    placeholder="ID"
+                    onChange={onChange}
+                />
+            </div>
+            <div className={style.inputContainer}>
+                <label className={style.loginLabel}>이름</label>
+                <Input
+                    className={`${loginFormStyle.loginInput} ${style.input}`}
+                    name="name"
+                    placeholder="이름"
+                    onChange={onChange}
+                />
+            </div>
+            <div className={style.inputContainer}>
+                <label className={style.loginLabel}>이메일</label>
+                <Input
+                    className={`${loginFormStyle.loginInput} ${style.input}`}
+                    name="email"
+                    placeholder="E-mail"
+                    onChange={onChange}
+                />
+            </div>
         </>
     )
 }
@@ -71,7 +93,14 @@ function FindFormModal({onClose, ...props}){
     const [selectedMode, setSelectedMode] = useState("id");
     const userData = useRef({});
     const [message, setMessage] = useState("");
-    
+
+    const onSelectButtonClick = useCallback(
+        (mode)=>()=>{
+            setSelectedMode(mode);
+            userData.current={};
+        },
+        [userData, setSelectedMode]
+    )
 
     const onChange = useCallback(
         ({name, value})=>{
@@ -83,20 +112,12 @@ function FindFormModal({onClose, ...props}){
     const [pending, error, onSubmit] = useAsync(
         selectedMode==="id"?
         async ()=>{
-            return await findId(userData.current.name, userData.current.email, alert);
+            const {name, email} = userData.current;
+            return await findId(name, email, setMessage);
         }:
-        ()=>{
-            return new Promise(
-                (resolve)=>{
-                    console.log(userData.current)
-                    setTimeout(
-                        ()=>{
-                            resolve(true)
-                        },
-                        1000
-                    )
-                }
-            )
+        async ()=>{
+            const {id, name, email} = userData.current;
+            return await resetPassword(id, name, email, setMessage);
         }
     );
 
@@ -112,7 +133,7 @@ function FindFormModal({onClose, ...props}){
                         ].join(" "):
                         style.selectButton
                     } 
-                    onClick={()=>{setSelectedMode("id")}}
+                    onClick={onSelectButtonClick("id")}
                 >
                     아이디 찾기
                 </Button>
@@ -125,7 +146,7 @@ function FindFormModal({onClose, ...props}){
                         ].join(" "):
                         style.selectButton
                     } 
-                    onClick={()=>{setSelectedMode("password")}}
+                    onClick={onSelectButtonClick("password")}
                 >
                     비밀번호 찾기
                 </Button>
@@ -136,11 +157,13 @@ function FindFormModal({onClose, ...props}){
                         (<FindIdForm onChange={onChange}/>):
                         (<FindPasswordForm onChange={onChange}/>)
                 }
+                <div className={style.messageContainer}>
+                    {
+                        ((str)=>str===""?" ":str)(message||(error?.message??""))
+                    }
+                </div>
             </div>
             <div className={style.footer}>
-                <div className={style.footerMessageContainer}>
-                    {((error?.message)??"")||message}
-                </div>
                 <div className={style.footerButtonContainer}>
                     <Button className={`${style.footerButton } ${style.Cancel}`} onClick={onClose}>Cancel</Button>
                     <Button className={`${style.footerButton } ${style.OK}`} onClick={onSubmit} pending={pending}>OK</Button>

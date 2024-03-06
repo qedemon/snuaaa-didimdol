@@ -11,9 +11,9 @@ const request = {
       headers: withToken?{ Authorization: `Bearer ${getToken()}` }:{},
     }),
 
-  post: async (url, body, withoutToken=false) =>
+  post: async (url, body, withToken=true) =>
     instance.post(url, body, {
-      headers: withoutToken?{ Authorization: `Bearer ${getToken()}` }:{},
+      headers: withToken?{ Authorization: `Bearer ${getToken()}` }:{},
     }),
 
   login: async (body) => instance.post("/authenticate/", body),

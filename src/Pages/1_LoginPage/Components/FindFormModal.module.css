@@ -13,12 +13,18 @@
 }
 
 .findFormModal>.body{
-    margin: 24px 0px;
+    margin: 24px 0px 3px 0px;
+    display: grid;
+    gap: 8px;
+}
+
+.findFormModal>.body>.inputContainer{
+    display: grid;
+    gap: 4px;
 }
 
 .findFormModal>.footer{
     width: 100%;
-    display: flex;
 }
 
 .selectButton{
@@ -39,11 +45,37 @@
     background-color: rgba(247, 201, 119, 1);
 }
 
-.footerMessageContainer{
-    flex-grow: 1;
+
+.loginLabel {
+    width: 100%;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
 }
+.input{
+    margin: 0px;
+    width: 250px;
+}
+.messageContainer{
+    flex-grow: 1;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+    overflow: hidden;
+
+    white-space: pre-wrap;
+}
+
 .footerButtonContainer{
     display: flex;
+    width: 100%;
+    justify-content: flex-end;
     gap: 40px;
 }
 .footerButton{
