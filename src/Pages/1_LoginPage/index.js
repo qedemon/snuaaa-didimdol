@@ -8,6 +8,7 @@ import LoginForm from "./Components/LoginForm";
 
 import StarsImage from "@images/Stars.svg";
 import style from "./index.module.css";
+import FindFormModal from "./Components/FindFormModal";
 
 const logoAnimate = {
   before: {
@@ -38,6 +39,7 @@ export default function LoginPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [formState, setFormState] = useState(false);
+  const [findModalOpen, setFindModalOpen] = useState(false);
 
   const handleClick = () => {
     if (!formState) {
@@ -50,6 +52,14 @@ export default function LoginPage() {
       navigate("/enroll");
     }
   }, [user, navigate]);
+
+
+  const openFindModal = ()=>{
+    setFindModalOpen(true);
+  }
+  const closeFindModal = ()=>{
+    setFindModalOpen(false);
+  }
 
   return (
     <div className={style.loginPage}>
@@ -73,9 +83,17 @@ export default function LoginPage() {
         onClick={handleClick}
         formState={formState}
         transition={transition}
+        openFindModal={openFindModal}
       />
       <p className={style.copyRight}>AAApp2024</p>
       <div />
+      {
+        findModalOpen?
+        (
+          <FindFormModal onClose={closeFindModal}/>
+        ):
+        null
+      }
     </div>
   );
 }

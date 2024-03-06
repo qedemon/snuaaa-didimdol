@@ -36,7 +36,7 @@ const contentAnimate = {
   },
 };
 
-function LoginForm() {
+function LoginForm({openFindModal}) {
   const { login } = useAuth();
   const [isLoginPending, loginError, loginAsync] = useAsync(login);
   const [error, setError] = useState(false);
@@ -88,10 +88,8 @@ function LoginForm() {
         password
         error={error}
       />
-      <div className={style.idPasswordFind}>
-        <a href="https://our.snuaaa.net/page/auth/login">
-          아이디/비밀번호 찾기
-        </a>
+      <div className={style.idPasswordFind} onClick={openFindModal}>
+        아이디/비밀번호 찾기
       </div>
       <div className={style.loginButtonContainer}>
         <Button className={style.loginButton} pending={isLoginPending}>
@@ -109,7 +107,7 @@ function LoginForm() {
   );
 }
 
-export default function LoginFormContainer({ onClick, formState, transition }) {
+export default function LoginFormContainer({ onClick, formState, transition, openFindModal }) {
   return (
     <motion.div
       className={style.loginFormContainer}
@@ -127,7 +125,7 @@ export default function LoginFormContainer({ onClick, formState, transition }) {
         >
           <h1 className={style.loginFormHeader}>Welcome back!</h1>
           <p className={style.loginFormSecondHeader}>디딤돌 로그인하기</p>
-          <LoginForm />
+          <LoginForm openFindModal={openFindModal}/>
         </motion.div>
       ) : (
         <motion.p

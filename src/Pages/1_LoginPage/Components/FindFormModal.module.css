@@ -1,0 +1,95 @@
+.findFormModal{
+    background-color: white;
+    padding: 32px;
+
+    display: grid;
+}
+
+.findFormModal>.header{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+
+.findFormModal>.body{
+    margin: 24px 0px 3px 0px;
+    display: grid;
+    gap: 8px;
+}
+
+.findFormModal>.body>.inputContainer{
+    display: grid;
+    gap: 4px;
+}
+
+.findFormModal>.footer{
+    width: 100%;
+}
+
+.selectButton{
+    background: rgba(34, 40, 136, 1);
+
+    padding: 5px 10px;
+    height: 25px;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: center;
+
+    color: white;
+}
+.selectButton.selected{
+    background-color: rgba(247, 201, 119, 1);
+}
+
+
+.loginLabel {
+    width: 100%;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.input{
+    margin: 0px;
+    width: 250px;
+}
+.messageContainer{
+    flex-grow: 1;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+    overflow: hidden;
+
+    white-space: pre-wrap;
+}
+
+.footerButtonContainer{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 40px;
+}
+.footerButton{
+    padding: 0px;
+    background: none;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+.footerButton.OK{
+    color: rgba(153, 191, 64, 1);
+}
+.footerButton.Cancel{
+    color: rgba(235, 116, 82, 1);
+}

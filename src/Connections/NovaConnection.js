@@ -6,14 +6,14 @@ const instance = axios.create({
 });
 
 const request = {
-  get: async (url) =>
+  get: async (url, withToken=true) =>
     instance.get(url, {
-      headers: { Authorization: `Bearer ${getToken()}` },
+      headers: withToken?{ Authorization: `Bearer ${getToken()}` }:{},
     }),
 
-  post: async (url, body) =>
+  post: async (url, body, withToken=true) =>
     instance.post(url, body, {
-      headers: { Authorization: `Bearer ${getToken()}` },
+      headers: withToken?{ Authorization: `Bearer ${getToken()}` }:{},
     }),
 
   login: async (body) => instance.post("/authenticate/", body),
