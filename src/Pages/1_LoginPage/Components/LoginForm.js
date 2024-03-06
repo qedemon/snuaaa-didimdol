@@ -15,10 +15,11 @@ const containerAnimate = {
     padding: "16px 0pz",
     boxShadow: "0px 0px 0px 0px #463bd5",
     cursor: "pointer",
+    transform: "translateY(0px)",
   },
   after: {
     width: "100%",
-    height: "70%",
+    height: "75%",
     padding: "24px 32px",
     boxShadow: "0px -4px 20px -10px #463bd5",
     cursor: "default",

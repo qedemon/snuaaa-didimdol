@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { transpose } from "@/Utils/Utils";
+import { useAuth } from "@/Contexts/AuthContext";
+import useAsync from "@/Hooks/useAsync";
 import axios from "@connections/NovaConnection";
+import { EnrollPageIndexContext } from "..";
 
 import ClassDetailContainer from "./Components/ClassDetailContainer";
 
 import style from "./index.module.css";
 import SelectedClassContainer from "./Components/SelectedClassContainer";
 import { AnimatePresence } from "framer-motion";
+import Button from "@/Components/Button";
+import ConfirmModal from "./Components/ConfirmModal";
 
 const timeTable = [
   ["3:30", "6:30"],
@@ -20,11 +25,15 @@ const makeClassTable = () =>
   Array.from(Array(timeTable.length), () => Array(weekTable.length).fill(null));
 
 export default function SelectPage() {
+  const { user } = useAuth();
+  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
   const [classTable, setClassTable] = useState(makeClassTable());
 
   const [timeIndex, setTimeIndex] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
   const [selectedClasses, setSelectedClasses] = useState([]);
+
+  const [modalState, setModalState] = useState(false);
 
   const getClasses = async () => {
     try {
@@ -51,6 +60,27 @@ export default function SelectPage() {
     }
   };
 
+  const postClasses = async (userId, classes) => {
+    try {
+      const body = [
+        {
+          id: userId,
+          didimdolClass: {
+            wants: classes.map((el) => el._id),
+          },
+        },
+      ];
+
+      await axios.post("/user/updateUsers/", body);
+      handleGotoNextPage();
+    } catch (e) {
+      console.error(e);
+      throw new Error("서버와의 통신 중 오류가 발생했습니다");
+    }
+  };
+
+  const [postPending, postError, postClassesAsync] = useAsync(postClasses);
+
   const insertSelectedClasses = (selectedClass) => {
     const nextSelectedClasses = [...selectedClasses];
     nextSelectedClasses.push(selectedClass);
@@ -64,13 +94,13 @@ export default function SelectPage() {
     setSelectedClasses(nextSelectedClasses);
   };
 
-  const handleMoveClass = (index, isDownward) => {
+  const moveSelectedClass = (index, isDownward) => {
     const nextSelectedClasses = [...selectedClasses];
     const classToMove = nextSelectedClasses.splice(index, 1)[0];
     if (isDownward) {
       nextSelectedClasses.splice(index + 1, 0, classToMove);
     } else {
-      nextSelectedClasses.splice(index - 1, 0, classToMove);
+      nextSelectedClasses.splice(Math.max(index - 1, 0), 0, classToMove);
     }
     setSelectedClasses(nextSelectedClasses);
   };
@@ -136,7 +166,7 @@ export default function SelectPage() {
 
             <div className={style.selectionContainer}>
               {selectedClasses.length > 0 ? (
-                <>
+                <div>
                   <p className={style.selectionHeader}>디딤돌 조 선택 현황</p>
                   <div className={style.selectionList}>
                     <AnimatePresence>
@@ -149,14 +179,25 @@ export default function SelectPage() {
                             deleteSelectedClasses(el);
                           }}
                           onMove={(isDownward) => {
-                            handleMoveClass(idx, isDownward);
+                            moveSelectedClass(idx, isDownward);
                           }}
                           modifiable
                         />
                       ))}
                     </AnimatePresence>
                   </div>
-                </>
+                  <div className={style.confirmButtonContainer}>
+                    <Button
+                      className={style.confirmButton}
+                      disabled={selectedClasses.length === 0}
+                      onClick={() => {
+                        setModalState(true);
+                      }}
+                    >
+                      신청하기
+                    </Button>
+                  </div>
+                </div>
               ) : (
                 <div className={style.selectionDescription}>
                   아직 선택한 디딤돌 조가 없습니다.
@@ -186,6 +227,19 @@ export default function SelectPage() {
           }
         />
       </div>
+      {modalState && (
+        <ConfirmModal
+          onClose={() => {
+            setModalState(false);
+          }}
+          onSubmit={() => {
+            postClassesAsync(user.id, selectedClasses);
+          }}
+          classList={selectedClasses}
+          pending={postPending}
+          error={postError}
+        />
+      )}
     </>
   );
 }

@@ -53,8 +53,15 @@
 }
 
 .infoQuizCaution {
+  margin-top: 4px;
+
   font-weight: 500;
-  color: var(--blue-secondary);
+  font-size: var(--font-size-small);
+  color: var(--tangerine);
+}
+
+.infoQuizCaution .bold {
+  font-weight: 600;
 }
 
 .button {

@@ -14,7 +14,7 @@ function transformAnimate(index) {
 
 export default function InfoCarousel({
   index,
-  pictureIndex,
+  pictureIndexes,
   data,
   transition,
 }) {
@@ -36,10 +36,10 @@ export default function InfoCarousel({
             <ul className={style.pictureCarousel}>
               {el.pictures.map((picture, pictureIdx) => (
                 <motion.li
-                  key={pictureIdx}
+                  key={`${index} ${pictureIdx}`}
                   className={style.pictureCarouselItem}
-                  initial={transformAnimate(pictureIdx)}
-                  animate={transformAnimate(pictureIdx - pictureIndex)}
+                  initial={transformAnimate(pictureIdx - pictureIndexes[idx])}
+                  animate={transformAnimate(pictureIdx - pictureIndexes[idx])}
                   transition={transition}
                 >
                   {picture}

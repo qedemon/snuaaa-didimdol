@@ -1,0 +1,44 @@
+.EndPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo {
+  width: 80%;
+}
+
+.endHeader {
+  margin: 0;
+
+  font-weight: 600;
+  color: var(--blue-secondary);
+}
+
+.endSecondHeader {
+  margin: 0;
+
+  font-weight: 600;
+  font-size: var(--font-size-large);
+}
+
+.copyRight {
+  position: fixed;
+  bottom: 5%;
+
+  font-size: var(--font-size-small);
+}

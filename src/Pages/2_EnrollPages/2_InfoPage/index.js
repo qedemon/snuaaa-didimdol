@@ -12,22 +12,25 @@ const transition = { ease: cubicBezier(0.65, 0, 0.35, 1), duration };
 
 export default function InfoPage() {
   const [infoIndex, setInfoIndex] = useState(0);
-  const [pictureIndex, setPictureIndex] = useState(0);
+  const pictureIndexLengths = InfoData.map((el) => el.pictures.length);
+  const [pictureIndexes, setPictureIndexes] = useState(
+    Array.from({ length: pictureIndexLengths.length }, () => 0)
+  );
 
   const [moveState, setMoveState] = useState(false);
   const [initTouchPos, setInitTouchPos] = useState(null);
 
   const handleScrollNextFrame = useCallback(() => {
     if (!moveState) {
-      const nextPictureIndex = pictureIndex + 1;
-      if (nextPictureIndex === InfoData[infoIndex].pictures.length) {
+      if (pictureIndexes[infoIndex] === pictureIndexLengths[infoIndex] - 1) {
         const nextInfoIndex = infoIndex + 1;
         if (nextInfoIndex < InfoData.length) {
           setInfoIndex(nextInfoIndex);
-          setPictureIndex(0);
         }
       } else {
-        setPictureIndex(nextPictureIndex);
+        const nextPictureIndexes = [...pictureIndexes];
+        nextPictureIndexes[infoIndex] += 1;
+        setPictureIndexes(nextPictureIndexes);
       }
 
       setMoveState(true);
@@ -35,19 +38,19 @@ export default function InfoPage() {
         setMoveState(false);
       }, duration * 1000);
     }
-  }, [moveState, infoIndex, pictureIndex]);
+  }, [moveState, infoIndex, pictureIndexes]);
 
   const handleScrollPreviousFrame = useCallback(() => {
     if (!moveState) {
-      const nextPictureIndex = pictureIndex - 1;
-      if (nextPictureIndex < 0) {
+      if (pictureIndexes[infoIndex] === 0) {
         const nextInfoIndex = infoIndex - 1;
         if (nextInfoIndex >= 0) {
           setInfoIndex(nextInfoIndex);
-          setPictureIndex(InfoData[nextInfoIndex].pictures.length - 1);
         }
       } else {
-        setPictureIndex(nextPictureIndex);
+        const nextPictureIndexes = [...pictureIndexes];
+        nextPictureIndexes[infoIndex] -= 1;
+        setPictureIndexes(nextPictureIndexes);
       }
 
       setMoveState(true);
@@ -55,13 +58,13 @@ export default function InfoPage() {
         setMoveState(false);
       }, duration * 1000);
     }
-  }, [moveState, infoIndex, pictureIndex]);
+  }, [moveState, infoIndex, pictureIndexes]);
 
   const handleChangeIndex = useCallback(
     (index) => {
       if (!moveState) {
         setInfoIndex(index);
-        setPictureIndex(0);
+        setPictureIndexes(0);
 
         setMoveState(true);
         setTimeout(() => {
@@ -115,7 +118,7 @@ export default function InfoPage() {
     <div className={style.infoPage}>
       <InfoCarousel
         index={infoIndex}
-        pictureIndex={pictureIndex}
+        pictureIndexes={pictureIndexes}
         data={InfoData}
         transition={transition}
       />
