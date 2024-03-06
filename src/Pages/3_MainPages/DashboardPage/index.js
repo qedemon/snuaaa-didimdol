@@ -1,10 +1,5 @@
-import LogoutButton from "../../../Components/LogoutButton";
+import { Navigate } from "react-router-dom";
 
 export default function DashboardPage() {
-  return (
-    <div>
-      <LogoutButton />
-      대시보드
-    </div>
-  );
+  return <Navigate to="/login" />;
 }

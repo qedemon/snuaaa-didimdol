@@ -15,7 +15,7 @@ const logoAnimate = {
     transform: "translateY(0)",
   },
   after: {
-    transform: "translateY(-20dvh)",
+    transform: "translateY(-25dvh)",
   },
 };
 

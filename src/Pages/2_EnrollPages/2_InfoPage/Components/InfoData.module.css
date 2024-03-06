@@ -25,3 +25,11 @@
   text-align: center;
   color: var(--blue-dark);
 }
+
+.infoDescription .bold {
+  font-weight: 600;
+}
+
+.infoDescription .pink {
+  color: var(--pink);
+}

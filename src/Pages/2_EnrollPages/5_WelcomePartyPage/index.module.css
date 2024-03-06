@@ -1,0 +1,120 @@
+.welcomePartyPage {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 5%;
+
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  position: absolute;
+  right: 0;
+
+  width: 40%;
+
+  transform: scaleX(-1);
+}
+
+.welcomePartyHeader {
+  margin: 0;
+
+  font-size: var(--font-size-x-large);
+  font-weight: 600;
+  color: var(--yellow);
+}
+
+.welcomePartySecondHeader {
+  margin: 0;
+
+  font-size: var(--font-size-large);
+  font-weight: 600;
+  color: var(--blue-dark);
+
+  white-space: nowrap;
+}
+
+.welcomePartyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 60%;
+
+  z-index: 1;
+}
+
+.welcomePartyDescription {
+  font-size: 14px;
+  color: var(--blue-primary);
+}
+
+.welcomePartyDescription.bold {
+  font-weight: 600;
+}
+
+.welcomePartyDescription.noWrap {
+  white-space: nowrap;
+}
+
+.welcomePartyDescription.darkBlue {
+  color: var(--blue-dark);
+}
+
+.welcomePartyDescription .bluePrimary {
+  color: var(--blue-primary);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  width: 100%;
+}
+
+.button {
+  font-weight: 600;
+  color: var(--white);
+
+  width: 60%;
+}
+
+.button:first-child {
+  background-color: var(--green);
+}
+
+.button:last-child {
+  background-color: var(--tangerine);
+}
+
+.error {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+
+  text-align: center;
+  font-size: var(--font-size-small);
+  color: var(--red);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  width: 100dvw;
+  height: 100dvh;
+
+  z-index: 11;
+}

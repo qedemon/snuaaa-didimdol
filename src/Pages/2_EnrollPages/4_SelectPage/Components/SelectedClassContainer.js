@@ -5,7 +5,7 @@ import UpButton from "@images/UpButton.svg";
 import DownButton from "@images/DownButton.svg";
 import style from "./SelectedClassContainer.module.css";
 
-const variants = (index) => ({
+const wrapperVariants = (index) => ({
   initial: {
     transform: `translateY(${(index - 1) * 100}%)`,
     opacity: 0,
@@ -15,6 +15,15 @@ const variants = (index) => ({
     opacity: 1,
   },
 });
+
+const itemVariants = {
+  initial: {
+    transform: "scale(0)",
+  },
+  animate: {
+    transform: "scale(1)",
+  },
+};
 
 const transition = {
   duration: 0.4,
@@ -36,13 +45,20 @@ export default function SelectedClassContainer({
   return (
     <motion.div
       className={style.selectionItemWrapper}
-      variants={variants(index)}
+      variants={wrapperVariants(index)}
       initial="initial"
       animate="animate"
       exit="initial"
       transition={transition}
     >
-      <div className={style.selectionItem}>
+      <motion.div
+        className={style.selectionItem}
+        variants={itemVariants}
+        initial="initial"
+        animate="animate"
+        exit="initial"
+        transition={transition}
+      >
         {modifiable && (
           <div className={style.cancelButton} onClick={onDelete}>
             <img src={CloseRed} alt="close" />
@@ -79,7 +95,7 @@ export default function SelectedClassContainer({
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

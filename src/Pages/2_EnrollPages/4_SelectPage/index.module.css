@@ -109,8 +109,7 @@
 }
 
 .selectionContainer {
-  margin-top: 56px;
-  padding: 0 16px;
+  margin-top: 24px;
 
   width: 100%;
   max-width: 400px;
@@ -137,4 +136,41 @@
   position: relative;
 
   margin-top: 10px;
+}
+
+.confirmButtonContainer {
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+
+  width: 100%;
+}
+
+.confirmButton {
+  position: fixed;
+  bottom: 5%;
+
+  background-color: var(--yellow);
+
+  font-weight: 600;
+  color: var(--white);
+}
+
+.confirmButton:disabled {
+  background-color: var(--gray);
+}
+
+@media (max-height: 750px) {
+  .confirmButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: -38px;
+    right: 0;
+
+    max-height: 1em;
+  }
 }

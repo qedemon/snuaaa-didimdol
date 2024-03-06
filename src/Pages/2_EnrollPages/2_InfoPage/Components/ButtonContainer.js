@@ -35,9 +35,9 @@ export default function ButtonContainer({
             initial={buttonColorAnimate(idx === index)}
             animate={buttonColorAnimate(idx === index)}
             transition={transition}
-            onClick={() => {
-              onClick(idx);
-            }}
+            // onClick={() => {
+            //   onClick(idx);
+            // }}
           />
         ))}
       </div>

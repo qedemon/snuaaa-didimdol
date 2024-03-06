@@ -36,9 +36,15 @@ export default function InfoQuizPage() {
           2024년 5월 25일까지
           <br /> 하기 사항 완료
         </h2>
-        <div className={style.infoQuizConditionContainer}>
-          <img src={CheckCircle} alt="check" />
-          <p>3회 이상 불참 시 인준 불가</p>
+        <div className={style.infoQuizConditionWrapper}>
+          <div className={style.infoQuizConditionContainer}>
+            <img src={CheckCircle} alt="check" />
+            <p>3회 이상 불참 시 인준 불가</p>
+          </div>
+          <p className={style.infoQuizCaution}>
+            ※ <span className={style.bold}>자율돔관, 소규모 관측회</span> 참여시
+            <br /> 1회에 한하여 불참 1회 삭제
+          </p>
         </div>
         <div className={style.infoQuizConditionContainer}>
           <img src={CheckCircle} alt="check" />
@@ -48,10 +54,7 @@ export default function InfoQuizPage() {
           <img src={CheckCircle} alt="check" />
           <p>별모임에 1회 이상 참여</p>
         </div>
-        <p className={style.infoQuizCaution}>
-          자율돔관, 소규모 관측회 참여시
-          <br /> 1회에 한하여 불참 1회 삭제
-        </p>
+
         <Button className={style.button} onClick={openQuizModal}>
           이해하였습니다.
         </Button>
