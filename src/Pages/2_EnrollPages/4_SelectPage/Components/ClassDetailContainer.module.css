@@ -178,4 +178,5 @@
   height: 100px;
 
   z-index: 12;
+  pointer-events: none;
 }

@@ -12,9 +12,8 @@ const AuthContext = createContext({
   user: null,
   login: () => {},
   logout: () => {},
-  // register: () => {},
   getUser: () => {},
-  // updateUser: () => {},
+  updateUser: () => {},
 });
 
 export function AuthProvider({ children }) {
@@ -27,7 +26,6 @@ export function AuthProvider({ children }) {
       setUser({
         valid: true,
         ...response.data.userInfo,
-        // isEnrolled: response.data.origin === "local",
       });
     } catch {
       setUser(INVALID_USER);
@@ -63,28 +61,12 @@ export function AuthProvider({ children }) {
     deleteToken();
   };
 
-  // async function register(data) {
-  //   try {
-  //     const response = await axios.post("/user/registerUser/", data);
-
-  //     setUser({
-  //       valid: true,
-  //       ...response.data.user,
-  //       isEnrolled: true,
-  //     });
-  //   } catch {
-  //     throw new Error(
-  //       "마니또를 등록하는 데 실패하였습니다. 잠시 후 다시 시도해주세요."
-  //     );
-  //   }
-  // }
-
-  // async function updateUser(name, value) {
-  //   setUser((prevUser) => ({
-  //     ...prevUser,
-  //     [name]: value,
-  //   }));
-  // }
+  async function updateUser(name, value) {
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  }
 
   useEffect(() => {
     (async () => {
@@ -100,9 +82,8 @@ export function AuthProvider({ children }) {
         user,
         login,
         logout,
-        // register,
         getUser,
-        // updateUser,
+        updateUser,
       }}
     >
       {children}

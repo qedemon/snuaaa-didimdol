@@ -174,7 +174,7 @@ export default function ClassDetailContainer({
             <p className={style.groupRecommendHeader}>이런 분께 추천해요</p>
             <p className={style.groupRecommendText}>{description}</p>
           </div>
-          {!inputCondition && (
+          {inputCondition && (
             <>
               <p className={style.inputSelectionText}>마음에 들면 신청하기</p>
 

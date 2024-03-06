@@ -18,7 +18,9 @@ export default function InfoCarousel({
   data,
   transition,
 }) {
-  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
+  const { isEnrolled, handleChangePage, handleGotoNextPage } = useContext(
+    EnrollPageIndexContext
+  );
   const dataLength = data.length;
 
   return (
@@ -49,12 +51,23 @@ export default function InfoCarousel({
             {el.description}
           </div>
           {idx === dataLength - 1 ? (
-            <Button
-              className={style.nextPageButton}
-              onClick={handleGotoNextPage}
-            >
-              인준기준 보러가기
-            </Button>
+            isEnrolled ? (
+              <Button
+                className={style.nextPageButton}
+                onClick={() => {
+                  handleChangePage(6);
+                }}
+              >
+                대시보드로
+              </Button>
+            ) : (
+              <Button
+                className={style.nextPageButton}
+                onClick={handleGotoNextPage}
+              >
+                인준기준 보러가기
+              </Button>
+            )
           ) : (
             <></>
           )}

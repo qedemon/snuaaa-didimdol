@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useAuth } from "@/Contexts/AuthContext";
 
 import WelcomePage from "./1_WelcomePage";
 import InfoPage from "./2_InfoPage";
@@ -9,7 +10,6 @@ import EndPage from "./6_EndPage";
 import DashBoardPage from "./DashBoardPage";
 
 import LogoutButton from "@components/LogoutButton";
-import { useAuth } from "@/Contexts/AuthContext";
 
 const PageList = [
   <WelcomePage />,
@@ -23,7 +23,9 @@ const PageList = [
 
 const EnrollPageIndexContext = createContext({
   pageIndex: 0,
+  isEnrolled: false,
   handleGotoNextPage: () => {},
+  handleChangePage: () => {},
 });
 
 export { EnrollPageIndexContext };
@@ -31,9 +33,14 @@ export { EnrollPageIndexContext };
 export default function EnrollPage() {
   const { user } = useAuth(true);
   const [pageIndex, setPageIndex] = useState(0);
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   const handleGotoNextPage = () => {
     setPageIndex((prevPageIndex) => prevPageIndex + 1);
+  };
+
+  const handleChangePage = (idx) => {
+    setPageIndex(idx);
   };
 
   useEffect(() => {
@@ -43,11 +50,14 @@ export default function EnrollPage() {
         if (enrollState.party === null) {
           setPageIndex(4);
         } else {
-          setPageIndex(6);
+          setIsEnrolled(true);
+          if (pageIndex === 0) {
+            setPageIndex(6);
+          }
         }
       }
     }
-  }, [user]);
+  }, [user, pageIndex]);
 
   return (
     <>
@@ -55,7 +65,9 @@ export default function EnrollPage() {
         <EnrollPageIndexContext.Provider
           value={{
             pageIndex,
+            isEnrolled,
             handleGotoNextPage,
+            handleChangePage,
           }}
         >
           <LogoutButton />

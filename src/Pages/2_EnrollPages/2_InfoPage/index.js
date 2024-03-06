@@ -1,16 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { cubicBezier } from "framer-motion";
+import { EnrollPageIndexContext } from "..";
 
 import ButtonContainer from "./Components/ButtonContainer";
 import InfoCarousel from "./Components/InfoCarousel";
+import BackButton from "@/Components/BackButton";
 
 import InfoData from "./Components/InfoData";
 import style from "./index.module.css";
 
-const duration = 1;
+const duration = 0.4;
 const transition = { ease: cubicBezier(0.65, 0, 0.35, 1), duration };
-
 export default function InfoPage() {
+  const { isEnrolled, handleChangePage } = useContext(EnrollPageIndexContext);
   const [infoIndex, setInfoIndex] = useState(0);
   const pictureIndexLengths = InfoData.map((el) => el.pictures.length);
   const [pictureIndexes, setPictureIndexes] = useState(
@@ -38,7 +40,7 @@ export default function InfoPage() {
         setMoveState(false);
       }, duration * 1000);
     }
-  }, [moveState, infoIndex, pictureIndexes]);
+  }, [moveState, infoIndex, pictureIndexes, pictureIndexLengths]);
 
   const handleScrollPreviousFrame = useCallback(() => {
     if (!moveState) {
@@ -116,6 +118,13 @@ export default function InfoPage() {
 
   return (
     <div className={style.infoPage}>
+      {isEnrolled && (
+        <BackButton
+          onClick={() => {
+            handleChangePage(6);
+          }}
+        />
+      )}
       <InfoCarousel
         index={infoIndex}
         pictureIndexes={pictureIndexes}

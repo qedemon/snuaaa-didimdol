@@ -12,8 +12,8 @@ import StarsImage from "@images/Stars.svg";
 import CheckCircle from "@images/CheckCircle.svg";
 import style from "./index.module.css";
 
-const transitionTime = 3;
-const transitionDurationTime = 1;
+const transitionTime = 2;
+const transitionDurationTime = 0.8;
 
 const animate = {
   appear: {

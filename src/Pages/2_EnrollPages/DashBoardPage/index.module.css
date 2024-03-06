@@ -1,0 +1,155 @@
+.DashBoardPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  width: 100%;
+  height: 100%;
+
+  margin-top: 60px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.userImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 120px;
+  height: 120px;
+
+  border-radius: 60px;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  background-color: var(--white);
+}
+
+.userName {
+  font-weight: 600;
+  font-size: var(--font-size-large);
+  color: var(--blue-dark);
+}
+
+.userNo {
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
+.redirectionContainer {
+  width: 100%;
+  max-width: 400px;
+
+  padding: 0 32px;
+}
+
+.redirectionHeader {
+  font-weight: 600;
+  color: var(--blue-dark);
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+
+  margin-top: 8px;
+
+  width: 100%;
+}
+
+.buttonWrapper button {
+  flex-basis: 10%;
+  flex-shrink: 1;
+  flex-grow: 1;
+
+  border: 0;
+  border-radius: 8px;
+
+  height: 56px;
+
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+  font-weight: 600;
+  color: var(--white);
+}
+
+.buttonWrapper button:first-child {
+  background-color: var(--green);
+}
+
+.buttonWrapper button:last-child {
+  background-color: var(--blue-dark);
+}
+
+.classContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  width: 100%;
+  max-width: 400px;
+
+  margin-top: 16px;
+  padding: 0 32px;
+}
+
+.classHeader {
+  font-weight: 600;
+  color: var(--blue-dark);
+
+  width: 100%;
+}
+
+.classList {
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  width: 100%;
+}
+
+.classItem {
+  width: 100%;
+}
+
+.modifiyButton {
+  position: fixed;
+  bottom: 5%;
+
+  background-color: var(--yellow);
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+  font-weight: 600;
+  color: var(--white);
+}
+
+@media (max-height: 750px) {
+  .modifiyButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 2px;
+    right: 36px;
+
+    padding: 0 16px;
+
+    box-shadow: none;
+
+    max-height: 1.5em;
+  }
+}

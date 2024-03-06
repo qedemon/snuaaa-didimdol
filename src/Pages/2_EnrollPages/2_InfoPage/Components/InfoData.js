@@ -2,7 +2,13 @@ import InfoCardFirst from "@images/InfoCardFirst.svg";
 import InfoCardSecond from "@images/InfoCardSecond.svg";
 import InfoCardThird from "@images/InfoCardThird.svg";
 import InfoCardFourth from "@images/InfoCardFourth.svg";
-import TestPicture from "@images/TestPicture.png";
+
+import NoramlActivity1 from "@images/InfoCardPictures/NormalActivity 1.png";
+import NoramlActivity2 from "@images/InfoCardPictures/NormalActivity 2.png";
+import NoramlActivity3 from "@images/InfoCardPictures/NormalActivity 3.png";
+import SpecialActivity1 from "@images/InfoCardPictures/SpecialActivity 1.png";
+import SpecialActivity2 from "@images/InfoCardPictures/SpecialActivity 2.png";
+import SpecialActivity3 from "@images/InfoCardPictures/SpecialActivity 3.png";
 
 import style from "./InfoData.module.css";
 
@@ -64,10 +70,25 @@ const InfoData = [
         />
       </div>,
       <div key={1} className={style.infoImageWrapper}>
-        <img className={style.infoImage} src={TestPicture} alt="Test" />
+        <img
+          className={style.infoImage}
+          src={NoramlActivity1}
+          alt="normal activity"
+        />
       </div>,
-      <div key={1} className={style.infoImageWrapper}>
-        <img className={style.infoImage} src={TestPicture} alt="Test" />
+      <div key={2} className={style.infoImageWrapper}>
+        <img
+          className={style.infoImage}
+          src={NoramlActivity2}
+          alt="normal activity"
+        />
+      </div>,
+      <div key={3} className={style.infoImageWrapper}>
+        <img
+          className={style.infoImage}
+          src={NoramlActivity3}
+          alt="normal activity"
+        />
       </div>,
     ],
     description: (
@@ -89,10 +110,25 @@ const InfoData = [
         />
       </div>,
       <div key={1} className={style.infoImageWrapper}>
-        <img className={style.infoImage} src={TestPicture} alt="Test" />
+        <img
+          className={style.infoImage}
+          src={SpecialActivity1}
+          alt="special activity"
+        />
       </div>,
-      <div key={1} className={style.infoImageWrapper}>
-        <img className={style.infoImage} src={TestPicture} alt="Test" />
+      <div key={2} className={style.infoImageWrapper}>
+        <img
+          className={style.infoImage}
+          src={SpecialActivity2}
+          alt="special activity"
+        />
+      </div>,
+      <div key={3} className={style.infoImageWrapper}>
+        <img
+          className={style.infoImage}
+          src={SpecialActivity3}
+          alt="special activity"
+        />
       </div>,
     ],
     description: (

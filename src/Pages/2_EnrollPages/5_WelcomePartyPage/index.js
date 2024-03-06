@@ -11,7 +11,7 @@ import style from "./index.module.css";
 import Spinner from "@/Components/Spinner";
 
 export default function WelcomePartyPage() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
 
   const preventClick = (e) => {
@@ -24,13 +24,16 @@ export default function WelcomePartyPage() {
         {
           id: user.id,
           didimdolClass: {
+            ...user.didimdolClass,
             party: condition,
-            wants: user.didimdolClass.wants,
           },
         },
       ];
 
-      await axios.post("/user/updateUsers/", body);
+      const response = await axios.post("/user/updateUsers/", body);
+      const nextDidimbolClass =
+        response.data.updated.updated[0].user.didimdolClass;
+      updateUser("didimdolClass", nextDidimbolClass);
       handleGotoNextPage();
     } catch (e) {
       console.error(e);

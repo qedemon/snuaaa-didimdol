@@ -46,7 +46,7 @@ export default function SelectedClassContainer({
     <motion.div
       className={style.selectionItemWrapper}
       variants={wrapperVariants(index)}
-      initial="initial"
+      initial={modifiable ? "initial" : "animate"}
       animate="animate"
       exit="initial"
       transition={transition}
@@ -54,7 +54,7 @@ export default function SelectedClassContainer({
       <motion.div
         className={style.selectionItem}
         variants={itemVariants}
-        initial="initial"
+        initial={modifiable ? "initial" : "animate"}
         animate="animate"
         exit="initial"
         transition={transition}
