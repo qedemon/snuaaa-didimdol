@@ -8,10 +8,10 @@ import SelectPage from "./4_SelectPage";
 import LogoutButton from "@components/LogoutButton";
 
 const PageList = [
+  <InfoQuizPage />,
   <SelectPage />,
   <WelcomePage />,
   <InfoPage />,
-  <InfoQuizPage />,
 ];
 
 const EnrollPageIndexContext = createContext({

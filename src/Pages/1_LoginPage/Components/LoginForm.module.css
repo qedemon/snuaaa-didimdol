@@ -6,6 +6,11 @@
   width: 100%;
 }
 
+.loginLabel {
+  width: 100%;
+  text-align: left;
+}
+
 .loginInput {
   margin: 16px 0;
 
