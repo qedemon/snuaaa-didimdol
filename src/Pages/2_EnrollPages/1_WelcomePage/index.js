@@ -143,7 +143,7 @@ export default function WelcomePage() {
                   <div className={style.benefitList}>
                     <div className={style.benefitListItem}>
                       <img src={CheckCircle} alt="check" />
-                      <p>총회(동아리 의사결정 기구)의 의결권을 얻습니다.</p>
+                      <p>총회(동아리 의사결정 기구) 의결권을 얻습니다.</p>
                     </div>
                     <div className={style.benefitListItem}>
                       <img src={CheckCircle} alt="check" />

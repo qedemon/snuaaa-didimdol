@@ -151,6 +151,7 @@
 
   color: var(--white);
   text-align: left;
+  white-space: pre-wrap;
 }
 
 .inputSelectionText {
