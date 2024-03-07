@@ -35,6 +35,7 @@ export default function SelectedClassContainer({
   modifiable,
   onDelete,
   onMove,
+  className
 }) {
   // 데이터
   const title = (data?.title ?? "") + "조";
@@ -52,7 +53,7 @@ export default function SelectedClassContainer({
       transition={transition}
     >
       <motion.div
-        className={style.selectionItem}
+        className={`${style.selectionItem} ${className}`}
         variants={itemVariants}
         initial={modifiable ? "initial" : "animate"}
         animate="animate"

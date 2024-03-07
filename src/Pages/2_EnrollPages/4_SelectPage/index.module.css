@@ -82,23 +82,19 @@
   color: var(--white);
 }
 
-.classItem:nth-child(1) > .classButton {
+.orange{
   background-color: var(--orange);
 }
-
-.classItem:nth-child(2) > .classButton {
+.bluePrimary{
   background-color: var(--blue-primary);
 }
-
-.classItem:nth-child(3) > .classButton {
+.skyBlue{
   background-color: var(--sky-blue);
 }
-
-.classItem:nth-child(4) > .classButton {
+.tangerine{
   background-color: var(--tangerine);
 }
-
-.classItem:nth-child(5) > .classButton {
+.green{
   background-color: var(--green);
 }
 

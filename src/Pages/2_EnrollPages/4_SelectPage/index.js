@@ -23,6 +23,8 @@ const timeTable = [
 
 const weekTable = ["월", "화", "수", "목", "금"];
 
+const colors = ["orange", "bluePrimary", "skyBlue", "tangerine", "green"];
+
 const makeClassTable = () =>
   Array.from(Array(timeTable.length), () => Array(weekTable.length).fill(null));
 
@@ -47,7 +49,15 @@ export default function SelectPage() {
       const response = await axios.get("/didimdolClass/allDidimdolClasses/");
 
       if (response.data.result === 0) {
-        const responseData = response.data.didimdolClasses;
+        const responseData = (
+          (data)=>data.map(
+            (el)=>({
+              ...el,
+              color: colors[weekTable.indexOf(el.daytime.day)]
+            })
+          )
+        )(response.data.didimdolClasses);
+        
         setClasses(responseData);
 
         const nextClassTable = makeClassTable();
@@ -192,7 +202,12 @@ export default function SelectPage() {
                       : classTable[timeIndex][idx] === selectedClass
                       ? style.selected
                       : ""
-                  }`}
+                  } ${
+                    (
+                      (color)=>color?style[color]:""
+                    )(classTable[timeIndex][idx]?.color)
+                  }
+                  `}
                   onClick={() => {
                     setSelectedClass(classTable[timeIndex][idx]);
                   }}
@@ -228,6 +243,7 @@ export default function SelectPage() {
                         moveSelectedClass(idx, isDownward);
                       }}
                       modifiable
+                      className={style[el.color]}
                     />
                   ))}
                 </AnimatePresence>
@@ -259,6 +275,7 @@ export default function SelectPage() {
         </div>
 
         <ClassDetailContainer
+          className={style.bluePrimary}
           data={selectedClass}
           onClose={() => {
             setSelectedClass(null);
