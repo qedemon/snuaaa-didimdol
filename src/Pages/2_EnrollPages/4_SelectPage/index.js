@@ -15,6 +15,8 @@ import Button from "@/Components/Button";
 
 import style from "./index.module.css";
 
+import DayColor from "../Styles/DayColor";
+
 const timeTable = [
   ["3:30", "6:30"],
   ["5:00", "8:00"],
@@ -192,6 +194,8 @@ export default function SelectPage() {
                       : classTable[timeIndex][idx] === selectedClass
                       ? style.selected
                       : ""
+                  } ${
+                    ((day)=>day?DayColor[day]:"")(classTable[timeIndex][idx]?.daytime?.day)
                   }`}
                   onClick={() => {
                     setSelectedClass(classTable[timeIndex][idx]);
@@ -228,6 +232,7 @@ export default function SelectPage() {
                         moveSelectedClass(idx, isDownward);
                       }}
                       modifiable
+                      className={DayColor[el.daytime.day]}
                     />
                   ))}
                 </AnimatePresence>

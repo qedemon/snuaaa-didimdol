@@ -81,7 +81,7 @@
   font-size: var(--font-size-middle);
   color: var(--white);
 }
-
+/*
 .classItem:nth-child(1) > .classButton {
   background-color: var(--orange);
 }
@@ -101,7 +101,7 @@
 .classItem:nth-child(5) > .classButton {
   background-color: var(--green);
 }
-
+*/
 .classItem .classButton.disabled {
   background-color: var(--gray);
 }

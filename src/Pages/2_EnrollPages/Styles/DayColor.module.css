@@ -1,0 +1,19 @@
+.orange {
+    background-color: var(--orange);
+}
+  
+.bluePrimary{
+background-color: var(--blue-primary);
+}
+
+.skyBlue{
+background-color: var(--sky-blue);
+}
+
+.tangerine{
+background-color: var(--tangerine);
+}
+
+.green{
+background-color: var(--green);
+}
