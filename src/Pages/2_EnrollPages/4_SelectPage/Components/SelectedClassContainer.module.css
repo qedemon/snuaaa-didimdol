@@ -11,6 +11,8 @@
   align-items: center;
   gap: 16px;
 
+  background-color: var(--blue-primary);
+
   border-radius: 24px;
 
   padding: 8px 16px;

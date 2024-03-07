@@ -32,7 +32,6 @@ export default function ClassDetailContainer({
   onClose,
   onConfirm,
   inputCondition,
-  className
 }) {
   // 데이터
   const title = (data?.title ?? "") + "조";
@@ -114,7 +113,7 @@ export default function ClassDetailContainer({
       <motion.div
         initial={detailContainerAnimate(false)}
         animate={detailContainerAnimate(Boolean(data) + fullSize)}
-        className={`${style.classDetailContainer} ${className}`}
+        className={style.classDetailContainer}
         onClick={preventClose}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
