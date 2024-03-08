@@ -47,7 +47,7 @@ function Provider({children}){
         login: rootAuth.login,
         logout: rootAuth.logout,
     }
-    console.log(auth);
+    
     return (
         <authContext.Provider value={auth}>
             {
