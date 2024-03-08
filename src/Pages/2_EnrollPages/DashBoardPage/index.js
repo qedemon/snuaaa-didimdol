@@ -9,7 +9,7 @@ import Button from "@/Components/Button";
 
 import ProfileImage from "@images/CharacterProfileImage.svg";
 import style from "./index.module.css";
-import DayColor from "../Styles/DayColor";
+import {NumberColor} from "../Styles";
 
 export default function DashBoardPage() {
   const { handleChangePage } = useContext(EnrollPageIndexContext);
@@ -75,7 +75,7 @@ export default function DashBoardPage() {
                       setSelectedClass(data);
                     }}
                   >
-                    <SelectedClassContainer index={idx + 1} data={data} className={DayColor[data.daytime.day]}/>
+                    <SelectedClassContainer index={idx + 1} data={data} className={NumberColor[idx]}/>
                   </div>
                 );
               })}

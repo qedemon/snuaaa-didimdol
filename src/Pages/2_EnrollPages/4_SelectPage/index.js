@@ -15,7 +15,7 @@ import Button from "@/Components/Button";
 
 import style from "./index.module.css";
 
-import DayColor from "../Styles/DayColor";
+import {DayColor, NumberColor} from "../Styles";
 
 const timeTable = [
   ["3:30", "6:30"],
@@ -232,7 +232,7 @@ export default function SelectPage() {
                         moveSelectedClass(idx, isDownward);
                       }}
                       modifiable
-                      className={DayColor[el.daytime.day]}
+                      className={NumberColor[idx]}
                     />
                   ))}
                 </AnimatePresence>
