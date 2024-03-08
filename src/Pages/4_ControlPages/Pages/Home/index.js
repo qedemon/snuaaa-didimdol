@@ -7,7 +7,7 @@ import {useContext as useAuth} from "../../Context/Auth";
 import UserInfoPage from "./UserInfoPage";
 import {QRPage} from "../Modal";
 
-function Home({userInfoOpen, ...props}){
+function Home({path, userInfoOpen, ...props}){
     const navigate = useNavigate();
     const auth = useAuth();
     const modalController = useModalController().current;
@@ -46,9 +46,10 @@ function Home({userInfoOpen, ...props}){
     )*/
     const logout = useCallback(
         ()=>{
-            auth.setToken("");
+            auth.logout();
+            navigate(path);
         },
-        [auth]
+        [auth, path, navigate]
     )
 
     const openQR = useCallback(
@@ -120,20 +121,12 @@ function Home({userInfoOpen, ...props}){
                                 <Link to="Register">
                                     <LaunchButton>가입하기</LaunchButton>
                                 </Link>
-                                <Link to="/login">
-                                    <LaunchButton>로그인</LaunchButton>
-                                </Link>
                             </>
                         )
                     }
-                    {
-                        process.env.REACT_APP_DIDIMDOL_FRONTEND?
-                        (
-                            <Link to="/">
-                                <LaunchButton className="blue">디딤돌 신청하기</LaunchButton>
-                            </Link>
-                        ):null
-                    }   
+                    <Link to="/">
+                        <LaunchButton className="blue">디딤돌 신청하기</LaunchButton>
+                    </Link>
                 </MenuContainer>
                 
             </ContentContainer>

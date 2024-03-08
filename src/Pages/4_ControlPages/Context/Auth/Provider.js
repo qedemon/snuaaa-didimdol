@@ -1,9 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+//import { useState, useEffect, useCallback } from "react";
 import authContext from "./Context";
-import request from "../../Utility/Connection";
-import { setCookie } from "../../Utility/Cookie";
+//import request from "../../Utility/Connection";
+//import { setCookie } from "../../Utility/Cookie";
+import { useAuth as useRootAuth } from "@/Contexts/AuthContext";
 
 function Provider({children}){
+    const rootAuth = useRootAuth();
+    /*
     const [auth, setAuth] = useState(null);
     const loadAuth = useCallback(
         ()=>{
@@ -36,8 +39,17 @@ function Provider({children}){
         },
         [auth, loadAuth]
     )
+    */
+
+    const auth = {
+        authorized: rootAuth?.user?.valid?true:false,
+        userInfo: rootAuth?.user?.valid?rootAuth.user:null,
+        login: rootAuth.login,
+        logout: rootAuth.logout,
+    }
+    console.log(auth);
     return (
-        <authContext.Provider value={{...(auth??{}), setToken}}>
+        <authContext.Provider value={auth}>
             {
                 auth?
                 children:

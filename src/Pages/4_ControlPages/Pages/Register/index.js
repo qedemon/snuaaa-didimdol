@@ -20,7 +20,7 @@ function Register(props){
         async (userInfo)=>{
             try{
                 const {data} = await request.post("/user/register", userInfo);
-                const {token, error} = data;
+                const {error} = data;
                 if(error){
                     throw error
                 }
@@ -41,7 +41,7 @@ function Register(props){
                     }
                 );
                 modalController.close();
-                auth.setToken(token);
+                auth.login({id: userInfo.id, password: userInfo.password})
                 navigate("../UserInfo");
             }
             catch(error){

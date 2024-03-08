@@ -69,12 +69,11 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    (async () => {
-      try {
-        await getUser();
-      } catch {}
-    })();
-  }, []);
+
+    if(!user)
+      getUser();
+    
+  }, [user]);
 
   return (
     <AuthContext.Provider
@@ -86,7 +85,7 @@ export function AuthProvider({ children }) {
         updateUser,
       }}
     >
-      {children}
+      {user?children:null}
     </AuthContext.Provider>
   );
 }

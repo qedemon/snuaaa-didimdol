@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="enroll" element={<EnrollPage />} />
-          <Route path="control/*" element={<ControllPage />} />
+          <Route path="control/*" element={<ControllPage path="/control"/>} />
           <Route path="*" element={<DashboardPage />} />
         </Routes>
       </HashRouter>

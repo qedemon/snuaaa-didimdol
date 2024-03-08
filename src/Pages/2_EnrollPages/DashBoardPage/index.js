@@ -9,7 +9,6 @@ import Button from "@/Components/Button";
 
 import ProfileImage from "@images/CharacterProfileImage.svg";
 import style from "./index.module.css";
-import {NumberColor} from "../Styles";
 
 export default function DashBoardPage() {
   const { handleChangePage } = useContext(EnrollPageIndexContext);
