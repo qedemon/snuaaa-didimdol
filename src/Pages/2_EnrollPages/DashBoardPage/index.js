@@ -75,7 +75,7 @@ export default function DashBoardPage() {
                       setSelectedClass(data);
                     }}
                   >
-                    <SelectedClassContainer index={idx + 1} data={data} className={NumberColor[idx]}/>
+                    <SelectedClassContainer index={idx + 1} data={data}/>
                   </div>
                 );
               })}
