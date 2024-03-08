@@ -49,7 +49,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user?.valid) {
-      navigate("/enroll");
+      navigate(-1);
     }
   }, [user, navigate]);
 
