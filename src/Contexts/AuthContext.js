@@ -22,6 +22,9 @@ export function AuthProvider({ children }) {
   const getUser = async () => {
     try {
       const response = await axios.get("/user/whoami/");
+      if (!response.data.userInfo) {
+        throw new Error("Cannot find user data");
+      }
 
       setUser({
         valid: true,

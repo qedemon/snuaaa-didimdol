@@ -38,7 +38,11 @@ export default function DashBoardPage() {
       {user?.valid && classes && (
         <div className={style.DashBoardPage}>
           <div className={style.userInfo}>
-            <img className={style.userImage} src={ProfileImage} alt="profile" />
+            <img
+              className={style.userImage}
+              src={user.profilePath ?? ProfileImage}
+              alt="profile"
+            />
             <p className={style.userName}>{user.name}</p>
             <p className={style.userNo}>{user.aaaNo}</p>
           </div>
