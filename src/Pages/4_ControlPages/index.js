@@ -16,7 +16,7 @@ function App({path, ...props}) {
       <div className="App">
         <Main>
           <Routes>
-            <Route path="/" exact element={<Home root path={path}/>} />
+            <Route path="/" exact element={<Home/>} />
             <Route path="/StaffLogin" element={<StaffLogin/>}/>
             <Route path="/Register" element={<Register/>}/>
             <Route path="/UserInfo" element={<Home userInfoOpen={true}/>}/>

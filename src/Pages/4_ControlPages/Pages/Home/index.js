@@ -47,9 +47,9 @@ function Home({path, userInfoOpen, ...props}){
     const logout = useCallback(
         ()=>{
             auth.logout();
-            navigate(path);
+            navigate("/");
         },
-        [auth, path, navigate]
+        [auth, navigate]
     )
 
     const openQR = useCallback(
