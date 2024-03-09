@@ -113,8 +113,8 @@ function Home({path, userInfoOpen, ...props}){
                                     null
                                 }
                                 <LaunchButton onClick={logout}>로그아웃</LaunchButton>
-                                <Link to="/">
-                                    <LaunchButton className="blue">홈으로</LaunchButton>
+                                <Link to="/enroll">
+                                    <LaunchButton className="blue">디딤돌 신청하기</LaunchButton>
                                 </Link>
                             </>
                         )
