@@ -64,10 +64,9 @@ export default function WelcomePartyPage() {
           <p
             className={`${style.welcomePartyDescription} ${style.bold} ${style.noWrap} ${style.darkBlue}`}
           >
-            일정 : 3월 16일 토요일 오후 3시
+            일정 : 3월 16일 토요일 오후 5시
             <br />
-            장소 : 교내 강의실{" "}
-            <span className={style.bluePrimary}>(추후 확정)</span>
+            장소 : 56동 105호
             <br />
             <br />
             행사 일정
