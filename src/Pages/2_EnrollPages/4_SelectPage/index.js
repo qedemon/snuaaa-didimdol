@@ -137,8 +137,12 @@ export default function SelectPage() {
   useEffect(() => {
     if (!loadingState && classes.length !== 0) {
       setSelectedClasses(
-        user?.didimdolClass?.wants?.map((id) =>
-          classes?.find((el) => el?._id === id)
+        user?.didimdolClass?.wants?.reduce(
+          (result, id) =>{
+            const found = classes?.find((el) => el?._id === id);
+            return found?[...result, found]:result
+          }
+          ,[]
         ) ?? []
       );
     }

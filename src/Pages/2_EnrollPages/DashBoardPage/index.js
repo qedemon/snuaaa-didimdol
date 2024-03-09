@@ -64,20 +64,23 @@ export default function DashBoardPage() {
           <div className={style.classContainer}>
             <p className={style.classHeader}>나의 디딤돌 신청 현황</p>
             <div className={style.classList}>
-              {user.didimdolClass.wants.map((el, idx) => {
+              {user.didimdolClass.wants.reduce((result, el, idx) => {
                 const data = classes.find((cls) => cls._id === el);
-                return (
-                  <div
-                    className={style.classItem}
-                    key={idx}
-                    onClick={() => {
-                      setSelectedClass(data);
-                    }}
-                  >
-                    <SelectedClassContainer index={idx + 1} data={data}/>
-                  </div>
-                );
-              })}
+                return data?
+                [...result,
+                  (
+                    <div
+                      className={style.classItem}
+                      key={idx}
+                      onClick={() => {
+                        setSelectedClass(data);
+                      }}
+                    >
+                      <SelectedClassContainer index={idx + 1} data={data}/>
+                    </div>
+                  )
+                ]:result;
+              }, [])}
             </div>
             <Button
               className={style.modifiyButton}
