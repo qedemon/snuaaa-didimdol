@@ -3,6 +3,7 @@ export function getToken() {
     (key)=>{
       const reg = new RegExp(key + '=([^;]*)');
       const result = reg.exec(document.cookie);
+      console.log(document.cookie);
       return result?result[1]:"";
     }
   )("token");
@@ -15,8 +16,10 @@ export function getToken() {
 
 export function setToken(token) {
   document.cookie = `token=${token}; domain=${process.env.REACT_APP_COOKIE_PATH}; path=/;`;
+  document.cookie = `token=${token}; path=/;`;
 }
 
 export function deleteToken() {
   document.cookie = `token=; domain=${process.env.REACT_APP_COOKIE_PATH}; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
