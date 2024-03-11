@@ -4,6 +4,7 @@ import { AuthProvider } from "@contexts/AuthContext";
 import DashboardPage from "@pages/3_MainPages/DashboardPage";
 import EnrollPage from "@pages/2_EnrollPages";
 import LoginPage from "@pages/1_LoginPage";
+import ControllPage from "@pages/4_ControlPages";
 
 import "./App.css";
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="enroll" element={<EnrollPage />} />
+          <Route path="control/*" element={<ControllPage path="/control"/>} />
           <Route path="*" element={<DashboardPage />} />
         </Routes>
       </HashRouter>

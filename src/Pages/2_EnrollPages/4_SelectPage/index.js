@@ -137,8 +137,12 @@ export default function SelectPage() {
   useEffect(() => {
     if (!loadingState && classes.length !== 0) {
       setSelectedClasses(
-        user?.didimdolClass?.wants?.map((id) =>
-          classes?.find((el) => el?._id === id)
+        user?.didimdolClass?.wants?.reduce(
+          (result, id) =>{
+            const found = classes?.find((el) => el?._id === id);
+            return found?[...result, found]:result
+          }
+          ,[]
         ) ?? []
       );
     }
@@ -254,9 +258,9 @@ export default function SelectPage() {
               <br />
               <br />
               <span className={style.bold}>
-                시간과 요일을 정하여 디딤돌조
+                시간과 요일을 클릭하여
                 <br />
-                슬로건 자세히 읽어보기
+                디딤돌조에 대한 설명을 확인하세요.
               </span>
             </div>
           )}

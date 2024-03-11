@@ -16,6 +16,7 @@
   width: 40%;
 
   transform: scaleX(-1);
+  max-width: 210px;
 }
 
 .welcomePartyHeader {
