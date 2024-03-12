@@ -104,8 +104,8 @@ function Home({path, userInfoOpen, ...props}){
                                     auth?.userInfo?.isAdmin?
                                     (
                                         <>
-                                            <Link to="Admin">
-                                                <LaunchButton>가입 현황</LaunchButton>
+                                            <Link to="https://docs.google.com/spreadsheets/d/1rTcXFwO5sZhxqqgTZ2tJwjq5s84TFVQIl0-J3zq5pcU/edit#gid=0">
+                                                <LaunchButton>관리자 시트</LaunchButton>
                                             </Link>
                                             <LaunchButton onClick={openQR}>QR코드 생성</LaunchButton>
                                         </>
