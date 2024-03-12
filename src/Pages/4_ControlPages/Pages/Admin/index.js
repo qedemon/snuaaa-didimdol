@@ -30,7 +30,7 @@ function Admin(props){
 
     return auth?.userInfo?.isStaff?
     (   
-        <>
+        <div style={{height: "100vh", overflow: "auto"}}>
             <select onChange={onChageMenu}>
                 {
                     menu.map(
@@ -44,7 +44,7 @@ function Admin(props){
                 }
             </select>
             <MembersInfo/>
-        </>
+        </div>
     ):
     <></>
 }
