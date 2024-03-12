@@ -4,7 +4,9 @@ import {css} from "@emotion/react";
 
 const MembersInfoContainerCSS = css`
     width: 100%;
+    height: 100%;
     display: grid;
+    overflow: auto;
 `;
 
 function MembersInfoContainer({children, ...props}){
