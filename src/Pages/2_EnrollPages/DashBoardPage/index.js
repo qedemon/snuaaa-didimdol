@@ -82,14 +82,20 @@ export default function DashBoardPage() {
                 ]:result;
               }, [])}
             </div>
-            <Button
-              className={style.modifiyButton}
-              onClick={() => {
-                handleChangePage(3);
-              }}
-            >
-              신청 수정하기
-            </Button>
+            {
+              user.freeze?
+              null:
+              (
+                <Button
+                  className={style.modifiyButton}
+                  onClick={() => {
+                    handleChangePage(3);
+                  }}
+                >
+                  신청 수정하기
+                </Button>
+              )
+            }
           </div>
 
           <ClassDetailContainer

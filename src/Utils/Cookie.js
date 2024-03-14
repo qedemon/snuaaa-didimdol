@@ -3,7 +3,6 @@ export function getToken() {
     (key)=>{
       const reg = new RegExp(key + '=([^;]*)');
       const result = reg.exec(document.cookie);
-      console.log(document.cookie);
       return result?result[1]:"";
     }
   )("token");
