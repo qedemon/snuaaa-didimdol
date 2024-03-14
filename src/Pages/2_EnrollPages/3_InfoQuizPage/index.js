@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { EnrollPageIndexContext } from "..";
+import { useState } from "react";
 
 import Button from "@components/Button";
 import BackButton from "@/Components/BackButton";
@@ -10,8 +9,7 @@ import style from "./index.module.css";
 import QuizModal from "./Components/QuizModal";
 import { QuizFailModal, QuizSuccessModal } from "./Components/QuizResultModal";
 
-export default function InfoQuizPage() {
-  const { isEnrolled, handleChangePage } = useContext(EnrollPageIndexContext);
+export default function InfoQuizPage({ onClick }) {
   const [quizModalState, setQuizModalState] = useState(0); // 0: none, 1: quiz, 2: result
   const [quizCorrectState, setQuizCorrectState] = useState(false);
 
@@ -30,13 +28,7 @@ export default function InfoQuizPage() {
 
   return (
     <div className={style.infoQuizPage}>
-      {isEnrolled && (
-        <BackButton
-          onClick={() => {
-            handleChangePage(6);
-          }}
-        />
-      )}
+      {onClick && <BackButton onClick={onClick} />}
       <img className={style.image} src={CharactersBig} alt="characters" />
       <div className={style.infoQuizContainer}>
         <h1 className={style.infoQuizHeader}>
@@ -65,7 +57,7 @@ export default function InfoQuizPage() {
           <p>별모임에 1회 이상 참여</p>
         </div>
 
-        {isEnrolled || (
+        {onClick === undefined && (
           <Button className={style.button} onClick={openQuizModal}>
             이해하였습니다.
           </Button>

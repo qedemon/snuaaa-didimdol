@@ -41,9 +41,9 @@ export function AuthProvider({ children }) {
         id,
         password,
       });
-
       const { token } = response.data;
       setToken(token);
+      await getUser();
     } catch (error) {
       if (error?.response?.status === 403) {
         throw new Error("아이디 및 비밀번호가 일치하지 않습니다.");
@@ -53,7 +53,6 @@ export function AuthProvider({ children }) {
         );
       }
     }
-    await getUser();
   };
 
   const logout = () => {
@@ -69,11 +68,12 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-
-    if(!user)
-      getUser();
-    
-  }, [user]);
+    (async () => {
+      try {
+        await getUser();
+      } catch {}
+    })();
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -85,7 +85,7 @@ export function AuthProvider({ children }) {
         updateUser,
       }}
     >
-      {user?children:null}
+      {children}
     </AuthContext.Provider>
   );
 }
