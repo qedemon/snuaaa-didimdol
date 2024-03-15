@@ -17,10 +17,9 @@ export default function InfoCarousel({
   pictureIndexes,
   data,
   transition,
+  onClick,
 }) {
-  const { isEnrolled, handleChangePage, handleGotoNextPage } = useContext(
-    EnrollPageIndexContext
-  );
+  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
   const dataLength = data.length;
 
   return (
@@ -51,13 +50,8 @@ export default function InfoCarousel({
             {el.description}
           </div>
           {idx === dataLength - 1 ? (
-            isEnrolled ? (
-              <Button
-                className={style.nextPageButton}
-                onClick={() => {
-                  handleChangePage(6);
-                }}
-              >
+            onClick ? (
+              <Button className={style.nextPageButton} onClick={onClick}>
                 대시보드로
               </Button>
             ) : (

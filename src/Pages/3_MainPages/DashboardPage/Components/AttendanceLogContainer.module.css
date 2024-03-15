@@ -1,0 +1,64 @@
+.contentLogContainer {
+  width: 80%;
+}
+
+.contentLogHeader {
+  text-align: left;
+
+  margin-bottom: 8px;
+}
+
+.filterButtonContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.filterButton {
+  border-radius: 8px;
+
+  padding: 8px;
+
+  border: 1px solid var(--blue-dark);
+
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+  color: var(--blue-dark);
+
+  cursor: pointer;
+}
+
+.filterButton.selected {
+  background-color: var(--blue-secondary);
+
+  border: 1px solid var(--white);
+
+  color: var(--white);
+}
+
+.logList {
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  left: -5%;
+
+  margin-top: 8px;
+
+  width: 110%;
+}
+
+.logItem {
+  padding: 12px 24px;
+
+  border: 1px solid #f0a370;
+
+  font-size: var(--font-size-small);
+}
+
+.logItem:nth-child(odd) {
+  background-color: #f5e8cf;
+}
+
+.logItem:nth-child(even) {
+  background-color: var(--white);
+}

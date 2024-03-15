@@ -10,16 +10,7 @@ import EndPage from "./6_EndPage";
 import DashBoardPage from "./DashBoardPage";
 
 import LogoutButton from "@components/LogoutButton";
-
-const PageList = [
-  <WelcomePage />,
-  <InfoPage />,
-  <InfoQuizPage />,
-  <SelectPage />,
-  <WelcomePartyPage />,
-  <EndPage />,
-  <DashBoardPage />,
-];
+import { useNavigate } from "react-router-dom";
 
 const EnrollPageIndexContext = createContext({
   pageIndex: 0,
@@ -32,8 +23,35 @@ export { EnrollPageIndexContext };
 
 export default function EnrollPage() {
   const { user } = useAuth(true);
+  const navigate = useNavigate();
   const [pageIndex, setPageIndex] = useState(0);
   const [isEnrolled, setIsEnrolled] = useState(false);
+
+  const PageList = [
+    <WelcomePage />,
+    <InfoPage
+      onClick={
+        isEnrolled
+          ? () => {
+              setPageIndex(6);
+            }
+          : undefined
+      }
+    />,
+    <InfoQuizPage
+      onClick={
+        isEnrolled
+          ? () => {
+              setPageIndex(6);
+            }
+          : undefined
+      }
+    />,
+    <SelectPage />,
+    <WelcomePartyPage />,
+    <EndPage />,
+    <DashBoardPage />,
+  ];
 
   const handleGotoNextPage = () => {
     setPageIndex((prevPageIndex) => prevPageIndex + 1);
@@ -45,6 +63,10 @@ export default function EnrollPage() {
 
   useEffect(() => {
     if (user?.valid) {
+      if (!user?.isStudent || !user?.paid) {
+        navigate("/");
+      }
+
       const enrollState = user.didimdolClass;
       if (enrollState.wants.length > 0) {
         if (enrollState.party === null) {

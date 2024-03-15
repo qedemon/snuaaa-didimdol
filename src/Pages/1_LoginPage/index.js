@@ -53,13 +53,12 @@ export default function LoginPage() {
     }
   }, [user, navigate]);
 
-
-  const openFindModal = ()=>{
+  const openFindModal = () => {
     setFindModalOpen(true);
-  }
-  const closeFindModal = ()=>{
+  };
+  const closeFindModal = () => {
     setFindModalOpen(false);
-  }
+  };
 
   return (
     <div className={style.loginPage}>
@@ -87,13 +86,7 @@ export default function LoginPage() {
       />
       <p className={style.copyRight}>AAApp2024</p>
       <div />
-      {
-        findModalOpen?
-        (
-          <FindFormModal onClose={closeFindModal}/>
-        ):
-        null
-      }
+      {findModalOpen ? <FindFormModal onClose={closeFindModal} /> : null}
     </div>
   );
 }

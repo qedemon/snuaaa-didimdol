@@ -137,6 +137,19 @@
 }
 
 @media (max-height: 750px) {
+  .userImage {
+    width: 60px;
+    height: 60px;
+
+    padding: 8px;
+
+    border-radius: 30px;
+  }
+
+  .buttonWrapper button {
+    height: 40px;
+  }
+
   .modifiyButton {
     display: flex;
     justify-content: center;

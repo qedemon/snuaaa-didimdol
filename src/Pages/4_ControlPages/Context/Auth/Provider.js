@@ -4,9 +4,9 @@ import authContext from "./Context";
 //import { setCookie } from "../../Utility/Cookie";
 import { useAuth as useRootAuth } from "@/Contexts/AuthContext";
 
-function Provider({children}){
-    const rootAuth = useRootAuth();
-    /*
+function Provider({ children }) {
+  const rootAuth = useRootAuth();
+  /*
     const [auth, setAuth] = useState(null);
     const loadAuth = useCallback(
         ()=>{
@@ -41,22 +41,18 @@ function Provider({children}){
     )
     */
 
-    const auth = {
-        authorized: rootAuth?.user?.valid?true:false,
-        userInfo: rootAuth?.user?.valid?rootAuth.user:null,
-        login: rootAuth.login,
-        logout: rootAuth.logout,
-    }
-    
-    return (
-        <authContext.Provider value={auth}>
-            {
-                auth?
-                children:
-                (<></>)
-            }
-        </authContext.Provider>
-    )
+  const auth = {
+    authorized: rootAuth?.user?.valid ? true : false,
+    userInfo: rootAuth?.user?.valid ? rootAuth.user : null,
+    login: rootAuth.login,
+    logout: rootAuth.logout,
+  };
+
+  return (
+    <authContext.Provider value={auth}>
+      {auth ? children : <></>}
+    </authContext.Provider>
+  );
 }
 
 export default Provider;

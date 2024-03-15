@@ -1,32 +1,26 @@
 import React, { useCallback, useEffect } from "react";
 import MembersInfo from "./MembersInfo";
-import {useContext as useAuth} from "../../Context/Auth";
+import { useContext as useAuth } from "../../Context/Auth";
 import { useNavigate } from "react-router-dom";
 
 const menu = [
-    {
-        label: "가입현황",
-        Component: MembersInfo
-    }
+  {
+    label: "가입현황",
+    Component: MembersInfo,
+  },
 ];
 
-function Admin(props){
-    const auth = useAuth();
-    const navigate = useNavigate();
+function Admin(props) {
+  const auth = useAuth();
+  const navigate = useNavigate();
 
-    useEffect(
-        ()=>{
-            if(!auth?.userInfo?.isStaff)
-            navigate("/StaffLogin");
-        }
-    );
+  useEffect(() => {
+    if (!auth?.userInfo?.isStaff) navigate("/StaffLogin");
+  });
 
-    const onChageMenu = useCallback(
-        (e)=>{
-            console.log(e.target.value);
-        },
-        []
-    );
+  const onChageMenu = useCallback((e) => {
+    console.log(e.target.value);
+  }, []);
 
     return auth?.userInfo?.isStaff?
     (   
@@ -47,6 +41,7 @@ function Admin(props){
         </div>
     ):
     <></>
+  );
 }
 
 export default Admin;
