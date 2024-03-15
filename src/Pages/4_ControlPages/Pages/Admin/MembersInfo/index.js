@@ -90,7 +90,7 @@ function MembersInfo({...props}){
                 <button onClick={load}>Load</button>
                 <button onClick={onSave}>Save</button>
                 <label>{message}</label>
-                <GoogleSheetFileView sheetPath={sheetURL}></GoogleSheetFileView>
+                <GoogleSheetFileView sheetPath={process.env.REACT_APP_ADMIN_SHEET}></GoogleSheetFileView>
             </MembersInfoHeader>
             <MembersView members={members} onChange={onChange}></MembersView>
         </MembersInfoContainer>

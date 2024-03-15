@@ -22,21 +22,24 @@ function Admin(props) {
     console.log(e.target.value);
   }, []);
 
-  return auth?.userInfo?.isStaff ? (
-    <>
-      <select onChange={onChageMenu}>
-        {menu.map((item, index) => {
-          const { label } = item;
-          return (
-            <option key={index} value={item}>
-              {label}
-            </option>
-          );
-        })}
-      </select>
-      <MembersInfo />
-    </>
-  ) : (
+    return auth?.userInfo?.isStaff?
+    (   
+        <div style={{height: "100vh", overflow: "auto"}}>
+            <select onChange={onChageMenu}>
+                {
+                    menu.map(
+                        (item, index)=>{
+                            const {label} = item;
+                            return (
+                                <option key={index} value={item}>{label}</option>
+                            )
+                        }
+                    )
+                }
+            </select>
+            <MembersInfo/>
+        </div>
+    ):
     <></>
   );
 }
