@@ -63,9 +63,9 @@ export default function EnrollPage() {
 
   useEffect(() => {
     if (user?.valid) {
-      if (!user?.isStudent || !user?.paid) {
+      /*if (!user?.isStudent || !user?.paid) {
         navigate("/");
-      }
+      }*/
 
       const enrollState = user.didimdolClass;
       if (enrollState.wants.length > 0) {

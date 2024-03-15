@@ -32,7 +32,9 @@ export default function DashboardPage() {
   useEffect(() => {
     if (user?.isAdmin || user?.isStaff) {
       navigate("/control");
-    } else {
+    }
+    else if(!didimdol){
+      navigate("/enroll");
     }
   });
 
