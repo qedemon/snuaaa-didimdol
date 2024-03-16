@@ -26,7 +26,11 @@ export default function DashboardPage() {
 
   const [pageIndex, setPageIndex] = useState(0);
 
-  const didimdol = Array.isArray(user?.didimdolClass?.belongs)?user?.didimdolClass?.belongs[0]:undefined;
+  const didimdol = Array.isArray(user?.didimdolClass?.belongs)?
+    user.didimdolClass.belongs.filter(
+      ({role})=>role==="student"
+    )[0]?.didimdolClass
+    :undefined;
   const logs = user?.attendant?.logs??{};
 
   useEffect(() => {

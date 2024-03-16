@@ -9,7 +9,8 @@ const types = [
     "별모임",
     "디딤돌",
     "자율돔관",
-    "소관"
+    "소관",
+    "etc"
 ]
 
 async function getQRURL(type){
