@@ -13,7 +13,7 @@ import InfoQuizPage from "@/Pages/2_EnrollPages/3_InfoQuizPage";
 
 const mockData = {
   status: "blue",
-  numSaveCount: 0,
+  numSaveCount: 1,
   numClasses: 0,
   numAssoc: 0,
   isPracAccepted: false,
