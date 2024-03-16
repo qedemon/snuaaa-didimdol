@@ -28,7 +28,7 @@ const LogQRAuthenticationContainerCSS = css`
         font-weight: 600;
         line-height: 48px;
         letter-spacing: 0em;
-        text-align: right;
+        text-align: center;
     }
 `;
 function LogQRAuthenticationContainer({children}){

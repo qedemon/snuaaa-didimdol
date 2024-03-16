@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useContext as useModalController } from "../../../Context/Modal";
-import { LaunchButton } from "../../../Components";
+import { Input, LaunchButton } from "../../../Components";
 import { MessageBoxBody, MessageBoxContainer, MessageBoxFooter, MessageBoxHeader } from "./Components/MessageBox";
 import request from "../../../Utility/Connection";
 
@@ -9,19 +9,20 @@ const types = [
     "별모임",
     "디딤돌",
     "자율돔관",
-    "소관"
+    "소관",
+    "etc"
 ]
 
-async function getQRURL(type){
+async function getQRURL(type, queries=""){
     const {authenticationId, expiredAt} = await (
-        async (type)=>{
+        async (type, queries)=>{
             if(type==="가입하기"){
                 return {
                     authenticationId: "register",
                     expiredAt: null
                 }
             }
-            const {data} = await request.get(`qrAuthentication/acquireQRAuthentication/${type}`);
+            const {data} = await request.get(`qrAuthentication/acquireQRAuthentication/${type}`+(queries?`?${queries}`:""));
             if(data && data.qrAuthentication){
                 const {qrAuthentication} = data;
                 return {
@@ -30,7 +31,7 @@ async function getQRURL(type){
                 }
             }
         }
-    )(type);
+    )(type, queries);
 
     return {
         dataURL: await (
@@ -57,6 +58,7 @@ function QRPage({...props}){
     const [qrImageURL, setQRImageURL] = useState();
     const [timeToReload, setTimeToReload] = useState(null);
     const timer = useRef(null);
+    const titleInput = useRef();
 
     const changeIndex = useCallback(
         (add)=>()=>{
@@ -104,13 +106,14 @@ function QRPage({...props}){
         ()=>{
             (
                 async ()=>{
-                    const {dataURL: qrImageURL, timeToReload} = await getQRURL(types[typeIndex]);
+                    const title = titleInput?.current?.value;
+                    const {dataURL: qrImageURL, timeToReload} = await (title?getQRURL(types[typeIndex], `title=${title}`):getQRURL(types[typeIndex]));
                     setQRImageURL(qrImageURL);
                     resetTimeToReload(timeToReload);
                 }
             )();
         },
-        [typeIndex, setQRImageURL, resetTimeToReload]
+        [typeIndex, setQRImageURL, resetTimeToReload, titleInput]
     )
 
     useEffect(
@@ -160,6 +163,11 @@ function QRPage({...props}){
                 {
                     qrImageURL?
                         (<img src={qrImageURL} alt="qr"/>):
+                        null
+                }
+                {
+                    types[typeIndex]==="etc"?
+                        (<Input ref={titleInput} placeholder="QR의 제목"/>):
                         null
                 }
                 <p className="label">{formattedTimeString}</p>

@@ -13,7 +13,7 @@ import InfoQuizPage from "@/Pages/2_EnrollPages/3_InfoQuizPage";
 
 const mockData = {
   status: "blue",
-  numSaveCount: 0,
+  numSaveCount: 1,
   numClasses: 0,
   numAssoc: 0,
   isPracAccepted: false,
@@ -26,13 +26,19 @@ export default function DashboardPage() {
 
   const [pageIndex, setPageIndex] = useState(0);
 
-  const didimdol = user?.didimdolClass?.belongs[0];
-  const logs = user?.attendance;
+  const didimdol = Array.isArray(user?.didimdolClass?.belongs)?
+    user.didimdolClass.belongs.filter(
+      ({role})=>role==="student"
+    )[0]?.didimdolClass
+    :undefined;
+  const logs = user?.attendant?.logs??{};
 
   useEffect(() => {
     if (user?.isAdmin || user?.isStaff) {
       navigate("/control");
-    } else {
+    }
+    else if(user?.valid && !didimdol){
+      navigate("/enroll");
     }
   });
 
