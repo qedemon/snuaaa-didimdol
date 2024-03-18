@@ -21,7 +21,7 @@ function LogQRAuthentication(props){
             }
             (
                 async ()=>{
-                    const {data} = await request.get(`qrAuthentication/getQRAuthentication/${authenticationId}`);
+                    const {data} = await request.get(`qrAuthentication/getQRAuthenticationById/${authenticationId}`);
                     if(data){
                         const {qrAuthentication, error} = data;
                         if(error){
