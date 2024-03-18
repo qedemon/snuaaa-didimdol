@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useAuth } from "@/Contexts/AuthContext";
 import useAsync from "@/Hooks/useAsync";
 import axios from "@connections/NovaConnection";
@@ -44,6 +44,11 @@ export default function WelcomePartyPage() {
   const [postPending, postError, postAttendPartyAsync] =
     useAsync(postAttendParty);
 
+  useEffect(
+    ()=>{
+      handleGotoNextPage();//수정바람
+    }
+  );
   return (
     <>
       <div className={style.welcomePartyPage}>
