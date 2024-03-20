@@ -103,12 +103,16 @@ function Home({path, userInfoOpen, ...props}){
                                 {
                                     auth?.userInfo?.isAdmin?
                                     (
-                                        <>
-                                            <Link to="Admin">
-                                                <LaunchButton>가입 현황</LaunchButton>
-                                            </Link>
-                                            <LaunchButton onClick={openQR}>QR코드 생성</LaunchButton>
-                                        </>
+                                        <Link to="Admin">
+                                            <LaunchButton>가입 현황</LaunchButton>
+                                        </Link>
+                                    ):
+                                    null
+                                }
+                                {
+                                    auth?.userInfo?.isStaff || auth?.userInfo?.isAdmin?
+                                    (
+                                        <LaunchButton onClick={openQR}>QR코드 생성</LaunchButton>
                                     ):
                                     null
                                 }
