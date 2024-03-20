@@ -9,7 +9,7 @@ function Home(){
     const auth = useAuth();
     const navigate = useNavigate();
     const modalController = useModalController().current;
-    const icons = getIcons(auth, {navigate, modalController});
+    const icons = getIcons({auth, navigate, modalController});
 
     return (
         <StaffHomeContainer>

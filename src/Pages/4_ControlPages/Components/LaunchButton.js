@@ -22,6 +22,13 @@ const LaunchButtonCSS = css`
   &.blue {
     background: rgba(118, 128, 226, 1);
   }
+  &.white {
+    background: white;
+    color: black;
+  }
+  &.border {
+    border: 2px solid black;
+  }
 `;
 function LaunchButton({ children, ...props }) {
   return (

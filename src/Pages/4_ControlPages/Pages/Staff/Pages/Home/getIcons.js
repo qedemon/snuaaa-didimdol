@@ -1,28 +1,44 @@
 import { QRPage } from "../../../Modal";
+import AdminImg from "./Assets/admin.png";
 import QRImg from "./Assets/QR.png"
 import LoginImg from "./Assets/login.png";
-import LogOutImg from "./Assets/logout.png"
+import LogOutImg from "./Assets/logout.png";
+import RegisterImg from "./Assets/register.png";
 
-function getIcons(auth, {navigate, modalController}){
-    console.log(auth);
+function getIcons({auth, navigate, modalController}){
     return [
         ...auth?.authorized?
         [
-            {
-                label: "QR 생성",
-                img: QRImg,
-                callback: ()=>{
-                    modalController.setChildren(
-                        {
-                            component: QRPage,
-                            props: {
-                                userInfo: auth.userInfo
-                            }
-                        }
-                    );
-                    modalController.open();
+            ...auth?.userInfo?.isAdmin?
+            [
+                {
+                    label: "가입자 정보",
+                    img: AdminImg,
+                    callback: ()=>{
+                        navigate(`../../Admin`)
+                    }
                 }
-            },
+            ]:
+            [],
+            ...auth?.userInfo?.isStaff?
+            [
+                {
+                    label: "QR 생성",
+                    img: QRImg,
+                    callback: ()=>{
+                        modalController.setChildren(
+                            {
+                                component: QRPage,
+                                props: {
+                                    userInfo: auth.userInfo
+                                }
+                            }
+                        );
+                        modalController.open();
+                    }
+                }
+            ]:
+            [],
             {
                 label: "로그아웃",
                 img: LogOutImg,
@@ -41,7 +57,14 @@ function getIcons(auth, {navigate, modalController}){
                     navigate("/login");
                 }
             }
-        ]
+        ],
+        {
+            label: "가입하기",
+            img: RegisterImg,
+            callback: ()=>{
+                navigate(`../../Register`)
+            }
+        },
     ]
 }
 
