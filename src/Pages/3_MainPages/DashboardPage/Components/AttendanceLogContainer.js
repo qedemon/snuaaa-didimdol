@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import style from "./AttendanceLogContainer.module.css";
 
-const logCategories = ["디딤돌", "별모임", "자율관측", "행사"];
+const logCategories = ["디딤돌", "별모임", "자율관측", "etc"];
 
 export default function AttendnaceLogContainer({ logs: initialLogs }) {
   const [filterIndex, setFilterIndex] = useState(0);
@@ -10,7 +10,11 @@ export default function AttendnaceLogContainer({ logs: initialLogs }) {
 
   useEffect(() => {
     if (initialLogs) {
-      const nextLogList = Object.values(initialLogs).filter(
+      const nextLogList = Object.entries(initialLogs)
+      .map(
+        ([key, value])=>({...value, key})
+      )
+      .filter(
         (el) => el.type === logCategories[filterIndex]
       );
       nextLogList.sort((a, b) =>
@@ -41,7 +45,7 @@ export default function AttendnaceLogContainer({ logs: initialLogs }) {
       <div className={style.logList}>
         {logList.map((el, idx) => (
           <div key={idx} className={style.logItem}>
-            {idx + 1}. {el.type} {el.authenticatedAt.split("T")[0]}
+            {idx + 1}. {el.key}
           </div>
         ))}
       </div>

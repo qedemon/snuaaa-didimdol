@@ -69,13 +69,9 @@ export default function EnrollPage() {
 
       const enrollState = user.didimdolClass;
       if (enrollState.wants.length > 0) {
-        if (enrollState.party === null) {
-          setPageIndex(4);
-        } else {
-          setIsEnrolled(true);
-          if (pageIndex === 0) {
-            setPageIndex(6);
-          }
+        setIsEnrolled(true);
+        if (pageIndex === 0) {
+          setPageIndex(6);
         }
       }
     }

@@ -11,9 +11,15 @@ import InfoPage from "@/Pages/2_EnrollPages/2_InfoPage";
 import style from "./index.module.css";
 import InfoQuizPage from "@/Pages/2_EnrollPages/3_InfoQuizPage";
 
+const statusList = {
+  "적": "red",
+  "황": "orange",
+  "녹": "blue"
+}
+
 const mockData = {
-  status: "blue",
-  numSaveCount: 1,
+  status: statusList["녹"],
+  numSaveCount: 0,
   numClasses: 0,
   numAssoc: 0,
   isPracAccepted: false,
@@ -32,6 +38,22 @@ export default function DashboardPage() {
     )[0]?.didimdolClass
     :undefined;
   const logs = user?.attendant?.logs??{};
+
+  const status = (
+    (info)=>{
+      if(!info){
+        return mockData;
+      }
+      return {
+        status: statusList[info.status]??mockData.status,
+        numSaveCount: info.shield??mockData.numSaveCount,
+        numClasses: info.absent??mockData.numClasses,
+        numAssoc: info.numAssoc??mockData.numAssoc,
+        isPracAccepted: info.license??mockData.isPracAccepted,
+        statusText: info.message??mockData.statusText
+      }
+    }
+  )(user?.attendant?.info)
 
   useEffect(() => {
     if (user?.isAdmin || user?.isStaff) {
@@ -59,7 +81,7 @@ export default function DashboardPage() {
               </div>
 
               <div className={style.scrollWrapper}>
-                <StatusContainer status={mockData} />
+                <StatusContainer status={status} />
 
                 <ClassContainer didimdol={didimdol} />
 
