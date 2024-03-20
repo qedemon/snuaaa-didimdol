@@ -4,6 +4,7 @@ import QRImg from "./Assets/QR.png"
 import LoginImg from "./Assets/login.png";
 import LogOutImg from "./Assets/logout.png";
 import RegisterImg from "./Assets/register.png";
+import AttendantImg from "./Assets/attendant.png";
 
 function getIcons({auth, navigate, modalController}){
     return [
@@ -35,6 +36,13 @@ function getIcons({auth, navigate, modalController}){
                             }
                         );
                         modalController.open();
+                    }
+                },
+                {
+                    label: "출석 확인",
+                    img: AttendantImg,
+                    callback: ()=>{
+                        navigate("Attendant");
                     }
                 }
             ]:
