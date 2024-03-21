@@ -56,34 +56,76 @@ function AttendantBody({children}){
 }
 export {AttendantBody};
 
-/*
-const StaffHomeIconContainerCSS = css`
+const AttendantContentContainerCSS = css`
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(4, 1fr);
-    @media (max-aspect-ratio: 2/3) {
-        grid-template-rows: repeat(4, 1fr);
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (min-aspect-ratio: 3/2){
-        grid-template-rows: repeat(3, 1fr);
-        grid-template-columns: repeat(5, 1fr);
-    }
-    gap: 8px;
-    justify-items: center;
-    align-items: center;
+    grid-template-areas: 
+        "header"
+        "body"
+        "footer";
+    grid-template-rows: auto 1fr auto;
 `;
-function StaffHomeIconContainer({children}){
+function AttendantContentContainer({children}){
     return (
-        <div css={StaffHomeIconContainerCSS}>
+        <div css={AttendantContentContainerCSS}>
             {children}
         </div>
     )
 }
-export {StaffHomeIconContainer}
+export {AttendantContentContainer}
 
+const AttendantContentHeaderCSS = css`
+    grid-area: header;
+`;
+function AttendantContentHeader({children}){
+    return <div css={AttendantContentHeaderCSS}>
+        {children}
+    </div>
+}
+export {AttendantContentHeader}
+
+const AttendantContentBodyCSS = css`
+    grid-area: body;
+`;
+function AttendantContentBody({children}){
+    return <div css={AttendantContentBodyCSS}>
+        {children}
+    </div>
+}
+export {AttendantContentBody}
+
+const AttendtListSelectCSS = css`
+    padding: 4px;
+`
+function AttendantListSelect({onChange, children}){
+    return (
+        <select css={AttendtListSelectCSS} onChange={onChange}>
+            {children}
+        </select>
+    )
+}
+export {AttendantListSelect}
+
+const AttendentListUlCSS = css`
+    list-style-type: none;
+    text-align: left;
+    padding: 0px;
+    &>li{
+        border: 1px solid black;
+        padding: 4px;
+        border-radius: 5px;
+    }
+`
+function AttendantListUl({children}){
+    return (
+        <ul css={AttendentListUlCSS}>
+            {children}
+        </ul>
+    )
+}
+export default AttendantListUl;
+/*
 const StaffHomeIconCSS = css`
     display: grid;
     justify-items: center;

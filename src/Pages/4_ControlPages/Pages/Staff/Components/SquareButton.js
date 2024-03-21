@@ -13,11 +13,22 @@ const SquareButtonCSS = css`
         width: 100%;
         height: 100%;
     }
+    &.spinning>img{
+        animation: rotation 1s linear infinite;
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+    }
 `;
 
-function SquareButton({onClick, css, imgSrc}){
+function SquareButton({onClick, css, imgSrc, spinning}){
     return (
-        <button css={[SquareButtonCSS, ...Array.isArray(css)?css:[css]]} onClick={onClick}>
+        <button css={[SquareButtonCSS, ...Array.isArray(css)?css:[css]]} className={spinning?"spinning":""} onClick={onClick}>
             <img src={imgSrc} alt="Home"/>
         </button>
     )
