@@ -31,10 +31,24 @@ const LogQRAuthenticationContainerCSS = css`
         text-align: center;
     }
 `;
-function LogQRAuthenticationContainer({children}){
+
+const SpinningCharacterCSS = css`
+    animation: rotation 0.5s linear infinite;
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;
+
+function LogQRAuthenticationContainer({children, spinningCharacter}){
     return (
         <div css={LogQRAuthenticationContainerCSS}>
-            <Character/>
+            <Character css={spinningCharacter?SpinningCharacterCSS:null}/>
             {children}
         </div>
     )
