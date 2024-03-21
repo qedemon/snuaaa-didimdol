@@ -10,7 +10,8 @@ const AttendantContainerCSS = css`
         "header"
         "body"
         "footer";
-    grid-template-rows: 50px 1fr 40px;
+    grid-template-rows: 50px 1fr 20px;
+    padding: 8px;
 `;
 function AttendantContainer({children}){
     return (
@@ -46,6 +47,7 @@ const AttendantBodyCSS = css`
     justify-items: center;
     align-items: center;
     padding: 20px;
+    overflow: hidden;
 `;
 function AttendantBody({children}){
     return (
@@ -65,6 +67,7 @@ const AttendantContentContainerCSS = css`
         "body"
         "footer";
     grid-template-rows: auto 1fr auto;
+    overflow: hidden;
 `;
 function AttendantContentContainer({children}){
     return (
@@ -87,6 +90,8 @@ export {AttendantContentHeader}
 
 const AttendantContentBodyCSS = css`
     grid-area: body;
+    height: 100%;
+    overflow: auto;
 `;
 function AttendantContentBody({children}){
     return <div css={AttendantContentBodyCSS}>
@@ -113,8 +118,9 @@ const AttendentListUlCSS = css`
     padding: 0px;
     &>li{
         border: 1px solid black;
-        padding: 4px;
+        padding: 8px;
         border-radius: 5px;
+        margin: 8px;
     }
 `
 function AttendantListUl({children}){

@@ -80,6 +80,9 @@ function Attendant(){
                                                 },
                                                 []
                                             )
+                                            .sort(
+                                                (A, B)=>B.authenticatedAt.getTime()-A.authenticatedAt.getTime()
+                                            )
                                     }
                                 }
                             )
