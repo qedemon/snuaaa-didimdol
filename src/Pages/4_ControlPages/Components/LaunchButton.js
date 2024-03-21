@@ -8,6 +8,8 @@ const LaunchButtonCSS = css`
   border: 0px;
   gap: 12px;
 
+  width: max-content;
+
   background: rgba(243, 145, 134, 1);
 
   font-size: 16px;

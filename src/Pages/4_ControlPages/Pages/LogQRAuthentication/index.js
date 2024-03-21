@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {useContext as useAuth} from "../../Context/Auth";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {useContext as useModalController} from "../../Context/Modal";
 import { Background, LogQRAuthenticationContainer } from "./Components";
 import request from "../../Utility/Connection";
 import { LaunchButton } from "../../Components";
+import AlertMessageBox from "../Modal/AlertBoxPage";
 
 function LogQRAuthentication(props){
     const navigate = useNavigate();
     const auth = useAuth();
-    //const modalController = useModalController().current;
+    const modalController = useModalController().current;
     const params = useParams();
     const authenticationId = params?.authenticationId;
     const [qrAuthentication, setQRAuthentication] = useState()
     useEffect(
         ()=>{
-            console.log(auth);
             if(!auth?.authorized){
                 navigate("/login");
                 return;
@@ -45,10 +46,26 @@ function LogQRAuthentication(props){
                     if(data){
                         const {qrAuthenticationLog} = data;
                         if(!qrAuthenticationLog){
-                            alert("인증 실패");
+                            modalController.setChildren(
+                                {
+                                    component: AlertMessageBox,
+                                    props: {
+                                        message: "인증 실패"
+                                    }
+                                }
+                            );
+                            modalController.open();
                         }
                         else{
-                            alert(qrAuthenticationLog.message);
+                            modalController.setChildren(
+                                {
+                                    component: AlertMessageBox,
+                                    props: {
+                                        message: qrAuthenticationLog.message
+                                    }
+                                }
+                            );
+                            modalController.open();
                         }
                     }
                 }
