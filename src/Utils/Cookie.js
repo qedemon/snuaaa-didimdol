@@ -14,11 +14,11 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  document.cookie = `token=${token}; domain=${process.env.REACT_APP_COOKIE_PATH}; path=/;`;
-  document.cookie = `token=${token}; path=/;`;
+  document.cookie = `token=${token}; Max-Age=${60*60*24*14}; domain=${process.env.REACT_APP_COOKIE_PATH}; path=/;`;
+  document.cookie = `token=${token}; Max-Age=${60*60*24*14}; path=/;`;
 }
 
 export function deleteToken() {
-  document.cookie = `token=; domain=${process.env.REACT_APP_COOKIE_PATH}; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+  document.cookie = `token=; domain=${process.env.REACT_APP_COOKIE_PATH}; Max-Age=-1;`;
+  document.cookie = `token=; Max-Age=-1;`;
 }
