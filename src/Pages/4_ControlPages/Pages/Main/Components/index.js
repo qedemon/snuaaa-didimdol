@@ -8,7 +8,8 @@ const MainContainerCSS = css`
     width: 100vw;
     height: 100vh;
     @supports (-webkit-touch-callout: none) {
-        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+        height: 1px;
     }
     &>.topLayer{
         position: absolute;
