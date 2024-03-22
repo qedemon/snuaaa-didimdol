@@ -8,9 +8,8 @@ const AttendantContainerCSS = css`
     display: grid;
     grid-template-areas: 
         "header"
-        "body"
-        "footer";
-    grid-template-rows: 50px 1fr 20px;
+        "body";
+    grid-template-rows: 50px 1fr;
     padding: 8px;
 `;
 function AttendantContainer({children}){
@@ -64,10 +63,10 @@ const AttendantContentContainerCSS = css`
     display: grid;
     grid-template-areas: 
         "header"
-        "body"
-        "footer";
-    grid-template-rows: auto 1fr auto;
+        "body";
+    grid-template-rows: auto 1fr;
     overflow: hidden;
+    gap: 8px;
 `;
 function AttendantContentContainer({children}){
     return (
@@ -80,6 +79,7 @@ export {AttendantContentContainer}
 
 const AttendantContentHeaderCSS = css`
     grid-area: header;
+    padding: 4px;
 `;
 function AttendantContentHeader({children}){
     return <div css={AttendantContentHeaderCSS}>
@@ -91,7 +91,8 @@ export {AttendantContentHeader}
 const AttendantContentBodyCSS = css`
     grid-area: body;
     height: 100%;
-    overflow: auto;
+    overflow: scroll;
+    border: 1px solid black;
 `;
 function AttendantContentBody({children}){
     return <div css={AttendantContentBodyCSS}>
@@ -102,6 +103,10 @@ export {AttendantContentBody}
 
 const AttendtListSelectCSS = css`
     padding: 4px;
+    font-size: 15px;
+    color: black;
+    background-color: white:
+    border: 1px solid black;
 `
 function AttendantListSelect({onChange, children}){
     return (
