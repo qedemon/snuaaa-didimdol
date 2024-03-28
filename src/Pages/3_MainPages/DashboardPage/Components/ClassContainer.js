@@ -2,7 +2,7 @@ import style from "./ClassContainer.module.css";
 
 export default function ClassContainer({ didimdol }) {
   return (
-    <div className={style.classContainer} style={{backgroundColor: didimdol.backgroundColor}}>
+    <div className={style.classContainer} style={didimdol.backgroundColor?{backgroundColor: didimdol.backgroundColor}:{}}>
       <div className={style.classLogo}>
         <img src={didimdol.imgSrc} alt={`${didimdol.title}조`}/>
       </div>
