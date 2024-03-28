@@ -60,6 +60,10 @@ const MessageBoxHeaderCSS = css`
     }
     &>button{
         cursor: pointer;
+        border: 1px solid black;
+        background-color: white;
+        color: black;
+        aspect-ratio: 1 / 1;
     }
     &>p{
         margin: 0px;

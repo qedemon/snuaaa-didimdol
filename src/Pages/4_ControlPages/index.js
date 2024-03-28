@@ -9,6 +9,7 @@ import Register from './Pages/Register';
 import Admin from './Pages/Admin';
 import LogQRAuthentication from './Pages/LogQRAuthentication';
 import ChangePassword from './Pages/ChangePassword';
+import Staff from './Pages/Staff';
 
 function App({path, ...props}) {
   return (
@@ -23,6 +24,7 @@ function App({path, ...props}) {
             <Route path="/Admin" element={<Admin/>}/>
             <Route path="/LogQRAuthentication/:authenticationId/" element={<LogQRAuthentication/>}/>
             <Route path="/changePassword/:passwordResetId" element={<ChangePassword/>}/>
+            <Route path="/Staff/*" element={<Staff/>}/>
           </Routes>
         </Main>
       </div>

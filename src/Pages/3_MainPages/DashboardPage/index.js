@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "@contexts/AuthContext";
 
@@ -57,7 +57,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (user?.isAdmin || user?.isStaff) {
-      navigate("/control");
+      navigate("/control/Staff");
     }
     else if(user?.valid && !didimdol){
       navigate("/enroll");
@@ -102,9 +102,11 @@ export default function DashboardPage() {
                   >
                     디딤돌 안내
                   </button>
-                  <button className={style.infoButton} disabled={true}>
-                    준비중
-                  </button>
+                  <Link to="https://our.snuaaa.net">
+                    <button className={style.infoButton}>
+                      커뮤니티
+                    </button>
+                  </Link>
                 </div>
 
                 <div className={style.dividor} />

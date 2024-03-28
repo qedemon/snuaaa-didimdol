@@ -5,7 +5,6 @@ import { ReactComponent as Rocket } from "./Assets/Rocket.svg";
 import {useContext as useModalController} from "../../Context/Modal";
 import {useContext as useAuth} from "../../Context/Auth";
 import UserInfoPage from "./UserInfoPage";
-import {QRPage} from "../Modal";
 
 function Home({path, userInfoOpen, ...props}){
     const navigate = useNavigate();
@@ -30,46 +29,13 @@ function Home({path, userInfoOpen, ...props}){
         },
         [modalController, auth, navigate]
     );
-    /*const login = useCallback(
-        ()=>{
-            modalController.setChildren(
-                {
-                    component: LoginPage,
-                    props: {
-                        returnPath: "/"
-                    }
-                }
-            );
-            modalController.open();
-        },
-        [modalController]
-    )*/
+    
     const logout = useCallback(
         ()=>{
             auth.logout();
             navigate("/");
         },
         [auth, navigate]
-    )
-
-    const openQR = useCallback(
-        ()=>{
-            if(auth?.authorized){
-                modalController.setChildren(
-                    {
-                        component: QRPage,
-                        props: {
-                            userInfo: auth.userInfo
-                        }
-                    }
-                );
-                modalController.open();
-            }
-            else{
-                navigate("/login")
-            }
-        },
-        [auth, modalController, navigate]
     )
 
     useEffect(
@@ -100,18 +66,6 @@ function Home({path, userInfoOpen, ...props}){
                         (
                             <>
                                 <LaunchButton onClick={openUserInfo}>가입번호 조회</LaunchButton>
-                                {
-                                    auth?.userInfo?.isAdmin?
-                                    (
-                                        <>
-                                            <Link to="Admin">
-                                                <LaunchButton>가입 현황</LaunchButton>
-                                            </Link>
-                                            <LaunchButton onClick={openQR}>QR코드 생성</LaunchButton>
-                                        </>
-                                    ):
-                                    null
-                                }
                                 <LaunchButton onClick={logout}>로그아웃</LaunchButton>
                                 <Link to="/enroll">
                                     <LaunchButton className="blue">디딤돌 신청하기</LaunchButton>

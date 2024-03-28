@@ -8,6 +8,8 @@ const LaunchButtonCSS = css`
   border: 0px;
   gap: 12px;
 
+  width: max-content;
+
   background: rgba(243, 145, 134, 1);
 
   font-size: 16px;
@@ -21,6 +23,13 @@ const LaunchButtonCSS = css`
 
   &.blue {
     background: rgba(118, 128, 226, 1);
+  }
+  &.white {
+    background: white;
+    color: black;
+  }
+  &.border {
+    border: 2px solid black;
   }
 `;
 function LaunchButton({ children, ...props }) {

@@ -67,10 +67,18 @@ function QRPage({...props}){
                 (typeIndex)=>{
                     const newIndex = typeIndex+add;
                     if(newIndex<0){
-                        return 0;
+                        return (
+                            (newIndex)=>{
+                                let index=newIndex;
+                                while(index<0){
+                                    index+=types.length;
+                                }
+                                return index;
+                            }
+                        )(newIndex)
                     }
                     if(newIndex>=types.length){
-                        return types.length-1;
+                        return newIndex%types.length;
                     }
                     return newIndex
                 }
@@ -107,7 +115,11 @@ function QRPage({...props}){
             (
                 async ()=>{
                     const title = titleInput?.current?.value;
-                    const {dataURL: qrImageURL, timeToReload} = await (title?getQRURL(types[typeIndex], `title=${title}`):getQRURL(types[typeIndex]));
+                    const type = types[typeIndex];
+                    if(type === "etc" && !title){
+                        return;
+                    }
+                    const {dataURL: qrImageURL, timeToReload} = await (title?getQRURL(type, `title=${title}`):getQRURL(type));
                     setQRImageURL(qrImageURL);
                     resetTimeToReload(timeToReload);
                 }
@@ -173,7 +185,7 @@ function QRPage({...props}){
                 <p className="label">{formattedTimeString}</p>
             </MessageBoxBody>
             <MessageBoxFooter>
-                <LaunchButton onClick={generateQR}>
+                <LaunchButton className="white border" onClick={generateQR}>
                     QR 생성하기
                 </LaunchButton>
             </MessageBoxFooter>
