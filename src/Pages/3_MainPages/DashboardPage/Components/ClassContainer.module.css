@@ -3,11 +3,9 @@
   justify-content: space-evenly;
   align-items: center;
 
-  background-color: var(--blue-primary);
+  background-color: var(--night-blue);
 
   border-radius: 8px;
-
-  padding: 16px 0;
 
   width: 80%;
 
@@ -18,10 +16,27 @@
   text-align: center;
 }
 
+.classDescriptionWrapper{
+  margin: 16px 0px;
+}
+
 .classDescription {
   font-size: 14px;
 }
 
 .classDescription.bold {
   font-weight: 600;
+}
+
+.classLogo {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.classLogo > img{
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
