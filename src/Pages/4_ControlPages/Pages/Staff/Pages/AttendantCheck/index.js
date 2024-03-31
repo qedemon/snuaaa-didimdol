@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckCountContainer, AttendantCheckHeader, AttendantCheckLockEditable, AttendantCheckMemberList, AttendantCheckMemberItem, AttendantCheckLogger } from "./Components";
 import { Link } from "react-router-dom";
 import {useContext as useAuth} from "../../../../Context/Auth";
@@ -12,6 +12,7 @@ import request from "@/Pages/4_ControlPages/Utility/Connection";
 function AttendantCheck(){
 
     const auth = useAuth();
+
     const [attendantList, setAttendantList] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     
@@ -26,13 +27,6 @@ function AttendantCheck(){
         },
         [setAttendantList, setSelectedIndex]
     );
-    useEffect(
-        ()=>{
-            loadAttendantList(auth);
-        },
-        [auth, loadAttendantList]
-    )
-
 
     const modalController = useModalController().current;
     const openAttendantSelect = useCallback(
@@ -73,6 +67,51 @@ function AttendantCheck(){
             setLocked(true)
         },
         [selectedIndex, setLocked]
+    )
+
+    const webSocket = useRef();
+    const onWebSocketMessage = useCallback(
+        (event)=>{
+            const data = JSON.parse(event.data);
+            if(Array.isArray(data?.updated) && data.updated.includes("attendant")){
+                if(locked){
+                    loadAttendantList(auth);
+                }
+            }
+        },
+        [loadAttendantList, auth, locked]
+    )
+    useEffect(
+        ()=>{
+            (
+                async ()=>{
+                    if(!webSocket.current){
+                        await (
+                            async()=>{
+                                const webSocketURL = await (
+                                    async ()=>{
+                                        const {data} = await request.get("/webSocket");
+                                        return data?.url;
+                                    }
+                                )();
+                                webSocket.current = new WebSocket(webSocketURL);
+                                webSocket.current.onmessage = onWebSocketMessage;
+                            }
+                        )();
+                    }
+                    webSocket.current.onmessage = onWebSocketMessage;
+                }
+            )();
+        },
+        [webSocket, onWebSocketMessage]
+    );
+    
+    useEffect(
+        ()=>{
+            if(!attendantList?.leng || locked)
+                loadAttendantList(auth);
+        },
+        [auth, loadAttendantList, locked]
     )
 
     const selectedAttendant = attendantList[selectedIndex]??{};
