@@ -68,6 +68,12 @@ function AttendantCheck(){
         },
         [setLocked]
     );
+    useEffect(
+        ()=>{
+            setLocked(true)
+        },
+        [selectedIndex, setLocked]
+    )
 
     const selectedAttendant = attendantList[selectedIndex]??{};
     const students = (selectedAttendant?.students??[]).map((student)=>({...student, checked: student?.authenticatedAt??false}));

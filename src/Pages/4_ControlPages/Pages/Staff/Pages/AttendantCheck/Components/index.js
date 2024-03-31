@@ -314,7 +314,7 @@ function AttendantCheckMemberItem({user, lock, onCheckClick}){
                     <h1>{user.name}</h1>
                     <h2>{`${user.colNo} - ${user.major}`}</h2>
                 </div>
-                <div className={`check ${lock===false?"unlock":""}`} onClick={onCheckClick}>
+                <div className={`check ${lock===false?"unlock":""}`} onClick={user.pending?null:onCheckClick}>
                     {
                         user.pending?
                             (
