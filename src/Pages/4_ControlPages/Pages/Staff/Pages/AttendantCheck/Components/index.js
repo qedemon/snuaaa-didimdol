@@ -83,7 +83,7 @@ const AttendantCheckCountContainerCSS = css`
         &>h1{
             padding: 4px 8px;
             font-size: 20px;
-            font-weight: 400;
+            font-weight: 800;
             line-height: 20px;
         }
         &>h2{
@@ -102,7 +102,7 @@ const AttendantCheckCountContainerCSS = css`
         padding: 8px 0px;
         &>h1{
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 800;
             line-height: 24px;
             &>span.white{
                 color: white;
