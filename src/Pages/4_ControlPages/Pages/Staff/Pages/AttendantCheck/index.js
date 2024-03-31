@@ -108,7 +108,7 @@ function AttendantCheck(){
     
     useEffect(
         ()=>{
-            if(!attendantList?.leng || locked)
+            if(!attendantList?.length || locked)
                 loadAttendantList(auth);
         },
         [auth, loadAttendantList, locked]
