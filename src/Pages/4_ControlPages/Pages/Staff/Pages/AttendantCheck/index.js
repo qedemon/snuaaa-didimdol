@@ -1,22 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckCountContainer, AttendantCheckHeader, AttendantCheckLockEditable, AttendantCheckMemberList, AttendantCheckMemberItem } from "./Components";
+import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckCountContainer, AttendantCheckHeader, AttendantCheckLockEditable, AttendantCheckMemberList, AttendantCheckMemberItem, AttendantCheckLogger } from "./Components";
 import { Link } from "react-router-dom";
 import {useContext as useAuth} from "../../../../Context/Auth";
 import {useContext as useModalController} from "../../../../Context/Modal";
 import loadAttendant from "./loadAttendant";
 import { localDateString } from "@/Utils/Utils";
 import SelectPage from "../../../Modal/SelectPage";
+import updateAttendants from "./updateAttendants";
+import request from "@/Pages/4_ControlPages/Utility/Connection";
 
 function AttendantCheck(){
 
     const auth = useAuth();
     const [attendantList, setAttendantList] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
+    
+    const [updateLog, setUpdateLog] = useState({pending: false, message: ""});
     const loadAttendantList = useCallback(
         async (auth)=>{
+            setUpdateLog({pending: true, message: "출석 정보 불러오는 중..."});
             const attendantList = (await loadAttendant(auth))??[];
             setAttendantList(attendantList);
             setSelectedIndex(0);
+            setUpdateLog({pending: false, message: "출석 정보 불러오기 완료."});
         },
         [setAttendantList, setSelectedIndex]
     );
@@ -71,39 +77,42 @@ function AttendantCheck(){
                 return;
             (
                 async()=>{
+                    setAttendantList(updateAttendants(selectedIndex, index, (student)=>({...student, pending: true})))
                     const updated = await (
                         async (student, attendant)=>{
+                            await (
+                                async (user, attendant, check)=>{
+                                    if(check){
+                                        await request.post("qrAuthentication/addQRAuthenticationLogForUser/", 
+                                            {
+                                                targetUserId: user.id,
+                                                type: "디딤돌",
+                                                createdAt: new Date(attendant.date)
+                                            }    
+                                        )
+                                    }
+                                    else{
+                                        await request.post("qrAuthentication/deleteQRLogsFromUser/",
+                                            {
+                                                targetUserId: user.id,
+                                                filter: {
+                                                    "authentication.context.title": attendant.title
+                                                }
+                                            }
+                                        )
+                                    }
+                                }
+                            )(student, attendant, check)
                             const {authenticatedAt, ...remain} = student;
                             return {
                                 ...remain,
-                                authenticatedAt: check?new Date(attendant.date):null
+                                authenticatedAt: check?new Date(attendant.date):null,
+                                pending: false
                             }
                         }
                     )(attendantList[selectedIndex].students[index], attendantList[selectedIndex])
 
-                    setAttendantList(
-                        (
-                            (updated)=>(attendantList)=>{
-                                return [
-                                    ...attendantList.slice(0, selectedIndex),
-                                    (
-                                        (selectedAttendant)=>{
-                                            const {students, ...remain} = selectedAttendant;
-                                            return {
-                                                ...remain,
-                                                students: [
-                                                    ...students.slice(0, index),
-                                                    updated,
-                                                    ...students.slice(index+1)
-                                                ]
-                                            }
-                                        }
-                                    )(attendantList[selectedIndex]),
-                                    ...attendantList.slice(selectedIndex+1)
-                                ];
-                            }
-                        )(updated)
-                    );
+                    setAttendantList(updateAttendants(selectedIndex, index, updated));
                 }
             )();
         },
@@ -129,6 +138,7 @@ function AttendantCheck(){
             </AttendantCheckCountContainer>
             <AttendantCheckDetailContainer>
                 <div className="head">
+                    <AttendantCheckLogger className="logger" pending={updateLog.pending} message={updateLog.message}/>
                     <AttendantCheckLockEditable lock={locked} onClick={onLockClicked} messages={["Lock", "편집"]}/>
                 </div>
                 <div className="body">

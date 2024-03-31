@@ -3,6 +3,7 @@ import React from "react";
 import {css} from "@emotion/react";
 import { ReactComponent as Lock } from "../Assets/Lock.svg";
 import { ReactComponent as UnLock } from "../Assets/UnLock.svg";
+import Spinner from "@/Components/Spinner";
 
 const AttendantCheckContainerCSS = css`
     width: 100%;
@@ -132,7 +133,10 @@ const AttendantCheckDetailContainerCSS = css`
     grid-template-rows: auto 1fr;
     &>div.head{
         display: flex;
-        justify-content: right;
+        padding: 8px;
+        &>*.logger{
+            flex-grow: 1;
+        }
     }
     &>div.body{
         height: 100%;
@@ -148,10 +152,48 @@ function AttendantCheckDetailContainer({children}){
 }
 export {AttendantCheckDetailContainer}
 
+const AttendantCheckLoggerCSS = css`
+    display: flex;
+    gap: 8px;
+    &>div.spinner{
+        display: flex;
+        align-items: center;
+    }
+    &>div.message{
+        flex-grow: 1;
+        text-align: left;
+        
+        display: flex;
+        align-items: center;
+        
+        &>p{
+            margin: 0px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+`;
+function AttendantCheckLogger({pending, message, ...props}){
+    return (
+        <div css={AttendantCheckLoggerCSS} {...props}>
+            <div className="spinner">
+                {
+                    pending?
+                        (<Spinner color="black"/>)
+                        :'\u00A0'
+                }
+            </div>
+            <div className="message">
+                <p>{message.length>0?message:'\u00A0'}</p>
+            </div>
+        </div>
+    )
+}
+export {AttendantCheckLogger}
+
 const AttendantCheckLockEditableContainerCSS = css`
     width: max-content;
     text-align: right;
-    padding: 8px;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -273,8 +315,21 @@ function AttendantCheckMemberItem({user, lock, onCheckClick}){
                     <h2>{`${user.colNo} - ${user.major}`}</h2>
                 </div>
                 <div className={`check ${lock===false?"unlock":""}`} onClick={onCheckClick}>
-                    <label>출석</label>
-                    <div className={`checkbox ${user.checked?"checked":""}`}/>
+                    {
+                        user.pending?
+                            (
+                                <>
+                                    <label>기록 중</label>
+                                    <Spinner color="var(--blue-primary)"/>
+                                </>
+                            ):
+                            (
+                                <>
+                                    <label>출석</label>
+                                    <div className={`checkbox ${user.checked?"checked":""}`}/>
+                                </>
+                            )
+                    }
                 </div>
             </div>
         </li>
