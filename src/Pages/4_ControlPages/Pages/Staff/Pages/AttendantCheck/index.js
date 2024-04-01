@@ -24,6 +24,7 @@ function AttendantCheck(){
             setAttendantList(attendantList);
             setSelectedIndex(0);
             setUpdateLog({pending: false, message: "출석 정보 불러오기 완료."});
+            return attendantList;
         },
         [setAttendantList, setSelectedIndex]
     );
@@ -70,16 +71,26 @@ function AttendantCheck(){
     )
 
     const webSocket = useRef();
+    const socketTimer = useRef();
+    const [updateRequired, setUpdateRequired] = useState(true);
     const onWebSocketMessage = useCallback(
         (event)=>{
-            const data = JSON.parse(event.data);
-            if(Array.isArray(data?.updated) && data.updated.includes("attendant")){
-                if(locked){
-                    loadAttendantList(auth);
+            const data = (
+                (data)=>{
+                    try{
+                        return JSON.parse(event.data);
+                    }
+                    catch{
+                        console.log(data);
+                        return {};
+                    }
                 }
+            )(event.data);
+            if(Array.isArray(data?.updated) && data.updated.includes("attendant")){
+                setUpdateRequired(true);
             }
         },
-        [loadAttendantList, auth, locked]
+        [setUpdateRequired]
     )
     useEffect(
         ()=>{
@@ -94,24 +105,57 @@ function AttendantCheck(){
                                         return data?.url;
                                     }
                                 )();
+                                if(socketTimer.current){
+                                    clearInterval(socketTimer)
+                                }
                                 webSocket.current = new WebSocket(webSocketURL);
-                                webSocket.current.onmessage = onWebSocketMessage;
+                                webSocket.current.onopen = ()=>{
+                                    console.log("open socket");
+                                    socketTimer.current = setInterval(
+                                        ()=>{
+                                            if(webSocket.current){
+                                                webSocket.current.send("this is AttendantCheck.")
+                                            };
+                                        },
+                                        10000
+                                    )
+                                }
                             }
                         )();
                     }
                     webSocket.current.onmessage = onWebSocketMessage;
                 }
             )();
+
+            return ()=>{
+                if(socketTimer.current){
+                    console.log("clear");
+                    clearInterval(socketTimer.current);
+                }
+                if(webSocket.current){
+                    webSocket.current.close();
+                    console.log("close socket");
+                }
+            }
         },
-        [webSocket, onWebSocketMessage]
+        [webSocket, onWebSocketMessage, socketTimer]
     );
-    
+
     useEffect(
         ()=>{
-            if(locked)
-                loadAttendantList(auth);
+            if(!updateLog.pending && locked && updateRequired && auth?.userInfo){
+                (
+                    async() =>{
+                        if((await loadAttendantList(auth)).length>0)
+                            setUpdateRequired(false);
+                    }
+                )();
+            }
+            if(!locked){
+                setUpdateRequired(true);
+            }
         },
-        [auth, loadAttendantList, locked]
+        [auth, loadAttendantList, setUpdateRequired, updateRequired, updateLog, locked]
     )
 
     const selectedAttendant = attendantList[selectedIndex]??{};
