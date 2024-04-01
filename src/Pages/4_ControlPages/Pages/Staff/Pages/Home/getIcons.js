@@ -44,6 +44,12 @@ function getIcons({auth, navigate, modalController}){
                     callback: ()=>{
                         navigate("Attendant");
                     }
+                },
+                {
+                    label: "현황 확인",
+                    callback: ()=>{
+                        navigate("StatusCheck");
+                    }
                 }
             ]:
             [],

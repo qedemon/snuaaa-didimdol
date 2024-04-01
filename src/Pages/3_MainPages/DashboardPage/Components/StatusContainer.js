@@ -1,8 +1,8 @@
 import CharacterRed from "@images/CharacterRed.svg";
 import CharacterOrange from "@images/CharacterOrange.svg";
 import CharacterBlue from "@images/CharacterBlue.svg";
-import Shield from "@images/Shield.svg";
 import style from "./StatusContainer.module.css";
+import StatusContentContainer from "./StatusContentContainer";
 
 const statusColor = {
   red: "#F17233",
@@ -25,33 +25,7 @@ export default function StatusContainer({ status }) {
         className={style.statusBox}
         style={{ backgroundColor: statusColor[status.status] }}
       >
-        <div className={style.statusWrapper}>
-          <div className={style.statusItemWrapper}>
-            {status?.numSaveCount > 0 && (
-              <div className={style.shieldWrapper}>
-                <img src={Shield} alt="shield" />
-                <p>
-                  구제 (+
-                  {status?.numSaveCount})
-                </p>
-              </div>
-            )}
-            <p className={style.statusValue} style={{ color: "var(--red)" }}>
-              {status?.numClasses}
-            </p>
-            <p className={style.statusLabel}>디딤돌 불참</p>
-          </div>
-          <div className={style.statusItemWrapper}>
-            <p className={style.statusValue}>{status?.numAssoc}</p>
-            <p className={style.statusLabel}>별모임</p>
-          </div>
-          <div className={style.statusItemWrapper}>
-            <p className={style.statusValue} style={{ color: "var(--red)" }}>
-              {status?.isPracAccepted ? "이수" : "미이수"}
-            </p>
-            <p className={style.statusLabel}>장비실습</p>
-          </div>
-        </div>
+        <StatusContentContainer status={status}/>
         <div className={style.horizontalLine}></div>
         <div className={style.statusText}>{status?.statusText}</div>
       </div>

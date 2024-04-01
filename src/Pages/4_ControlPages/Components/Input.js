@@ -54,6 +54,7 @@ const Input = forwardRef(
       className,
       children,
       sideButtonLabel,
+      sideButtonElement,
       onSideButtonClick,
       ...props
     },
@@ -71,7 +72,14 @@ const Input = forwardRef(
           {children}
         </input>
         <div className="sideButton" onClick={onSideButtonClick}>
-          <label>{sideButtonLabel}</label>
+          {
+            sideButtonLabel?
+              (<label>{sideButtonLabel}</label>):
+              null
+          }
+          {
+            sideButtonElement??null
+          }
         </div>
       </div>
     );
