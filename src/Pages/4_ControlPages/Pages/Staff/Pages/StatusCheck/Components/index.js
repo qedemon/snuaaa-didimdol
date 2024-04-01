@@ -131,7 +131,7 @@ export {StatusCheckStudentsViewBody};
 
 const StatusCheckStudentsViewItemCSS = css`
     width: 100%;
-    aspect-ratio: 105 / 67;
+    padding: 16px 0px;
     border-radius: 8px;
     display: grid;
     justify-items: center;
