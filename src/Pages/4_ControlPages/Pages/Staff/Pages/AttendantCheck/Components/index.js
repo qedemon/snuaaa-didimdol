@@ -26,6 +26,7 @@ export {AttendantCheckContainer};
 
 const AttendantCheckHeaderCSS = css`
     text-align: left;
+    width: 100%;
     position: relative;
     &>*{
         margin: 0px;
