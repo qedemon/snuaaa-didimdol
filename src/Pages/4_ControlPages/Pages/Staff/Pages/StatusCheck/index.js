@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useContext as useAuth } from "../../../../Context/Auth";
 import { useContext as useModalController } from "../../../../Context/Modal";
 import { FilterButton, FinderInput, StatusCheckContainer, StatusCheckHeader, StatusCheckStudentsViewBody, StatusCheckStudentsViewContainer, StatusCheckStudentsViewHeader, StatusCheckStudentsViewItem, UserStatusView } from "./Components";
 import { Link } from "react-router-dom";
 import loadDidimdol from "./loadDidimdol";
+import SelectFilter from "./Components/SelectFilter";
 
 const mockData = {
     name: "김이름",
@@ -18,9 +19,58 @@ const mockData = {
 };
 
 function StatusCheck(){
+    const searchInputRef = useRef();
     const auth = useAuth();
+    const modalController = useModalController().current;
     const [students, setStudents] = useState();
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [filter, setFilter] = useState(
+        {
+            name: "",
+            status: ["적", "황", "녹"]
+        }
+    );
+    const filterFunction = useCallback(
+        (student)=>{
+            return student.name.includes(filter.name) && filter.status.includes(student.status);
+        },
+        [filter]
+    )
+    const onSearchNameChange = useCallback(
+        (event)=>{
+            const name = event.target.value;
+            setFilter((filter)=>({...filter, name}));
+        },
+        [setFilter]
+    )
+    const onFilterButtonClick = useCallback(
+        ()=>{
+            modalController.setChildren(
+                {
+                    component: SelectFilter,
+                    props: {
+                        filter: {
+                            status: [{key: "적", label: "위험"}, {key: "황", label: "경고"}, {key: "녹", label: "안전"}].map(
+                                ({key, label})=>(
+                                    {
+                                        key,
+                                        label,
+                                        selected: filter.status.includes(key),
+                                    }
+                                )
+                            )
+                        },
+                        onSelect: (value)=>{
+                            setFilter((filter)=>({...filter, status: value.status.reduce((result, {key, selected})=>selected?[...result, key]:result, [])}));
+                            modalController.close();
+                        }
+                    }
+                }
+            );
+            modalController.open();
+        },
+        [modalController, filter]
+    )
     /*const updateStudents = useCallback(
         (index, update)=>{
             setStudents(
@@ -105,16 +155,16 @@ function StatusCheck(){
             <UserStatusView user={selectedStudent}/>
             <StatusCheckStudentsViewContainer>
                 <StatusCheckStudentsViewHeader>
-                    <FinderInput placeholder="이름으로 찾기"/>
-                    <FilterButton/>
+                    <FinderInput ref={searchInputRef} placeholder="이름으로 찾기" onChange={onSearchNameChange}/>
+                    <FilterButton onClick={onFilterButtonClick}/>
                 </StatusCheckStudentsViewHeader>
                 <StatusCheckStudentsViewBody>
                     {
                         Array.isArray(students)?
-                            students.map(
+                            students.filter(filterFunction).map(
                                 (student, index)=>{
                                     return (
-                                        <StatusCheckStudentsViewItem key={index} user={student} selected={selectedIndex===index} onClick={()=>{setSelectedIndex(index)}}/>
+                                        <StatusCheckStudentsViewItem key={index} user={student} selected={selectedIndex===student.index} onClick={()=>{setSelectedIndex(student.index)}}/>
                                     )
                                 }
                             ):

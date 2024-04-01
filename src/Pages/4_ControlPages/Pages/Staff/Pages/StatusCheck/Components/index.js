@@ -114,16 +114,21 @@ const StatusCheckStudentsViewBodyCSS = css`
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: auto;
-    row-gap: 16px;
-    column-gap: 8px;
+    &>div{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: auto;
+        row-gap: 16px;
+        column-gap: 8px;
+    }
 `;
 function StatusCheckStudentsViewBody({children}){
     return (
         <div css={StatusCheckStudentsViewBodyCSS}>
-            {children}
+            <div>
+                {children}
+            </div>
         </div>
     )
 }
