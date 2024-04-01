@@ -160,6 +160,7 @@ function AttendantCheck(){
 
     const selectedAttendant = attendantList[selectedIndex]??{};
     const students = (selectedAttendant?.students??[]).map((student)=>({...student, checked: student?.authenticatedAt??false}));
+    const checkCount = students.reduce((result, {authenticatedAt})=>authenticatedAt?result+1:result, 0);
     const updateCheck = useCallback(
         (index, check)=>()=>{
             if(locked)
@@ -221,7 +222,7 @@ function AttendantCheck(){
                     <h2 className="classIndex">{`디딤돌 수업 # ${selectedAttendant.no}`}</h2>
                 </div>
                 <div className="attendantCount">
-                    <h1><span className="white">{selectedAttendant.count}</span> {`/ ${students.length}`}</h1>
+                    <h1><span className="white">{checkCount}</span> {`/ ${students.length}`}</h1>
                     <h2>오늘 출석 수</h2>
                 </div>
             </AttendantCheckCountContainer>
