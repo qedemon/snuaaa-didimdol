@@ -1,10 +1,9 @@
 import { QRPage } from "../../../Modal";
 import AdminImg from "./Assets/admin.png";
-/*import QRImg from "./Assets/QR.png"
-import LoginImg from "./Assets/login.png";
-import LogOutImg from "./Assets/logout.png";
+import QRImg from "./Assets/QR.png"
 import RegisterImg from "./Assets/register.png";
-import AttendantImg from "./Assets/attendant.png";*/
+import AttendantImg from "./Assets/attendant.png";
+import InspectImg from "./Assets/inspect.png"
 
 import {ReactComponent as D} from "./Assets/D.svg";
 import {ReactComponent as O} from "./Assets/O.svg"
@@ -30,7 +29,7 @@ function getIcons({auth, navigate, modalController}){
             [
                 {
                     label: "QR 생성",
-                    svg: D,
+                    img: QRImg,
                     callback: ()=>{
                         modalController.setChildren(
                             {
@@ -44,14 +43,14 @@ function getIcons({auth, navigate, modalController}){
                     }
                 },
                 {
-                    svg: I,
+                    img: AttendantImg,
                     label: "출석 체크",
                     callback: ()=>{
                         navigate("Attendant");
                     }
                 },
                 {
-                    svg: O,
+                    img: InspectImg,
                     label: "현황 확인",
                     callback: ()=>{
                         navigate("StatusCheck");
@@ -59,19 +58,11 @@ function getIcons({auth, navigate, modalController}){
                 }
             ]:
             [],
-            /*{
-                label: "로그아웃",
-                img: LogOutImg,
-                callback: ()=>{
-                    auth.logout();
-                    navigate("/login");
-                }
-            }*/
         ]
         :
         [],
         {
-            svg: SD,
+            img: RegisterImg,
             label: "가입하기",
             callback: ()=>{
                 navigate(`../../Register`)
