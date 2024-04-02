@@ -3,6 +3,7 @@ import React from "react";
 import {css} from "@emotion/react";
 
 const MainContainerCSS = css`
+    background: #F5F5F5;
     position: relative;
     margin: 0px;
     width: 100vw;

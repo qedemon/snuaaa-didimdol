@@ -58,7 +58,7 @@ const StatusCheckHeaderCSS = css`
         & *{
             text-decoration: none;
             font-size: 12px;
-            font-weight: 400;
+            font-weight: 600;
             line-height: 12px;
             text-align: left;
     

@@ -1,10 +1,15 @@
 import { QRPage } from "../../../Modal";
 import AdminImg from "./Assets/admin.png";
-import QRImg from "./Assets/QR.png"
+/*import QRImg from "./Assets/QR.png"
 import LoginImg from "./Assets/login.png";
 import LogOutImg from "./Assets/logout.png";
 import RegisterImg from "./Assets/register.png";
-import AttendantImg from "./Assets/attendant.png";
+import AttendantImg from "./Assets/attendant.png";*/
+
+import {ReactComponent as D} from "./Assets/D.svg";
+import {ReactComponent as O} from "./Assets/O.svg"
+import {ReactComponent as I} from "./Assets/I.svg";
+import {ReactComponent as SD} from "./Assets/SD.svg";
 
 function getIcons({auth, navigate, modalController}){
     return [
@@ -25,7 +30,7 @@ function getIcons({auth, navigate, modalController}){
             [
                 {
                     label: "QR 생성",
-                    img: QRImg,
+                    svg: D,
                     callback: ()=>{
                         modalController.setChildren(
                             {
@@ -39,13 +44,14 @@ function getIcons({auth, navigate, modalController}){
                     }
                 },
                 {
-                    label: "출석 확인",
-                    img: AttendantImg,
+                    svg: I,
+                    label: "출석 체크",
                     callback: ()=>{
                         navigate("Attendant");
                     }
                 },
                 {
+                    svg: O,
                     label: "현황 확인",
                     callback: ()=>{
                         navigate("StatusCheck");
@@ -53,28 +59,20 @@ function getIcons({auth, navigate, modalController}){
                 }
             ]:
             [],
-            {
+            /*{
                 label: "로그아웃",
                 img: LogOutImg,
                 callback: ()=>{
                     auth.logout();
                     navigate("/login");
                 }
-            }
+            }*/
         ]
         :
-        [
-            {
-                label: "로그인",
-                img: LoginImg,
-                callback: ()=>{
-                    navigate("/login");
-                }
-            }
-        ],
+        [],
         {
+            svg: SD,
             label: "가입하기",
-            img: RegisterImg,
             callback: ()=>{
                 navigate(`../../Register`)
             }

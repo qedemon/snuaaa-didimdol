@@ -53,7 +53,7 @@ const AttendantCheckHeaderCSS = css`
         right: 0px;
         &>a{
             font-size: 12px;
-            font-weight: 400;
+            font-weight: 600;
             line-height: 12px;
             text-align: left;
             color: var(--blue-primary);
