@@ -3,71 +3,197 @@ import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckC
 import { Link } from "react-router-dom";
 import {useContext as useAuth} from "../../../../Context/Auth";
 import {useContext as useModalController} from "../../../../Context/Modal";
-import loadAttendant from "./loadAttendant";
 import { localDateString } from "@/Utils/Utils";
 import SelectPage from "../../../Modal/SelectPage";
-import updateAttendants from "./updateAttendants";
+import updateAttendants from "./Utils/updateAttendants";
 import request from "@/Pages/4_ControlPages/Utility/Connection";
+import loadDidimdol from "../StatusCheck/loadDidimdol";
+import getAttendant from "./Utils/getAttendant";
+import getAttendantTitle from "./Utils/getAttendantTitle";
+import DateSelectPage from "../../../Modal/DateSelectPage";
 
 function AttendantCheck(){
-
     const auth = useAuth();
 
-    const [attendantList, setAttendantList] = useState([]);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const didlmdolClass = useRef();
+    const [attendantDate, setAttendantDate] = useState(
+        ((date)=>({[getAttendantTitle(date)]: date}))(new Date())
+    );
+    const [attendantList, setAttendantList] = useState({});
+    const [selectedAttendantTitle, setSelectedAttendantTitle] = useState();
     
     const [updateLog, setUpdateLog] = useState({pending: false, message: ""});
-    const loadAttendantList = useCallback(
+    const loadDidimdolClass = useCallback(
         async (auth)=>{
             setUpdateLog({pending: true, message: "출석 정보 불러오는 중..."});
-            const attendantList = (await loadAttendant(auth))??[];
-            setAttendantList(attendantList);
-            setSelectedIndex(0);
-            setUpdateLog({pending: false, message: "출석 정보 불러오기 완료."});
-            return attendantList;
+            const loadedDidimdolClass = (await loadDidimdol(auth));
+            if(loadedDidimdolClass){
+                didlmdolClass.current=loadedDidimdolClass;
+                setAttendantDate((attendantDate)=>(
+                    {
+                        ...attendantDate,
+                        ...Object.entries(loadedDidimdolClass.attendant)
+                        .reduce(
+                            (result, [key, value])=>(
+                                {
+                                    ...result, [key]: new Date(value)
+                                }
+                            ),
+                            {}
+                        )
+                    }
+                ));
+                setUpdateLog({pending: false, message: "출석 정보 불러오기 완료"})
+                return loadDidimdolClass;
+            }
         },
-        [setAttendantList, setSelectedIndex]
+        [didlmdolClass, setUpdateLog, setAttendantDate]
     );
+    useEffect(
+        ()=>{
+            if(didlmdolClass.current){
+                const attendantDateList = Object.values(attendantDate)
+                .sort(
+                    (A, B)=>{
+                        if(A<B){
+                            return 1;
+                        }
+                        else if(A>B){
+                            return -1;
+                        }
+                        return 0;
+                    }
+                );
+                const attendantListArray = attendantDateList
+                    .map(
+                        (attendantDateValue)=>getAttendant(didlmdolClass.current, attendantDateValue)
+                    )
+                    .map(
+                        (attendant, index, array)=>({...attendant, no: array.length-index})
+                    )
+                const attendantList = attendantListArray
+                    .reduce(
+                        (result, attendant)=>({...result, [attendant.title]: attendant}),
+                        {}
+                    );
+                setAttendantList(attendantList);
+                setSelectedAttendantTitle(
+                    (selectedAttendantTitle)=>{
+                        if(selectedAttendantTitle && attendantList[selectedAttendantTitle]){
+                            return selectedAttendantTitle;
+                        }
+                        if(Array.isArray(attendantListArray) && attendantListArray.length>0){
+                            return attendantListArray[0].title;
+                        }
+                        return selectedAttendantTitle;
+                    }
+                )
+            }
+        },
+        [didlmdolClass, attendantDate, setAttendantList, setSelectedAttendantTitle]
+    )
 
     const modalController = useModalController().current;
+    const [attendantSelectOpenRquired, setAttendantSelectOpenRquired] = useState(false);
+    const requireOpenAttendantSelect = useCallback(
+        ()=>{
+            setAttendantSelectOpenRquired(true);
+        },
+        [setAttendantSelectOpenRquired]
+    );
     const openAttendantSelect = useCallback(
         ()=>{
             modalController.setChildren(
                 {
                     component: SelectPage,
                     props: {
-                        list: attendantList.map(
-                            ({date}, index)=>{
-                                return {
-                                    label: localDateString(date),
-                                    value: index
+                        list: [
+                            {
+                                label: "날짜 추가",
+                                value: null
+                            },
+                            ...(Object.values(attendantDate))
+                            .sort(
+                                (A, B)=>{
+                                    if(A<B)
+                                        return 1;
+                                    else if(A>B)
+                                        return -1;
+                                    else
+                                        return 0;
                                 }
-                            }
-                        ),
+                            )
+                            .map(
+                                (date)=>{
+                                    return {
+                                        label: localDateString(date),
+                                        value: date
+                                    }
+                                }
+                            )
+                        ],
                         onSelect: (value)=>{
-                            modalController.close();
-                            setSelectedIndex(value);
+                            if(value===null){
+                                modalController.setChildren(
+                                    {
+                                        component: DateSelectPage,
+                                        props:{
+                                            onSelect: (value)=>{
+                                                const localDate = (
+                                                    (date)=>{
+                                                        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 18);
+                                                    }
+                                                )(new Date(value));
+                                                setAttendantDate(
+                                                    (attendantDate)=>(
+                                                        {
+                                                            ...attendantDate,
+                                                            [getAttendantTitle(localDate)]: localDate
+                                                        }
+                                                    )
+                                                );
+                                                setAttendantSelectOpenRquired(true);
+                                                modalController.close();
+                                            }
+                                        }
+                                    }
+                                );
+                                modalController.open();
+                            }
+                            else{
+                                modalController.close();
+                                setSelectedAttendantTitle(getAttendantTitle(value));
+                            }
                         }
                     }
                 }
             );
             modalController.open();
         },
-        [attendantList, modalController]
+        [modalController, attendantDate, setAttendantDate, setSelectedAttendantTitle, setAttendantSelectOpenRquired]
+    )
+    useEffect(
+        ()=>{
+            if(attendantSelectOpenRquired){
+                openAttendantSelect();
+                setAttendantSelectOpenRquired(false);
+            }
+        },
+        [attendantSelectOpenRquired, openAttendantSelect, setAttendantSelectOpenRquired]
     )
 
-    const [locked, setLocked] = useState(true);
+    const [locked, setLocked] = useState({current: true, prev: true});
     const onLockClicked = useCallback(
         ()=>{
-            setLocked((locked)=>!locked);
+            setLocked((locked)=>({...locked, current: !locked.current}));
         },
         [setLocked]
     );
     useEffect(
         ()=>{
-            setLocked(true)
+            setLocked((locked)=>({...locked, current: true}))
         },
-        [selectedIndex, setLocked]
+        [selectedAttendantTitle, setLocked]
     )
 
     const webSocket = useRef();
@@ -143,31 +269,35 @@ function AttendantCheck(){
 
     useEffect(
         ()=>{
-            if(!updateLog.pending && locked && updateRequired && auth?.userInfo){
+            if(!updateLog.pending && locked.current && updateRequired && auth?.userInfo){
                 (
                     async() =>{
-                        if((await loadAttendantList(auth)).length>0)
+                        if(await loadDidimdolClass(auth)){
                             setUpdateRequired(false);
+                        }
                     }
                 )();
             }
-            if(!locked){
-                setUpdateRequired(true);
+            if(locked.prev!==locked.current){
+                setLocked((locked)=>({...locked, prev: locked.current}));
+                if(locked.current){
+                    setUpdateRequired(true);
+                }
             }
         },
-        [auth, loadAttendantList, setUpdateRequired, updateRequired, updateLog, locked]
-    )
+        [auth, loadDidimdolClass, setUpdateRequired, updateRequired, updateLog, locked, setLocked]
+    );
 
-    const selectedAttendant = attendantList[selectedIndex]??{};
+    const selectedAttendant = (selectedAttendantTitle?attendantList[selectedAttendantTitle]:null)??{};
     const students = (selectedAttendant?.students??[]).map((student)=>({...student, checked: student?.authenticatedAt??false}));
     const checkCount = students.reduce((result, {authenticatedAt})=>authenticatedAt?result+1:result, 0);
     const updateCheck = useCallback(
         (index, check)=>()=>{
-            if(locked)
+            if(locked.current)
                 return;
             (
                 async()=>{
-                    setAttendantList(updateAttendants(selectedIndex, index, (student)=>({...student, pending: true})))
+                    setAttendantList(updateAttendants(selectedAttendantTitle, index, (student)=>({...student, pending: true})))
                     const updated = await (
                         async (student, attendant)=>{
                             await (
@@ -200,13 +330,13 @@ function AttendantCheck(){
                                 pending: false
                             }
                         }
-                    )(attendantList[selectedIndex].students[index], attendantList[selectedIndex])
+                    )(attendantList[selectedAttendantTitle].students[index], attendantList[selectedAttendantTitle])
 
-                    setAttendantList(updateAttendants(selectedIndex, index, updated));
+                    setAttendantList(updateAttendants(selectedAttendantTitle, index, updated));
                 }
             )();
         },
-        [attendantList, selectedIndex, locked]
+        [attendantList, selectedAttendantTitle, locked]
     )
 
     return (
@@ -216,7 +346,7 @@ function AttendantCheck(){
                 <h2>Welcome to Amateur Astronomy Association</h2>
                 <div className="homeLink"><Link to={"/"}>Home</Link></div>
             </AttendantCheckHeader>
-            <AttendantCheckCountContainer onClick={openAttendantSelect}>
+            <AttendantCheckCountContainer onClick={requireOpenAttendantSelect}>
                 <div className="classInfo">
                     <h1 className="date">{selectedAttendant?.date?localDateString(selectedAttendant?.date):""}</h1>
                     <h2 className="classIndex">{`디딤돌 수업 # ${selectedAttendant.no}`}</h2>
@@ -229,13 +359,13 @@ function AttendantCheck(){
             <AttendantCheckDetailContainer>
                 <div className="head">
                     <AttendantCheckLogger className="logger" pending={updateLog.pending} message={updateLog.message}/>
-                    <AttendantCheckLockEditable lock={locked} onClick={onLockClicked} messages={["Lock", "편집"]}/>
+                    <AttendantCheckLockEditable lock={locked.current} onClick={onLockClicked} messages={["Lock", "편집"]}/>
                 </div>
                 <div className="body">
                     <AttendantCheckMemberList>
                         {
                             students.map(
-                                (user, index)=>(<AttendantCheckMemberItem key={index} user={user} lock={locked} onCheckClick={updateCheck(index, !user.checked)}/>)
+                                (user, index)=>(<AttendantCheckMemberItem key={index} user={user} lock={locked.current} onCheckClick={updateCheck(index, !user.checked)}/>)
                             )
                         }
                     </AttendantCheckMemberList>

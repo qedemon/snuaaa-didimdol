@@ -313,7 +313,7 @@ function AttendantCheckMemberItem({user, lock, onCheckClick}){
             <div>
                 <div className="memberInfo">
                     <h1>{user.name}</h1>
-                    <h2>{`${user.major} / ${user.attendant.info.support}원`}</h2>
+                    <h2>{`${user.major} / ${user.id}`/* ${user.attendant.info.support}원`*/}</h2>
                 </div>
                 <div className={`check ${lock===false?"unlock":""}`} onClick={user.pending?null:onCheckClick}>
                     {
