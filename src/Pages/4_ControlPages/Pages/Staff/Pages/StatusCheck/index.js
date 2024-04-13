@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useContext as useAuth } from "../../../../Context/Auth";
 import { useContext as useModalController } from "../../../../Context/Modal";
-import { FilterButton, FinderInput, StatusCheckContainer, StatusCheckHeader, StatusCheckStudentsViewBody, StatusCheckStudentsViewContainer, StatusCheckStudentsViewHeader, StatusCheckStudentsViewItem, UserStatusView } from "./Components";
+import { FilterButton, FinderInput, StatusCheckContainer, StatusCheckDidimdolClassSelector, StatusCheckHeader, StatusCheckStudentsViewBody, StatusCheckStudentsViewContainer, StatusCheckStudentsViewHeader, StatusCheckStudentsViewItem, UserStatusView } from "./Components";
 import { Link } from "react-router-dom";
 import loadDidimdol from "./loadDidimdol";
 import SelectFilter from "./Components/SelectFilter";
@@ -21,6 +21,25 @@ const mockData = {
 function StatusCheck(){
     const searchInputRef = useRef();
     const auth = useAuth();
+    const [targetDidimdolClassId, setTargetDidimdolClassId] = useState();
+    const [belongs, setBelongs] = useState([]);
+    const onDidimdolClassSelectChange = useCallback(
+        ({target: {value}})=>{
+            setTargetDidimdolClassId(value);
+        },
+        [setTargetDidimdolClassId]
+    )
+    useEffect(
+        ()=>{
+            const belongs = (auth.userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
+            setBelongs(belongs);
+            if(Array.isArray(belongs) && belongs.length>0){
+                setTargetDidimdolClassId(belongs[0].didimdolClass._id);
+            }
+        },
+        [auth, setBelongs, setTargetDidimdolClassId]
+    )
+
     const modalController = useModalController().current;
     const [students, setStudents] = useState();
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -103,44 +122,43 @@ function StatusCheck(){
     )
     useEffect(
         ()=>{
-            if(!students){
-                (
-                    async ()=>{
-                        const didimdol = await loadDidimdol(auth);
-                        if(didimdol?.students){
-                            const students = didimdol.students.map(
-                                ({name, major, colNo, attendant}, index)=>{
 
-                                    return {
-                                        ...mockData,
-                                        name,
-                                        major,
-                                        colNo,
-                                        index,
-                                        ...(
-                                            (attendantInfo)=>{
-                                                if(!attendantInfo){
-                                                    return {};
-                                                }
-                                                const {status, absent: numClasses, shield: numSaveCount, numAssoc, support, message: statusText, license: isPracAccepted} = attendantInfo;
-                                                return {
-                                                    status, numClasses, numSaveCount, numAssoc, support, statusText, isPracAccepted
-                                                }
+            (
+                async ()=>{
+                    const didimdol = await loadDidimdol(targetDidimdolClassId);
+                    if(didimdol?.students){
+                        const students = didimdol.students.map(
+                            ({name, major, colNo, attendant}, index)=>{
+
+                                return {
+                                    ...mockData,
+                                    name,
+                                    major,
+                                    colNo,
+                                    index,
+                                    ...(
+                                        (attendantInfo)=>{
+                                            if(!attendantInfo){
+                                                return {};
                                             }
-                                        )(attendant?.info)
-                                    }
+                                            const {status, absent: numClasses, shield: numSaveCount, numAssoc, support, message: statusText, license: isPracAccepted} = attendantInfo;
+                                            return {
+                                                status, numClasses, numSaveCount, numAssoc, support, statusText, isPracAccepted
+                                            }
+                                        }
+                                    )(attendant?.info)
                                 }
-                            );
-                            setStudents(students);
-                            if(Array.isArray(students)){
-                                setSelectedIndex(0);
                             }
+                        );
+                        setStudents(students);
+                        if(Array.isArray(students)){
+                            setSelectedIndex(0);
                         }
                     }
-                )();
-            }
+                }
+            )();
         },
-        [auth, students, setStudents, setSelectedIndex]
+        [targetDidimdolClassId, setStudents, setSelectedIndex]
     )
 
     return (
@@ -152,6 +170,16 @@ function StatusCheck(){
                     <Link to="/">Home</Link>
                 </div>
             </StatusCheckHeader>
+            {
+                (Array.isArray(belongs) && belongs.length>1)?
+                (
+                    <StatusCheckDidimdolClassSelector onChange={onDidimdolClassSelectChange} defaultValue={targetDidimdolClassId}>
+                        {
+                            belongs.map(({didimdolClass: {_id, daytime, title}})=>(<option key={_id} value={_id}>{`${title}조 ${daytime.day}요일 ${daytime.start}`}</option>))
+                        }
+                    </StatusCheckDidimdolClassSelector>
+                ):null
+            }
             <UserStatusView user={selectedStudent}/>
             <StatusCheckStudentsViewContainer>
                 <StatusCheckStudentsViewHeader>

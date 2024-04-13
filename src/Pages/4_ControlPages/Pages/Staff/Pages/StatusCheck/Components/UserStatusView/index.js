@@ -5,6 +5,7 @@ import StatusContentContainer from "@/Pages/3_MainPages/DashboardPage/Components
 import statusColorlist from "../statusColorList";
 
 const UserStatusViewContainerCSS = css`
+    grid-area: user;
     width: 300px;
     border-radius: 8px;
 

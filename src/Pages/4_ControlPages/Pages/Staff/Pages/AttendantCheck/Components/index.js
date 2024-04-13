@@ -10,7 +10,12 @@ const AttendantCheckContainerCSS = css`
     height: 100%;
     display: grid;
     gap: 16px;
-    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        "header"
+        "select"
+        "count"
+        "detail";
+    grid-template-rows: auto auto auto 1fr;
     justify-items: center;
     padding: 8px 16px;
     overflow: hidden;
@@ -25,6 +30,7 @@ function AttendantCheckContainer({children}){
 export {AttendantCheckContainer};
 
 const AttendantCheckHeaderCSS = css`
+    grid-area: header;
     text-align: left;
     width: 100%;
     position: relative;
@@ -71,6 +77,7 @@ function AttendantCheckHeader({children}){
 export {AttendantCheckHeader};
 
 const AttendantCheckCountContainerCSS = css`
+    grid-area: count;
     background-color: var(--blue-primary);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
@@ -127,6 +134,7 @@ function AttendantCheckCountContainer({onClick, children}){
 export {AttendantCheckCountContainer}
 
 const AttendantCheckDetailContainerCSS = css`
+    grid-area: detail;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -339,6 +347,7 @@ function AttendantCheckMemberItem({user, lock, onCheckClick}){
 export {AttendantCheckMemberItem};
 
 const AttendantCheckDidimdolSelectCSS = css`
+    grid-area: select;
     display: flex;
     justify-content: center;
     align-items: center;

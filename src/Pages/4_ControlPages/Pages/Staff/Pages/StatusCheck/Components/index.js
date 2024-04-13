@@ -12,10 +12,16 @@ const StatusCheckContainerCSS = css`
     height: 100%;
     overflow: hidden;
     padding: 8px 16px;
-    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 
+        "header"
+        "."
+        "select"
+        "user"
+        "."
+        "list";
+    grid-template-rows: auto 24px auto auto 24px 1fr;
 
     display: grid;
-    gap: 24px;
     justify-items: center;
 `;
 function StatusCheckContainer({children}){
@@ -28,6 +34,7 @@ function StatusCheckContainer({children}){
 export {StatusCheckContainer};
 
 const StatusCheckHeaderCSS = css`
+    grid-area: header;
     width: 100%;
     padding: 0px 8px;
     display: grid;
@@ -76,6 +83,7 @@ function StatusCheckHeader({children}){
 export {StatusCheckHeader};
 
 const StatusCheckStudentsViewContainerCSS = css`
+    grid-area: list;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -175,3 +183,21 @@ function StatusCheckStudentsViewItem({user, selected, onClick}){
     )
 }
 export {StatusCheckStudentsViewItem};
+
+const StatusCheckDidimdolClassSelectorCSS = css`
+    grid-area: select;
+    display: flex;
+    justify-content: center;
+    align-itens: center;
+    padding-bottom: 8px;
+`;
+function StatusCheckDidimdolClassSelector({children, onChange}){
+    return (
+        <div css={StatusCheckDidimdolClassSelectorCSS}>
+            <select onChange={onChange}>
+                {children}
+            </select>
+        </div>
+    )
+}
+export {StatusCheckDidimdolClassSelector};
