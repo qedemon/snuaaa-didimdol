@@ -5,10 +5,10 @@ import RegisterImg from "./Assets/register.png";
 import AttendantImg from "./Assets/attendant.png";
 import InspectImg from "./Assets/inspect.png"
 
-import {ReactComponent as D} from "./Assets/D.svg";
-import {ReactComponent as O} from "./Assets/O.svg"
-import {ReactComponent as I} from "./Assets/I.svg";
-import {ReactComponent as SD} from "./Assets/SD.svg";
+//import {ReactComponent as D} from "./Assets/D.svg";
+//import {ReactComponent as O} from "./Assets/O.svg"
+//import {ReactComponent as I} from "./Assets/I.svg";
+//import {ReactComponent as SD} from "./Assets/SD.svg";
 
 function getIcons({auth, navigate, modalController}){
     return [

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckCountContainer, AttendantCheckHeader, AttendantCheckLockEditable, AttendantCheckMemberList, AttendantCheckMemberItem, AttendantCheckLogger } from "./Components";
+import React, { useCallback, useEffect,  useRef, useState } from "react";
+import { AttendantCheckDetailContainer, AttendantCheckContainer, AttendantCheckCountContainer, AttendantCheckHeader, AttendantCheckLockEditable, AttendantCheckMemberList, AttendantCheckMemberItem, AttendantCheckLogger, AttendantCheckDidimdolSelect } from "./Components";
 import { Link } from "react-router-dom";
 import {useContext as useAuth} from "../../../../Context/Auth";
 import {useContext as useModalController} from "../../../../Context/Modal";
@@ -7,13 +7,25 @@ import { localDateString } from "@/Utils/Utils";
 import SelectPage from "../../../Modal/SelectPage";
 import updateAttendants from "./Utils/updateAttendants";
 import request from "@/Pages/4_ControlPages/Utility/Connection";
-import loadDidimdol from "../StatusCheck/loadDidimdol";
+import loadDidimdol from "./Utils/loadDidimdol";
 import getAttendant from "./Utils/getAttendant";
 import getAttendantTitle from "./Utils/getAttendantTitle";
 import DateSelectPage from "../../../Modal/DateSelectPage";
 
 function AttendantCheck(){
     const auth = useAuth();
+    const [targetDidimdolClassId, setTargetDidimdolClassId] = useState();
+    const [belongings, setBelongings] = useState([]);
+    useEffect(
+        ()=>{
+            const belongings = (auth.userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
+            setBelongings(belongings);
+            if(Array.isArray(belongings)&&belongings.length>0){
+                setTargetDidimdolClassId(belongings[0].didimdolClass._id);
+            }
+        },
+        [auth, setBelongings, setTargetDidimdolClassId]
+    );
 
     const didlmdolClass = useRef();
     const [attendantDate, setAttendantDate] = useState(
@@ -24,9 +36,9 @@ function AttendantCheck(){
     
     const [updateLog, setUpdateLog] = useState({pending: false, message: ""});
     const loadDidimdolClass = useCallback(
-        async (auth)=>{
+        async (targetDidimdolClassId)=>{
             setUpdateLog({pending: true, message: "출석 정보 불러오는 중..."});
-            const loadedDidimdolClass = (await loadDidimdol(auth));
+            const loadedDidimdolClass = (await loadDidimdol(targetDidimdolClassId));
             if(loadedDidimdolClass){
                 didlmdolClass.current=loadedDidimdolClass;
                 setAttendantDate((attendantDate)=>(
@@ -44,7 +56,7 @@ function AttendantCheck(){
                     }
                 ));
                 setUpdateLog({pending: false, message: "출석 정보 불러오기 완료"})
-                return loadDidimdolClass;
+                return loadedDidimdolClass;
             }
         },
         [didlmdolClass, setUpdateLog, setAttendantDate]
@@ -269,10 +281,10 @@ function AttendantCheck(){
 
     useEffect(
         ()=>{
-            if(!updateLog.pending && locked.current && updateRequired && auth?.userInfo){
+            if(!updateLog.pending && locked.current && updateRequired && targetDidimdolClassId){
                 (
                     async() =>{
-                        if(await loadDidimdolClass(auth)){
+                        if(await loadDidimdolClass(targetDidimdolClassId)){
                             setUpdateRequired(false);
                         }
                     }
@@ -285,7 +297,7 @@ function AttendantCheck(){
                 }
             }
         },
-        [auth, loadDidimdolClass, setUpdateRequired, updateRequired, updateLog, locked, setLocked]
+        [targetDidimdolClassId, loadDidimdolClass, setUpdateRequired, updateRequired, updateLog, locked, setLocked]
     );
 
     const selectedAttendant = (selectedAttendantTitle?attendantList[selectedAttendantTitle]:null)??{};
@@ -337,6 +349,14 @@ function AttendantCheck(){
             )();
         },
         [attendantList, selectedAttendantTitle, locked]
+    );
+    
+    const onTargetDidimdolClassIdSelect = useCallback(
+        ({target: {value}})=>{
+            setTargetDidimdolClassId(value);
+            setUpdateRequired(true);
+        },
+        [setTargetDidimdolClassId, setUpdateRequired]
     )
 
     return (
@@ -346,6 +366,20 @@ function AttendantCheck(){
                 <h2>Welcome to Amateur Astronomy Association</h2>
                 <div className="homeLink"><Link to={"/"}>Home</Link></div>
             </AttendantCheckHeader>
+            {
+                belongings.length>1?
+                    (
+                        <AttendantCheckDidimdolSelect onChange={onTargetDidimdolClassIdSelect} defaultValue={targetDidimdolClassId}>
+                            {
+                                belongings.map(
+                                    ({didimdolClass: {_id, title, daytime}})=>(<option key={_id} value={_id}>{`${title}조 ${daytime.day}요일 ${daytime.start}`}</option>)
+                                )
+                            }
+                        </AttendantCheckDidimdolSelect>
+                    ):
+                    null
+            }
+            
             <AttendantCheckCountContainer onClick={requireOpenAttendantSelect}>
                 <div className="classInfo">
                     <h1 className="date">{selectedAttendant?.date?localDateString(selectedAttendant?.date):""}</h1>

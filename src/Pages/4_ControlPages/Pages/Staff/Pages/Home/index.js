@@ -16,7 +16,7 @@ function Home(){
             auth.logout();
             navigate("/login");
         },
-        [auth]
+        [auth, navigate]
     )
 
     return (

@@ -337,3 +337,19 @@ function AttendantCheckMemberItem({user, lock, onCheckClick}){
     )
 }
 export {AttendantCheckMemberItem};
+
+const AttendantCheckDidimdolSelectCSS = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+function AttendantCheckDidimdolSelect({children, onChange, defaultValue}){
+    return (
+        <div css={AttendantCheckDidimdolSelectCSS}>
+            <select onChange={onChange} defaultValue={defaultValue}>
+                {children}
+            </select>
+        </div>
+    )
+};
+export {AttendantCheckDidimdolSelect};
