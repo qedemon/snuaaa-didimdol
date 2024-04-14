@@ -49,7 +49,7 @@ export default function SelectPage() {
       const response = await axios.get("/didimdolClass/allDidimdolClasses/");
 
       if (response.data.result === 0) {
-        const responseData = response.data.didimdolClasses;
+        const responseData = response.data.didimdolClasses.filter(({freeze})=>!freeze);
         setClasses(responseData);
 
         const nextClassTable = makeClassTable();
