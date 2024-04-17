@@ -46,7 +46,7 @@ function StatusCheck(){
     const [filter, setFilter] = useState(
         {
             name: "",
-            status: ["적", "황", "녹"]
+            status: ["적", "황", "녹", "회"]
         }
     );
     const filterFunction = useCallback(
@@ -69,7 +69,7 @@ function StatusCheck(){
                     component: SelectFilter,
                     props: {
                         filter: {
-                            status: [{key: "적", label: "위험"}, {key: "황", label: "경고"}, {key: "녹", label: "안전"}].map(
+                            status: [{key: "적", label: "위험"}, {key: "황", label: "경고"}, {key: "녹", label: "안전"}, {key: "회", label: "인준 불가"}].map(
                                 ({key, label})=>(
                                     {
                                         key,

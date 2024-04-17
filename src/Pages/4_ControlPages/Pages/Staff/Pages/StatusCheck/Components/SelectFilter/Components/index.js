@@ -58,6 +58,7 @@ const StatusFilterItemCSS = css`
         font-weight: 400;
         line-height: 16px;
         text-align: left;
+        flex-grow: 1;
     }
     &>div.circle{
         width: 16px;

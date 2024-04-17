@@ -8,6 +8,7 @@ const statusColor = {
   red: "#F17233",
   orange: "#F5B538",
   blue: "#34D0D5",
+  gray: "var(--dark-gray)"
 };
 
 export default function StatusContainer({ status }) {
