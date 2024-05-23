@@ -34,14 +34,19 @@ export default function StatusContainer({ status }) {
         className={style.statusBox}
         style={statusColor[status.status]}
       >
-        <div className={style.statusContentWrapperShrink}>
+        <div className={인준?style.statusContentWrapperShrink:style.statusContentWrapper}>
           <StatusContentContainer status={status}/>
           <div className={style.horizontalLine}></div>
           <div className={style.statusText}>{status?.statusText}</div>
         </div>
-        <div className={style.statusBackgroundImageWrapper}>
-          <img src={Congratulation} alt="congratulation" />
-        </div>
+        {
+          인준?
+          (
+            <div className={style.statusBackgroundImageWrapper}>
+              <img src={Congratulation} alt="congratulation" />
+            </div>
+          ):null
+        }
       </div>
     </div>
   );
