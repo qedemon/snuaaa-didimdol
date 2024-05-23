@@ -25,7 +25,7 @@ function StatusContentContainer({status}){
             <p className={style.statusLabel}>별모임</p>
           </div>
           <div className={style.statusItemWrapper}>
-            <p className={style.statusValue} style={{ color: "var(--red)" }}>
+            <p className={style.statusValue} style={!status?.isPracAccepted?{ color: "var(--red)" }:{}}>
               {status?.isPracAccepted ? "이수" : "미이수"}
             </p>
             <p className={style.statusLabel}>장비실습</p>
