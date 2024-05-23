@@ -79,9 +79,7 @@ function StatusFilterItem({status, onClick}){
         color: ${statusColorList[status.key]??statusColorList["녹"]}
     `;
     const checkedCSS = status.selected?
-        css`
-            background-color: ${statusColorList[status.key]??statusColorList["녹"]}
-        `:
+        css(statusColorList[status.key]??statusColorList["녹"]):
         css``;
     
     return (

@@ -40,7 +40,7 @@ const UserStatusViewContainerCSS = css`
 `;
 
 function UserStatusView({user}){
-    const backgroundCSS = css`background: ${statusColorlist[user.status]??statusColorlist["녹"]};`
+    const backgroundCSS = css(statusColorlist[user.status]??statusColorlist["녹"]);
     return (
         <div css={[UserStatusViewContainerCSS, backgroundCSS]}>
             <div className="userInfo">

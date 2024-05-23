@@ -5,10 +5,11 @@ import style from "./StatusContainer.module.css";
 import StatusContentContainer from "./StatusContentContainer";
 
 const statusColor = {
-  red: "#F17233",
-  orange: "#F5B538",
-  blue: "#34D0D5",
-  gray: "var(--dark-gray)"
+  red: {backgroundColor: "#F17233"},
+  orange: {backgroundColor: "#F5B538"},
+  blue: {backgroundColor: "#34D0D5"},
+  gray: {backgroundColor: "var(--dark-gray)"},
+  인준: {background: "linear-gradient(135deg, red 0%, orange 16.6%, yellow 33.3%, green 50%, blue 66.6%, indigo 83.3%, violet 100%)"},
 };
 
 export default function StatusContainer({ status }) {
@@ -24,7 +25,7 @@ export default function StatusContainer({ status }) {
       </div>
       <div
         className={style.statusBox}
-        style={{ backgroundColor: statusColor[status.status] }}
+        style={statusColor[status.status]}
       >
         <StatusContentContainer status={status}/>
         <div className={style.horizontalLine}></div>

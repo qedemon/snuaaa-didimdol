@@ -170,9 +170,8 @@ const StatusCheckStudentsViewItemCSS = css`
     }
 `;
 function StatusCheckStudentsViewItem({user, selected, onClick}){
-    const colorCSS = css`
-        background-color: ${statusColorList[user.status]??statusColorList["녹"]}
-    `
+    const colorCSS = css(statusColorList[user.status]??statusColorList["녹"]);
+    
     return (
         <div css={[StatusCheckStudentsViewItemCSS, colorCSS]} className={selected?"selected":""} onClick={onClick}>
             <div>
