@@ -76,7 +76,7 @@ const StatusFilterItemCSS = css`
 `;
 function StatusFilterItem({status, onClick}){
     const colorCSS = css`
-        color: ${statusColorList[status.key]??statusColorList["녹"]}
+        color: ${["적", "황", "녹"].includes(status.key)?statusColorList[status.key].background:"black"}
     `;
     const checkedCSS = status.selected?
         css(statusColorList[status.key]??statusColorList["녹"]):

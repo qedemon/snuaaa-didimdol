@@ -165,7 +165,6 @@ const StatusCheckStudentsViewItemCSS = css`
         }
     }
     &.selected{
-        color: white;
         box-shadow: 0px 4px 4px 0px #00000040;
     }
 `;
