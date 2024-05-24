@@ -21,6 +21,8 @@ function MembersInfo({...props}){
     const [members, setMembers] = useState([]);
     const dataChanged = useRef(new Map());
 
+    console.log(sheetURL);
+    
     const load = useCallback(
         async ()=>{
             setMessage("불러오는 중");

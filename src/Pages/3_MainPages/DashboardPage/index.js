@@ -14,7 +14,9 @@ import InfoQuizPage from "@/Pages/2_EnrollPages/3_InfoQuizPage";
 const statusList = {
   "적": "red",
   "황": "orange",
-  "녹": "blue"
+  "녹": "blue",
+  "회": "gray",
+  "인준": "인준",
 }
 
 const mockData = {

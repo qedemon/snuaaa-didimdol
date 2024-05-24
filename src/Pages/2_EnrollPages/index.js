@@ -10,7 +10,7 @@ import EndPage from "./6_EndPage";
 import DashBoardPage from "./DashBoardPage";
 
 import LogoutButton from "@components/LogoutButton";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 const EnrollPageIndexContext = createContext({
   pageIndex: 0,
@@ -23,7 +23,7 @@ export { EnrollPageIndexContext };
 
 export default function EnrollPage() {
   const { user } = useAuth(true);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [pageIndex, setPageIndex] = useState(0);
   const [isEnrolled, setIsEnrolled] = useState(false);
 

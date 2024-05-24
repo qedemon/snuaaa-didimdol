@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import style from "./AttendanceLogContainer.module.css";
 
-const logCategories = ["디딤돌", "별모임", "자율관측", "etc"];
+const logCategories = ["디딤돌", "별모임", "자율돔관", "소관", "etc"];
 
 export default function AttendnaceLogContainer({ logs: initialLogs }) {
   const [filterIndex, setFilterIndex] = useState(0);

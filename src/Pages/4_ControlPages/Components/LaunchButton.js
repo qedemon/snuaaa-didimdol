@@ -24,6 +24,9 @@ const LaunchButtonCSS = css`
   &.blue {
     background: rgba(118, 128, 226, 1);
   }
+  &.green {
+    background: var(--green);
+  }
   &.white {
     background: white;
     color: black;
