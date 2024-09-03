@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { transpose } from "@/Utils/Utils";
 import { useAuth } from "@/Contexts/AuthContext";
@@ -17,16 +17,7 @@ import style from "./index.module.css";
 
 import {DayColor} from "../Styles";
 
-const timeTable = [
-  ["3:30", "6:30"],
-  ["5:00", "8:00"],
-  ["6:30", "9:30"],
-];
-
 const weekTable = ["월", "화", "수", "목", "금"];
-
-const makeClassTable = () =>
-  Array.from(Array(timeTable.length), () => Array(weekTable.length).fill(null));
 
 export default function SelectPage() {
   const { user, updateUser } = useAuth();
@@ -34,8 +25,16 @@ export default function SelectPage() {
     EnrollPageIndexContext
   );
 
+  const [timeTable, setTimeTable] = useState(
+    [
+    ]
+  );
+  const makeClassTable = useCallback(
+    (timeTable)=>Array.from(Array(timeTable.length), () => Array(weekTable.length).fill(null)),
+    [timeTable]
+  )
   const [classes, setClasses] = useState([]);
-  const [classTable, setClassTable] = useState(makeClassTable());
+  const [classTable, setClassTable] = useState(makeClassTable(timeTable));
 
   const [timeIndex, setTimeIndex] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
@@ -51,20 +50,6 @@ export default function SelectPage() {
       if (response.data.result === 0) {
         const responseData = response.data.didimdolClasses.filter(({freeze})=>!freeze);
         setClasses(responseData);
-
-        const nextClassTable = makeClassTable();
-        const startTimeNumberTable = transpose(timeTable)[0].map((el) =>
-          Number(el.replace(":", ""))
-        );
-
-        responseData.forEach((el) => {
-          const row = startTimeNumberTable.indexOf(
-            Number(el.daytime.start.replace(":", ""))
-          );
-          const col = weekTable.indexOf(el.daytime.day);
-          nextClassTable[row][col] = el;
-        });
-        setClassTable(nextClassTable);
       }
     } catch (e) {
       console.error(e);
@@ -136,6 +121,7 @@ export default function SelectPage() {
 
   useEffect(() => {
     if (!loadingState && classes.length !== 0) {
+
       setSelectedClasses(
         user?.didimdolClass?.wants?.reduce(
           (result, id) =>{
@@ -147,6 +133,54 @@ export default function SelectPage() {
       );
     }
   }, [loadingState, classes, user]);
+
+  useEffect(
+    ()=>{
+      if(!classes?.length)
+        return;
+
+      const timeTable = classes.map(
+        ({daytime: {start, end}})=>{
+          return [start, end];
+        }
+      ).reduce(
+        (result, [start, end])=>{
+          return result.find(
+            ([prevStart, prevEnd])=>(prevStart===start)&&(prevEnd===end)
+          )?result:[...result, [start, end]]
+        },
+        []
+      ).sort(
+        (a, b)=>{
+          if(a.start<b.start)
+            return -1;
+          else if(a.start>b.start)
+            return 1;
+          if(a.end<b.end)
+            return -1;
+          else if(a.end>b.end)
+            return 1;
+          return 0;
+        }
+      );
+      setTimeTable(timeTable);
+
+      if(!timeTable?.length)
+        return;
+      const nextClassTable = makeClassTable(timeTable);
+
+      classes.forEach((el) => {
+        const row = timeTable.findIndex(
+          ([start, end])=>(el.daytime.start===start)&&(el.daytime.end===end)
+        );
+        const col = weekTable.indexOf(el.daytime.day);
+        if(row>=0 && col>=0)
+          nextClassTable[row][col] = el;
+      });
+      setClassTable(nextClassTable);
+    },
+    [classes, setClassTable, setTimeTable]
+  )
 
   return (
     <>
