@@ -8,11 +8,11 @@ import style from "./QuizModal.module.css";
 
 const checkList = [
   "3회 이상 불참 시 인준 불가",
-  "별모임 2회 이상 참여",
+  "별모임 or 자돔 or 소관 2회 이상 참여",
   "장비실습 선택사항",
-  "별모임 1회 이상 참여",
+  "별모임 or 자돔 or 소관 1회 이상 참여",
   "장비실습 필수사항",
-  "2024년 5월 6일까지 완료",
+  "2024년 11월 6일까지 완료",
 ];
 
 export default function QuizModal({ onClose, onSubmit }) {

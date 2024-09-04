@@ -156,7 +156,7 @@ export default function WelcomePage() {
                   </div>
                   <p className={style.caution}>
                     디딤돌은{" "}
-                    <span className={style.lightblue}>조 별로 3시간 동안</span>{" "}
+                    <span className={style.lightblue}>조 별로 2시간 동안</span>{" "}
                     진행됩니다.
                     <br />
                     <span className={style.underline}>
