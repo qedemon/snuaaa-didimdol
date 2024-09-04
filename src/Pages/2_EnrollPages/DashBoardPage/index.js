@@ -49,13 +49,14 @@ export default function DashBoardPage() {
           <div className={style.redirectionContainer}>
             <p className={style.redirectionHeader}>바로가기</p>
             <div className={style.buttonWrapper}>
-              <button
+              {/*<button
                 onClick={() => {
                   handleChangePage(1);
                 }}
               >
                 디딤돌 안내
-              </button>
+              </button>*/
+              }
               <button
                 onClick={() => {
                   handleChangePage(2);

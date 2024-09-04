@@ -29,7 +29,7 @@ const transition = {
 };
 
 export default function WelcomePage() {
-  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
+  const { handleGotoNextPage, handleChangePage} = useContext(EnrollPageIndexContext);
   const [contentIndex, setContentIndex] = useState(0);
 
   const gotoNext = () => {
@@ -176,7 +176,7 @@ export default function WelcomePage() {
                     >
                       <Button
                         className={style.nextPageButton}
-                        onClick={handleGotoNextPage}
+                        onClick={()=>handleChangePage(2)}
                       >
                         안내사항 읽기
                       </Button>

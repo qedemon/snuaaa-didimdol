@@ -91,19 +91,19 @@ export default function DashboardPage() {
                   <button
                     className={style.infoButton}
                     onClick={() => {
-                      setPageIndex(1);
+                      setPageIndex(2);
                     }}
                   >
                     인준기준
                   </button>
-                  <button
+                  {/*<button
                     className={style.infoButton}
                     onClick={() => {
-                      setPageIndex(2);
+                      setPageIndex(1);
                     }}
                   >
                     디딤돌 안내
-                  </button>
+                  </button>*/}
                   <Link to="https://our.snuaaa.net">
                     <button className={style.infoButton}>
                       커뮤니티
