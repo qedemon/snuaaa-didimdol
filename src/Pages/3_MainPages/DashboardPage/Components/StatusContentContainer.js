@@ -22,7 +22,7 @@ function StatusContentContainer({status}){
           </div>
           <div className={style.statusItemWrapper}>
             <p className={style.statusValue}>{status?.numAssoc}</p>
-            <p className={style.statusLabel}>별모임</p>
+            <p className={style.statusLabel}>별모임+자돔+소관</p>
           </div>
           <div className={style.statusItemWrapper}>
             <p className={style.statusValue} style={!status?.isPracAccepted?{ color: "var(--red)" }:{}}>

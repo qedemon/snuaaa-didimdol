@@ -35,7 +35,7 @@ export default function InfoQuizPage({ onClick }) {
           <span className={style.yellow}>AAA</span> 인준 기준
         </h1>
         <h2 className={style.infoQuizSecondHeader}>
-          2024년 11월 25일까지
+          2024년 11월 23일까지
           <br /> 하기 사항 완료
         </h2>
         <div className={style.infoQuizConditionWrapper}>
