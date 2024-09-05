@@ -44,7 +44,7 @@ function AttendantCheck(){
                 setAttendantDate((attendantDate)=>(
                     {
                         ...attendantDate,
-                        ...Object.entries(loadedDidimdolClass.attendant)
+                        ...Object.entries(loadedDidimdolClass.attendant??{})
                         .reduce(
                             (result, [key, value])=>(
                                 {
