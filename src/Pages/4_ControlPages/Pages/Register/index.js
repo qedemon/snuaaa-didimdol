@@ -125,7 +125,7 @@ function Register(props){
     return (
         <Background>
             <RocketContentContainer>
-                <p className="title">AAA 2024</p>
+                <p className="title">AAA {process.env.REACT_APP_CURRENT_YEAR}</p>
                 <p className="title">신입생 가입폼</p>
                 <Form ref={formController} formSchema={FormSchema({openDepositWindow})} className="content"/>
                 <LaunchButton onClick={onSubmit} className="content" disabled={submitPending}>{submitPending?"가입하는 중":"Sign Up"}</LaunchButton>
