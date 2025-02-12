@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { transpose } from "@/Utils/Utils";
 import { useAuth } from "@/Contexts/AuthContext";
 import useAsync from "@/Hooks/useAsync";
 import axios from "@connections/NovaConnection";
@@ -31,7 +30,7 @@ export default function SelectPage() {
   );
   const makeClassTable = useCallback(
     (timeTable)=>Array.from(Array(timeTable.length), () => Array(weekTable.length).fill(null)),
-    [timeTable]
+    []
   )
   const [classes, setClasses] = useState([]);
   const [classTable, setClassTable] = useState(makeClassTable(timeTable));
@@ -179,7 +178,7 @@ export default function SelectPage() {
       });
       setClassTable(nextClassTable);
     },
-    [classes, setClassTable, setTimeTable]
+    [classes, setClassTable, setTimeTable, makeClassTable]
   )
 
   return (

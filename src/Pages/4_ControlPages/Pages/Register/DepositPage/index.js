@@ -3,12 +3,17 @@ import { useContext as useModalController } from "../../../Context/Modal";
 import { LaunchButton } from "../../../Components";
 import { MessageBoxBody, MessageBoxContainer, MessageBoxFooter, MessageBoxHeader } from "../Components/MessageBox/Components";
 import CopyBody from "../Components/CopyBody";
+import { useEnv } from "@/Hooks/useEnv";
 
-const accountName = process.env.REACT_APP_ACCOUNT_NAME;
-const accountNo = process.env.REACT_APP_ACCOUNT_NO;
+
 
 function DepositPage({onSubmit, userInfo, ...props}){
+    const loadedEnv = useEnv();
     const controller = useModalController().current;
+
+    const accountName = loadedEnv?.입금계좌?.계좌명??"";
+    const accountNo = loadedEnv?.입금계좌?.계좌번호??"";
+
     const onClose = useCallback(
         ()=>{
             controller.close();
@@ -19,7 +24,7 @@ function DepositPage({onSubmit, userInfo, ...props}){
         ()=>{
             navigator.clipboard.writeText(`${accountName} ${accountNo}`);
         },
-        []
+        [accountName, accountNo]
     );
     const onDepositorCopy = useCallback(
         ()=>{
@@ -31,7 +36,7 @@ function DepositPage({onSubmit, userInfo, ...props}){
         <MessageBoxContainer onClose={onClose}>
             <MessageBoxHeader>
                 <h1>
-                    가입비 <span>{process.env.REACT_APP_PAY}</span>을<br/> 입금하셨나요?
+                    가입비 <span>{loadedEnv?.가입비??""}</span>을<br/> 입금하셨나요?
                 </h1>
             </MessageBoxHeader>
             <MessageBoxBody>

@@ -9,8 +9,10 @@ import DepositPage from "./DepositPage";
 import { useNavigate } from "react-router-dom";
 import request from "../../Utility/Connection";
 import { WelcomePage } from "../Modal";
+import { useEnv } from "@/Hooks/useEnv";
 
 function Register(props){
+    const loadedEnv = useEnv();
     const navigate = useNavigate();
     const formController = useRef();
     const modalController = useModalController().current;
@@ -125,7 +127,7 @@ function Register(props){
     return (
         <Background>
             <RocketContentContainer>
-                <p className="title">AAA {process.env.REACT_APP_CURRENT_YEAR}</p>
+                <p className="title">AAA {loadedEnv?.연도??""}</p>
                 <p className="title">신입생 가입폼</p>
                 <Form ref={formController} formSchema={FormSchema({openDepositWindow})} className="content"/>
                 <LaunchButton onClick={onSubmit} className="content" disabled={submitPending}>{submitPending?"가입하는 중":"Sign Up"}</LaunchButton>

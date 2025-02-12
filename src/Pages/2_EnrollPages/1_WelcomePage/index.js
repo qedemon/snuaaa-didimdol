@@ -29,7 +29,7 @@ const transition = {
 };
 
 export default function WelcomePage() {
-  const { handleGotoNextPage, handleChangePage} = useContext(EnrollPageIndexContext);
+  const { /*handleGotoNextPage,*/ handleChangePage} = useContext(EnrollPageIndexContext);
   const [contentIndex, setContentIndex] = useState(0);
 
   const gotoNext = () => {

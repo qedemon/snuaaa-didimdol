@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import Modal from "@components/Modal";
 import Button from "@components/Button";
 
 import Check from "@images/Check.svg";
 import style from "./QuizModal.module.css";
+import { useEnv } from "@/Hooks/useEnv";
 
-const checkList = [
+/*const checkList = [
   "3회 이상 불참 시 인준 불가",
   "별모임 or 자돔 or 소관 2회 이상 참여",
   "장비실습 선택사항",
   "별모임 or 자돔 or 소관 1회 이상 참여",
   "장비실습 필수사항",
   "2024년 11월 6일까지 완료",
-];
+];*/
 
 export default function QuizModal({ onClose, onSubmit }) {
+  const loadedEnv = useEnv();
+  const checkList = useMemo( ()=>loadedEnv?.깜짝퀴즈??[], [loadedEnv]);
+
   const [selectedList, setSelectedList] = useState(
     Array.from(checkList, () => false)
+  );
+  useEffect(
+    ()=>{
+      setSelectedList(Array.from(checkList, ()=>false))
+    },
+    [checkList, setSelectedList]
   );
 
   const handleCheck = (index) => {
@@ -27,13 +37,10 @@ export default function QuizModal({ onClose, onSubmit }) {
   };
 
   const handleSubmit = () => {
-    const correctCondition =
-      selectedList[0] &&
-      !selectedList[1] &&
-      !selectedList[2] &&
-      selectedList[3] &&
-      selectedList[4] &&
-      !selectedList[5];
+    console.log(selectedList, checkList);
+    const correctCondition = selectedList.every(
+      (el, index)=>el===checkList[index].valid
+    )
 
     onSubmit(correctCondition);
   };
@@ -63,7 +70,7 @@ export default function QuizModal({ onClose, onSubmit }) {
                 selectedList[idx] ? style.selected : ""
               }`}
             >
-              {el}
+              {el.text}
             </p>
           </li>
         ))}

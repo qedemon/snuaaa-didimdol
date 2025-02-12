@@ -78,7 +78,7 @@ export default function EnrollPage() {
         }
       }
     }
-  }, [user, pageIndex]);
+  }, [user, pageIndex, navigate]);
 
   return (
     <>
