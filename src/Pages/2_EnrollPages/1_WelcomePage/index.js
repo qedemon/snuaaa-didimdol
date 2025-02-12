@@ -176,7 +176,7 @@ export default function WelcomePage() {
                     >
                       <Button
                         className={style.nextPageButton}
-                        onClick={()=>handleChangePage(2)}
+                        onClick={()=>handleChangePage(1)}
                       >
                         안내사항 읽기
                       </Button>

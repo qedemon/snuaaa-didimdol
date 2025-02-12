@@ -31,7 +31,7 @@ const InfoData = [
     description: (
       <p className={style.infoDescription}>
         <span className={style.bold}>주 1회</span>, 동아리와 함께하는{" "}
-        <span className={style.bold}>3시간</span>의 여유
+        <span className={style.bold}>2시간</span>의 여유
       </p>
     ),
   },
