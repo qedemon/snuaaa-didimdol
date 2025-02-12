@@ -44,11 +44,6 @@ export default function WelcomePartyPage() {
   const [postPending, postError, postAttendPartyAsync] =
     useAsync(postAttendParty);
 
-  useEffect(
-    ()=>{
-      handleGotoNextPage();//수정바람
-    }
-  );
   return (
     <>
       <div className={style.welcomePartyPage}>

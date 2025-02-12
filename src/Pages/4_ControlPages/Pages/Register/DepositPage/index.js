@@ -31,7 +31,7 @@ function DepositPage({onSubmit, userInfo, ...props}){
         <MessageBoxContainer onClose={onClose}>
             <MessageBoxHeader>
                 <h1>
-                    가입비 <span>20,000원</span>을<br/> 입금하셨나요?
+                    가입비 <span>{process.env.REACT_APP_PAY}</span>을<br/> 입금하셨나요?
                 </h1>
             </MessageBoxHeader>
             <MessageBoxBody>
