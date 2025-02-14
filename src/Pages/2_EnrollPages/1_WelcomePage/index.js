@@ -29,7 +29,7 @@ const transition = {
 };
 
 export default function WelcomePage() {
-  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
+  const { /*handleGotoNextPage,*/ handleChangePage} = useContext(EnrollPageIndexContext);
   const [contentIndex, setContentIndex] = useState(0);
 
   const gotoNext = () => {
@@ -156,7 +156,7 @@ export default function WelcomePage() {
                   </div>
                   <p className={style.caution}>
                     디딤돌은{" "}
-                    <span className={style.lightblue}>조 별로 3시간 동안</span>{" "}
+                    <span className={style.lightblue}>조 별로 2시간 동안</span>{" "}
                     진행됩니다.
                     <br />
                     <span className={style.underline}>
@@ -176,7 +176,7 @@ export default function WelcomePage() {
                     >
                       <Button
                         className={style.nextPageButton}
-                        onClick={handleGotoNextPage}
+                        onClick={()=>handleChangePage(1)}
                       >
                         안내사항 읽기
                       </Button>

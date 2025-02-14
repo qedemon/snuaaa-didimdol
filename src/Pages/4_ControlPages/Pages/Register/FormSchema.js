@@ -99,7 +99,7 @@ const FormSchema = (context)=>[
         component: Input,
         property: {
             type: "text",
-            placeholder: "학부/대학원 입학년도 ex) 2024"
+            placeholder: `학부/대학원 입학년도 ex) ${process.env.REACT_APP_CURRENT_YEAR}`
         },
         validate: ({value})=>{
             return (/^\d{4}$/.test(value))?
@@ -284,7 +284,7 @@ const FormSchema = (context)=>[
         component: Input,
         property: {
             type: "text",
-            placeholder: '입금자명 ex) 신입 김이름 24',
+            placeholder: `입금자명 ex) 신입 김이름 ${(process.env.REACT_APP_CURRENT_YEAR).slice(-2)}`,
             sideButtonLabel: "계좌 정보"
         },
         validate: ({value})=>{

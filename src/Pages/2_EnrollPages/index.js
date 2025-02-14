@@ -10,7 +10,7 @@ import EndPage from "./6_EndPage";
 import DashBoardPage from "./DashBoardPage";
 
 import LogoutButton from "@components/LogoutButton";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EnrollPageIndexContext = createContext({
   pageIndex: 0,
@@ -23,7 +23,7 @@ export { EnrollPageIndexContext };
 
 export default function EnrollPage() {
   const { user } = useAuth(true);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [pageIndex, setPageIndex] = useState(0);
   const [isEnrolled, setIsEnrolled] = useState(false);
 
@@ -68,6 +68,9 @@ export default function EnrollPage() {
       }*/
 
       const enrollState = user.didimdolClass;
+      if(user.didimdolClass.belongs.length>0){
+        navigate("/");
+      }
       if (enrollState.wants.length > 0) {
         setIsEnrolled(true);
         if (pageIndex === 0) {
@@ -75,7 +78,7 @@ export default function EnrollPage() {
         }
       }
     }
-  }, [user, pageIndex]);
+  }, [user, pageIndex, navigate]);
 
   return (
     <>

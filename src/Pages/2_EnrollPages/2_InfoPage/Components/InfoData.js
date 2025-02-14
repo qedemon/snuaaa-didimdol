@@ -31,7 +31,7 @@ const InfoData = [
     description: (
       <p className={style.infoDescription}>
         <span className={style.bold}>주 1회</span>, 동아리와 함께하는{" "}
-        <span className={style.bold}>3시간</span>의 여유
+        <span className={style.bold}>2시간</span>의 여유
       </p>
     ),
   },
@@ -93,7 +93,7 @@ const InfoData = [
     ],
     description: (
       <p className={style.infoDescription}>
-        일반활동은 3시간 동안{" "}
+        일반활동은 2시간 동안{" "}
         <span className={`${style.bold} ${style.pink}`}>강의 + 실습</span>으로
         구성된 활동을 합니다.
       </p>
@@ -135,7 +135,7 @@ const InfoData = [
       <p className={style.infoDescription}>
         특수활동은{" "}
         <span className={`${style.bold} ${style.pink}`}>
-          3시간 동안 색다른 활동
+          2시간 동안 색다른 활동
         </span>
         을 합니다.
       </p>
