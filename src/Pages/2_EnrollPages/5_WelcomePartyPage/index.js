@@ -23,10 +23,7 @@ export default function WelcomePartyPage() {
       const body = [
         {
           id: user.id,
-          didimdolClass: {
-            ...user.didimdolClass,
-            party: condition,
-          },
+          "didimdolClass.party": condition
         },
       ];
 

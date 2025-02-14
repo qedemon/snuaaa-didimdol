@@ -62,10 +62,7 @@ export default function SelectPage() {
       const body = [
         {
           id: user.id,
-          didimdolClass: {
-            ...user.didimdolClass,
-            wants: classes.map((el) => el._id),
-          },
+          "didimdolClass.wants": classes.map((el) => el._id)
         },
       ];
 
@@ -151,13 +148,18 @@ export default function SelectPage() {
         []
       ).sort(
         (a, b)=>{
-          if(a.start<b.start)
+          function timeToMinutes(time) {
+              const [hours, minutes] = time.split(":").map(Number);
+              return hours * 60 + minutes;
+          }
+          const [A, B] = [a, b].map(([start, end])=>({start: timeToMinutes(start), end: timeToMinutes(end)}));
+          if(A.start<B.start)
             return -1;
-          else if(a.start>b.start)
+          else if(A.start>B.start)
             return 1;
-          if(a.end<b.end)
+          if(A.end<B.end)
             return -1;
-          else if(a.end>b.end)
+          else if(A.end>B.end)
             return 1;
           return 0;
         }
