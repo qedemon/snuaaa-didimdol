@@ -59,16 +59,14 @@ export default function SelectPage() {
 
   const postClasses = async (user, classes) => {
     try {
-      const body = [
-        {
-          id: user.id,
-          "didimdolClass.wants": classes.map((el) => el._id)
-        },
-      ];
+      const body = {
+        id: user.id,
+        wants: classes.map((el) => el._id)
+      };
 
-      const response = await axios.post("/user/updateUsers/", body);
+      const response = await axios.post("/user/updateDidimdolWants/", body);
       const nextDidimbolClass =
-        response.data.updated.updated[0].user.didimdolClass;
+        response.data.updated.didimdolClass;
       updateUser("didimdolClass", nextDidimbolClass);
       if (isEnrolled) {
         handleChangePage(6);
