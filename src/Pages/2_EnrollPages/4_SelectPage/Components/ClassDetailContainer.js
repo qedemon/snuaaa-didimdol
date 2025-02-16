@@ -31,7 +31,8 @@ export default function ClassDetailContainer({
   data,
   onClose,
   onConfirm,
-  inputCondition,
+  enabled,
+  message,
   className
 }) {
   // 데이터
@@ -175,18 +176,15 @@ export default function ClassDetailContainer({
             <p className={style.groupRecommendHeader}>이런 분께 추천해요</p>
             <p className={style.groupRecommendText}>{description}</p>
           </div>
-          {inputCondition && (
-            <>
-              <p className={style.inputSelectionText}>마음에 들면 신청하기</p>
+            <p className={style.inputSelectionText}>마음에 들면 신청하기</p>
 
-              <Button
-                className={style.inputSelectionButton}
-                onClick={handleConfirm}
-              >
-                신청하기
-              </Button>
-            </>
-          )}
+            <Button
+              className={style.inputSelectionButton}
+              onClick={handleConfirm}
+              disabled={!enabled}
+            >
+              {message}
+            </Button>
         </div>
       </motion.div>
 

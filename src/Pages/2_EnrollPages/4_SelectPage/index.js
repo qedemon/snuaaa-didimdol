@@ -180,7 +180,7 @@ export default function SelectPage() {
     },
     [classes, setClassTable, setTimeTable, makeClassTable]
   )
-
+  
   return (
     <>
       {isEnrolled && (
@@ -243,7 +243,7 @@ export default function SelectPage() {
                   }
                 >
                   {classTable[timeIndex][idx] !== null
-                    ? `${classTable[timeIndex][idx].title}조`
+                    ? (({title, wants, maxWant})=>`${title}조 ${wants}/${maxWant}`)(classTable[timeIndex][idx])
                     : "X"}
                 </button>
               </div>
@@ -307,9 +307,19 @@ export default function SelectPage() {
           onConfirm={() => {
             insertSelectedClasses(selectedClass);
           }}
-          inputCondition={
+          enabled={
             selectedClasses.length < 3 &&
-            !selectedClasses.includes(selectedClass)
+            !selectedClasses.includes(selectedClass) &&
+            !(selectedClass&&selectedClass.wants>=selectedClass.maxWant)
+          }
+          message={
+            selectedClasses.length >= 3?
+              "전부 선택함":
+              selectedClasses.includes(selectedClass)?
+                "이미 선택 중":
+                selectedClass&&selectedClass.wants>=selectedClass.maxWant?
+                  "정원 초과":
+                  "신청하기"
           }
           className={selectedClass?DayColor[selectedClass?.daytime?.day]:""}
         />
