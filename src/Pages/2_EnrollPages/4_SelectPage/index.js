@@ -65,13 +65,19 @@ export default function SelectPage() {
       };
 
       const response = await axios.post("/user/updateDidimdolWants/", body);
+      const {message, updated} = response.data;
       const nextDidimbolClass =
-        response.data.updated.didimdolClass;
+        updated.didimdolClass;
       updateUser("didimdolClass", nextDidimbolClass);
-      if (isEnrolled) {
-        handleChangePage(6);
-      } else {
-        handleGotoNextPage();
+      if(message){
+        alert(message);
+      }
+      else{
+        if (isEnrolled) {
+          handleChangePage(6);
+        } else {
+          handleGotoNextPage();
+        }
       }
     } catch (e) {
       console.error(e);
