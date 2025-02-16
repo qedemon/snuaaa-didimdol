@@ -108,7 +108,7 @@ export default function DashBoardPage() {
             onClose={() => {
               setSelectedClass(null);
             }}
-            inputCondition={false}
+            hideButton={true}
           />
         </div>
       )}

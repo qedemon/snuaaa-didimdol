@@ -33,6 +33,7 @@ export default function ClassDetailContainer({
   onConfirm,
   enabled,
   message,
+  hideButton,
   className
 }) {
   // 데이터
@@ -176,15 +177,25 @@ export default function ClassDetailContainer({
             <p className={style.groupRecommendHeader}>이런 분께 추천해요</p>
             <p className={style.groupRecommendText}>{description}</p>
           </div>
-            <p className={style.inputSelectionText}>마음에 들면 신청하기</p>
-
-            <Button
-              className={style.inputSelectionButton}
-              onClick={handleConfirm}
-              disabled={!enabled}
-            >
-              {message}
-            </Button>
+            {
+              hideButton?
+                (
+                  <>
+                  </>
+                ):
+                (
+                  <>
+                    <p className={style.inputSelectionText}>마음에 들면 신청하기</p>
+                    <Button
+                      className={style.inputSelectionButton}
+                      onClick={handleConfirm}
+                      disabled={!enabled}
+                    >
+                      {message}
+                    </Button>
+                  </>
+                )
+            }
         </div>
       </motion.div>
 
