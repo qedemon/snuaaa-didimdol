@@ -10,7 +10,10 @@ import CharactersBig from "@images/CharactersBig.svg";
 import style from "./index.module.css";
 import Spinner from "@/Components/Spinner";
 
+import { useEnv } from "@/Hooks/useEnv";
+
 export default function WelcomePartyPage() {
+  const loadedEnv = useEnv();
   const { user, updateUser } = useAuth();
   const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
 
@@ -61,21 +64,26 @@ export default function WelcomePartyPage() {
           <p
             className={`${style.welcomePartyDescription} ${style.bold} ${style.noWrap} ${style.darkBlue}`}
           >
-            일정 : 3월 16일 토요일 오후 5시
+            일정 : {loadedEnv?.신환회일시??""}
             <br />
-            장소 : 56동 105호
+            장소 : {loadedEnv?.신환회장소??""}
             <br />
             <br />
             행사 일정
             <br />
-            동아리 소개 및 디딤돌 안내{" "}
-            <span className={style.bluePrimary}>(3-4시)</span>
-            <br />
-            조별 활동 <span className={style.bluePrimary}>(4-5시)</span>
-            <br />
-            친목다지기(낙성대 이동){" "}
-            <span className={style.bluePrimary}>(6시~)</span>
-            <br />
+            {
+              (loadedEnv?.행사일정??[]).map(
+                ({content, at})=>{
+                  return (
+                    <>
+                      {`${content }`}
+                      <span className={style.bluePrimary}>{`(${at})`}</span>
+                      <br/>
+                    </>
+                  )
+                }
+              )
+            }
           </p>
           <div className={style.buttonContainer}>
             <Button
