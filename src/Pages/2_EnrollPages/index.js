@@ -77,6 +77,9 @@ export default function EnrollPage() {
           setPageIndex(6);
         }
       }
+      else if(user.trained){
+        setPageIndex(3);
+      }
     }
   }, [user, pageIndex, navigate]);
 

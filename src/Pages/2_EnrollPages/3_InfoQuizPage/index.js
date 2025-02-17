@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useAuth } from "@/Contexts/AuthContext";
+import axios from "@connections/NovaConnection";
 
 import Button from "@components/Button";
 import BackButton from "@/Components/BackButton";
@@ -10,8 +12,14 @@ import QuizModal from "./Components/QuizModal";
 import { QuizFailModal, QuizSuccessModal } from "./Components/QuizResultModal";
 import { useEnv } from "@/Hooks/useEnv";
 
+import { EnrollPageIndexContext } from "..";
+
 export default function InfoQuizPage({ onClick }) {
   const loadedEnv = useEnv();
+  const { user, updateUser } = useAuth();
+
+  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
+
   const [quizModalState, setQuizModalState] = useState(0); // 0: none, 1: quiz, 2: result
   const [quizCorrectState, setQuizCorrectState] = useState(false);
 
@@ -27,6 +35,16 @@ export default function InfoQuizPage({ onClick }) {
     setQuizCorrectState(condition);
     setQuizModalState(2);
   };
+
+
+  const onQuizeSuccess=async ()=>{
+    const response = await axios.post("/user/updateUsers/", [{id:user.id, "trained": true}]);
+    const updated = response.data?.updated?.updated;
+    const updatedUser = Array.isArray(updated)&&updated.length>0?updated[0]?.user:null;
+    updateUser("trained", updatedUser.trained);
+
+    handleGotoNextPage();
+  }
 
   return (
     <div className={style.infoQuizPage}>
@@ -93,7 +111,7 @@ export default function InfoQuizPage({ onClick }) {
       )}
       {quizModalState === 2 &&
         (quizCorrectState ? (
-          <QuizSuccessModal />
+          <QuizSuccessModal onClick={onQuizeSuccess}/>
         ) : (
           <QuizFailModal onClick={closeModal} />
         ))}

@@ -1,16 +1,16 @@
-import { EnrollPageIndexContext } from "../..";
-import { useContext } from "react";
-
 import Modal from "@components/Modal";
 import Button from "@components/Button";
+import useAsync from "@/Hooks/useAsync";
 
 import CharacterSuccess from "@images/CharacterSuccess.svg";
 import CharacterFail from "@images/CharacterFail.svg";
 import style from "./QuizResultModal.module.css";
 
-export function QuizSuccessModal() {
-  const { handleGotoNextPage } = useContext(EnrollPageIndexContext);
-
+export function QuizSuccessModal({onClick}) {
+  const [onClickPending, onClickError, onClickAsync] = useAsync(onClick);
+  if(onClickError){
+    console.log(onClickError);
+  }
   return (
     <Modal className={style.quizResultModal}>
       <div className={style.quizResultModalImageContainer}>
@@ -25,7 +25,7 @@ export function QuizSuccessModal() {
         <p className={style.quizResultModalDescription}>
           완벽해요! 디딤돌 신청만 남았어요.
         </p>
-        <Button className={style.button} onClick={handleGotoNextPage}>
+        <Button className={style.button} pending={onClickPending} onClick={onClickAsync}>
           신청하기
         </Button>
       </div>
