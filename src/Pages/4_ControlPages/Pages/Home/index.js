@@ -5,8 +5,10 @@ import { ReactComponent as Rocket } from "./Assets/Rocket.svg";
 import {useContext as useModalController} from "../../Context/Modal";
 import {useContext as useAuth} from "../../Context/Auth";
 import UserInfoPage from "./UserInfoPage";
+import { useEnv } from "@/Hooks/useEnv";
 
 function Home({path, userInfoOpen, ...props}){
+    const loadedEnv = useEnv(); 
     const navigate = useNavigate();
     const auth = useAuth();
     const modalController = useModalController().current;
@@ -48,18 +50,12 @@ function Home({path, userInfoOpen, ...props}){
             }
         },
     )
-    useEffect(
-        ()=>{
-            console.log(`last edit: ${process.env.REACT_APP_LAST_EDIT}`);
-        },
-        []
-    )
     return (
         <Background>
             <ContentContainer>
                 <Rocket/>
                 <TitleMessage>별의 세계로 떠나 볼까요?</TitleMessage>
-                <LinkMessage>{`AAA 2024 신입생 가입하기${process.env.REACT_APP_TEST?" 테스트":""}`}</LinkMessage>
+                <LinkMessage>{`AAA ${loadedEnv?.연도??""} 신입생 가입하기`}</LinkMessage>
                 <MenuContainer>
                     {
                         auth?.userInfo?
