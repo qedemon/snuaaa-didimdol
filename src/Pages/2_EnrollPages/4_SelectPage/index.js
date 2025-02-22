@@ -47,7 +47,7 @@ export default function SelectPage() {
       const response = await axios.get("/didimdolClass/allDidimdolClasses/");
 
       if (response.data.result === 0) {
-        const responseData = response.data.didimdolClasses.filter(({freeze})=>!freeze);
+        const responseData = response.data.didimdolClasses;
         setClasses(responseData);
       }
     } catch (e) {
@@ -316,7 +316,8 @@ export default function SelectPage() {
           enabled={
             selectedClasses.length < 3 &&
             !selectedClasses.includes(selectedClass) &&
-            !(selectedClass&&selectedClass.wants>=selectedClass.maxWant)
+            !(selectedClass&&selectedClass.wants>=selectedClass.maxWant) &&
+            !(selectedClass?.freeze)
           }
           message={
             selectedClasses.length >= 3?
@@ -325,7 +326,9 @@ export default function SelectPage() {
                 "이미 선택 중":
                 selectedClass&&selectedClass.wants>=selectedClass.maxWant?
                   "정원 초과":
-                  "신청하기"
+                  selectedClass?.freeze?
+                    "잠겨있음":
+                    "신청하기"
           }
           className={selectedClass?DayColor[selectedClass?.daytime?.day]:""}
         />
