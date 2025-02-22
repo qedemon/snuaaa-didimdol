@@ -15,10 +15,48 @@ import Button from "@/Components/Button";
 import style from "./index.module.css";
 
 import {DayColor} from "../Styles";
+import { useEnv } from "@/Hooks/useEnv";
+
+function formatTimeDifference(A, B) {
+  let seconds = Math.round((A-B)/1000);
+  const days = Math.floor(seconds / (24 * 3600));
+  seconds %= 24 * 3600;
+  
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  
+  const minutes = Math.floor(seconds / 60);
+  seconds %= 60;
+
+  // 결과 문자열 구성 (0인 값은 표시하지 않음)
+  const parts = [];
+  if (days > 0) parts.push(`${days}일`);
+  if (hours > 0) parts.push(`${hours}시간`);
+  if (minutes > 0) parts.push(`${minutes}분`);
+  if (seconds > 0) parts.push(`${seconds}초`);
+
+  return parts.length > 0 ? parts.join(" ") + " 남음" : "0초";
+}
 
 const weekTable = ["월", "화", "수", "목", "금"];
 
 export default function SelectPage() {
+  const loadedEnv = useEnv();
+  const 수강신청일시 = ((dateStr)=>dateStr?new Date(dateStr):null)(loadedEnv?.수강신청일시);
+  const [now, setNow] = useState(Date.now());
+  const 신청가능 = (수강신청일시 && now>=수강신청일시);
+  useEffect(
+    ()=>{
+      setTimeout(
+        ()=>{
+          setNow(Date.now())
+        },
+        1000
+      )
+    },
+    [now, setNow]
+  )
+
   const { user, updateUser } = useAuth();
   const { isEnrolled, handleChangePage, handleGotoNextPage } = useContext(
     EnrollPageIndexContext
@@ -282,12 +320,12 @@ export default function SelectPage() {
               <div className={style.confirmButtonContainer}>
                 <Button
                   className={style.confirmButton}
-                  disabled={selectedClasses.length === 0}
+                  disabled={(selectedClasses.length === 0) || !신청가능}
                   onClick={() => {
                     setModalState(true);
                   }}
                 >
-                  신청하기
+                  {신청가능?"신청하기":formatTimeDifference(수강신청일시, now)}
                 </Button>
               </div>
             </div>
