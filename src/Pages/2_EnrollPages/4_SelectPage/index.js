@@ -318,15 +318,25 @@ export default function SelectPage() {
                 </AnimatePresence>
               </div>
               <div className={style.confirmButtonContainer}>
-                <Button
-                  className={style.confirmButton}
-                  disabled={(selectedClasses.length === 0) || !신청가능}
-                  onClick={() => {
-                    setModalState(true);
-                  }}
-                >
-                  {신청가능?"신청하기":formatTimeDifference(수강신청일시, now)}
-                </Button>
+              {
+                신청가능?
+                (
+                  <Button
+                    className={style.confirmButton}
+                    disabled={(selectedClasses.length === 0) || !신청가능}
+                    onClick={() => {
+                      setModalState(true);
+                    }}
+                  >
+                    신청하기
+                  </Button>
+                ):
+                (
+                  <div className={style.timeDifference}>
+                    {formatTimeDifference(수강신청일시, now)}
+                  </div>
+                )
+              }
               </div>
             </div>
           ) : (

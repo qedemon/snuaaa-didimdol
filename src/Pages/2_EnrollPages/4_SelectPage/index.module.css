@@ -163,6 +163,11 @@
   background-color: var(--gray);
 }
 
+.timeDifference{
+  position: fixed;
+  bottom: 5%;
+}
+
 .loading {
   display: flex;
   justify-content: center;
@@ -191,5 +196,16 @@
     right: 0;
 
     max-height: 1em;
+  }
+  .timeDifference{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: -40px;
+    right: 0;
+
+    font-size: var(--font-size-small);
   }
 }
