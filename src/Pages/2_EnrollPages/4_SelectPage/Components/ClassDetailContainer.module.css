@@ -171,6 +171,10 @@
   color: var(--white);
 }
 
+.inputSelectionButton:disabled{
+  background-color: var(--gray);
+}
+
 .fadeOut {
   position: fixed;
   bottom: 0;
