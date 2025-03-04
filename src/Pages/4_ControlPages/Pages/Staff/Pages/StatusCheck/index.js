@@ -184,7 +184,7 @@ function StatusCheck(){
         },
         [selectedStudent, modalController]
     )
-    console.log(belongs);
+    
     return (
         <StatusCheckContainer>
             <StatusCheckHeader>

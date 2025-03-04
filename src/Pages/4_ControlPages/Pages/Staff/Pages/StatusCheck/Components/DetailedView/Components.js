@@ -5,7 +5,7 @@ import {css} from "@emotion/react";
 
 const DetailedViewContainerCSS = css`
     width: 80%;
-    height: 80%;
+    height: 90%;
     background: var(--white);
     border-radius: 8px;
 `;
