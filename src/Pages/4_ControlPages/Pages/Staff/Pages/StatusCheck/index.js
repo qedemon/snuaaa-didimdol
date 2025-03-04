@@ -5,6 +5,7 @@ import { FilterButton, FinderInput, StatusCheckContainer, StatusCheckDidimdolCla
 import { Link } from "react-router-dom";
 import loadDidimdol from "./loadDidimdol";
 import SelectFilter from "./Components/SelectFilter";
+import DetailedView from "./Components/DetailedView";
 
 const mockData = {
     name: "김이름",
@@ -128,14 +129,20 @@ function StatusCheck(){
                     const didimdol = await loadDidimdol(targetDidimdolClassId);
                     if(didimdol?.students){
                         const students = didimdol.students.map(
-                            ({name, major, colNo, attendant}, index)=>{
-
+                            (user, index)=>{
+                                const {name, major, colNo, attendant} = user;
                                 return {
                                     ...mockData,
                                     name,
                                     major,
                                     colNo,
                                     index,
+                                    userData:(
+                                        (user)=>{
+                                            user.didimdolClass.belongs=[{role: "student", didimdolClass: didimdol}]
+                                            return user;
+                                        }
+                                    )(user),
                                     ...(
                                         (attendantInfo)=>{
                                             if(!attendantInfo){
@@ -161,6 +168,23 @@ function StatusCheck(){
         [targetDidimdolClassId, setStudents, setSelectedIndex]
     )
 
+    const onSelectedStudentClick = useCallback(
+        ()=>{
+            if(selectedStudent){
+                    modalController.setChildren(
+                    {
+                        component: DetailedView,
+                        props:{
+                            user: selectedStudent.userData
+                        }
+                    }
+                );
+                modalController.open();
+            }
+        },
+        [selectedStudent, modalController]
+    )
+    console.log(belongs);
     return (
         <StatusCheckContainer>
             <StatusCheckHeader>
@@ -180,7 +204,7 @@ function StatusCheck(){
                     </StatusCheckDidimdolClassSelector>
                 ):null
             }
-            <UserStatusView user={selectedStudent}/>
+            <UserStatusView user={selectedStudent} onClick={onSelectedStudentClick}/>
             <StatusCheckStudentsViewContainer>
                 <StatusCheckStudentsViewHeader>
                     <FinderInput ref={searchInputRef} placeholder="이름으로 찾기" onChange={onSearchNameChange}/>

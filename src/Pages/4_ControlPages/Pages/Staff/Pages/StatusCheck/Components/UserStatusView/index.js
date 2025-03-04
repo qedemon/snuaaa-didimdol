@@ -39,10 +39,10 @@ const UserStatusViewContainerCSS = css`
     }
 `;
 
-function UserStatusView({user}){
+function UserStatusView({user, onClick}){
     const backgroundCSS = css(statusColorlist[user.status]??statusColorlist["녹"]);
     return (
-        <div css={[UserStatusViewContainerCSS, backgroundCSS]}>
+        <div css={[UserStatusViewContainerCSS, backgroundCSS]} onClick={onClick??(()=>{})}>
             <div className="userInfo">
                 <h1>{user.name}</h1>
                 <h2>{`${user.colNo}-${user.major}`}</h2>
