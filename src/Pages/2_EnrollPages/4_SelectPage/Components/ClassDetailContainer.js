@@ -8,11 +8,13 @@ import Button from "@/Components/Button";
 function detailContainerAnimate(condition) {
   return {
     transform:
-      condition === 2
-        ? "translateY(0dvh)"
-        : condition === 1
-        ? "translateY(35dvh)"
-        : "translateY(100dvh)",
+      condition === 3?
+        "translateY(-50dvh)"
+        :condition === 2
+          ? "translateY(0dvh)"
+            : condition === 1
+            ? "translateY(35dvh)"
+            : "translateY(100dvh)",
     boxShadow: condition
       ? "0px -4px 20px -10px #463bd5"
       : "0px 0px 0px 0px #463bd5",
@@ -22,7 +24,7 @@ function detailContainerAnimate(condition) {
 function fadeOutAnimate(condition) {
   return {
     background: `linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, ${
-      condition ? 0 : 0.5
+      condition>0 ? 0 : 0.5
     }) 100%)`,
   };
 }
@@ -67,38 +69,53 @@ export default function ClassDetailContainer({
 
   // 위아래 스크롤 추적 및 창 닫기 감지
   const [initTouchPos, setInitTouchPos] = useState(null);
-  const [fullSize, setFullSize] = useState(false);
+  const [touchActive, setTouchActive] = useState(false);
+  const [scrollState, setScrollState] = useState(0);
+  //const [fullSize, setFullSize] = useState(false);
 
   const handleTouchStart = useCallback(
     (e) => {
       if (data) {
         setInitTouchPos(e.touches[0].clientY);
+        setTouchActive(false);
       }
     },
-    [data]
+    [data, setTouchActive]
   );
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (initTouchPos !== null) {
+      if ((initTouchPos !== null) && !touchActive) {
         const threshold = 50;
         const finalTouchPos = e.touches[0].clientY;
 
         if (Math.abs(finalTouchPos - initTouchPos) > threshold) {
           if (finalTouchPos < initTouchPos) {
-            setFullSize(true);
+            //setFullSize(true);
+            setScrollState(
+              (prev)=>{
+                return (prev<2)?prev+1:prev;
+              }
+            );
           } else {
-            setFullSize(false);
+            //setFullSize(false);
+            setScrollState(
+              (prev)=>{
+                return (prev>0)?prev-1:prev;
+              }
+            );
           }
+          setTouchActive(true);
         }
       }
     },
-    [initTouchPos]
+    [initTouchPos, touchActive, setScrollState, setTouchActive]
   );
 
   // 버튼 클릭 및 창 닫기
   const closeModal = () => {
-    setFullSize(false);
+    //setFullSize(false);
+    setScrollState(0);
     onClose();
   };
 
@@ -115,7 +132,7 @@ export default function ClassDetailContainer({
     <>
       <motion.div
         initial={detailContainerAnimate(false)}
-        animate={detailContainerAnimate(Boolean(data) + fullSize)}
+        animate={detailContainerAnimate(Boolean(data) + scrollState)}
         className={`${style.classDetailContainer} ${className}`}
         onClick={preventClose}
         onTouchStart={handleTouchStart}
@@ -203,9 +220,9 @@ export default function ClassDetailContainer({
         {data && (
           <motion.div
             className={style.fadeOut}
-            initial={fadeOutAnimate(true)}
-            animate={fadeOutAnimate(fullSize)}
-            exit={fadeOutAnimate(true)}
+            initial={fadeOutAnimate(1)}
+            animate={fadeOutAnimate(scrollState)}
+            exit={fadeOutAnimate(1)}
           />
         )}
       </AnimatePresence>
