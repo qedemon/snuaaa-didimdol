@@ -10,6 +10,8 @@
   height: 150%;
 
   z-index: 11;
+
+  user-select: none;
 }
 
 .closeButton {
