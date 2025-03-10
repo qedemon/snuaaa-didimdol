@@ -73,13 +73,13 @@ export default function WelcomePartyPage() {
             <br />
             {
               (loadedEnv?.행사일정??[]).map(
-                ({content, at})=>{
+                ({content, at}, index)=>{
                   return (
-                    <>
-                      {`${content }`}
+                    <span key={`행사일정${index}`}>
+                      <span>{`${content} `}</span>
                       <span className={style.bluePrimary}>{`(${at})`}</span>
                       <br/>
-                    </>
+                    </span>
                   )
                 }
               )

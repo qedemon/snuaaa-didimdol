@@ -111,7 +111,7 @@ export default function SelectPage() {
         alert(message);
       }
       else{
-        if (isEnrolled) {
+        if ((user?.didimdolClass?.party===true) || (user?.didimdolClass?.party===false)) {
           handleChangePage(6);
         } else {
           handleGotoNextPage();
