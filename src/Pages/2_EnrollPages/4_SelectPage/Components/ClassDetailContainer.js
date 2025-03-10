@@ -114,7 +114,7 @@ export default function ClassDetailContainer({
 
   const handleTouchStart = useCallback(
     (e) => {
-      touchStart(e.touches[0].clientX, e.touches.clientY);
+      touchStart(e.touches[0].clientX, e.touches[0].clientY);
     },
     [touchStart]
   );
