@@ -286,9 +286,22 @@ export default function SelectPage() {
                     classTable[timeIndex][idx] === selectedClass
                   }
                 >
-                  {classTable[timeIndex][idx] !== null
-                    ? (({title, wants, maxWant})=>`${title}조 ${wants}/${maxWant}`)(classTable[timeIndex][idx])
-                    : "X"}
+                  {
+                    classTable[timeIndex][idx] !== null
+                    ? (
+                        ({title, wants, maxWant})=>{
+                          return (
+                            <>
+                              <p><span className={`${style.classTitle}`}>{`${title}조`}</span></p>
+                              <p>{`${wants}/${maxWant}`}</p>
+                            </>
+                          )
+                        }
+                      )(classTable[timeIndex][idx])
+                    : (
+                      <p><span className={`${style.classTitle}`}>X</span></p>
+                    )
+                  }
                 </button>
               </div>
             ))}

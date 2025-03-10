@@ -78,8 +78,11 @@
   width: 100%;
   aspect-ratio: 3 / 4;
 
-  font-size: var(--font-size-middle);
+  font-size: var(--font-size-small);
   color: var(--white);
+}
+.classTitle {
+  font-size: var(--font-size-middle);
 }
 /*
 .classItem:nth-child(1) > .classButton {
