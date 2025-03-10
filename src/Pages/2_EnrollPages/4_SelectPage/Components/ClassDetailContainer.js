@@ -73,21 +73,21 @@ export default function ClassDetailContainer({
   const [scrollState, setScrollState] = useState(0);
   //const [fullSize, setFullSize] = useState(false);
 
-  const touchStart = useCallback(
-    (xPos, yPos)=>{
+  const handleTouchStart = useCallback(
+    (e) => {
       if (data) {
-        setInitTouchPos(yPos);
+        setInitTouchPos(e.touches[0].clientY);
         setTouchActive(false);
       }
     },
     [data, setTouchActive]
   );
 
-  const touchMove = useCallback(
-    (xPos, yPos)=>{
+  const handleTouchMove = useCallback(
+    (e) => {
       if ((initTouchPos !== null) && !touchActive) {
         const threshold = 50;
-        const finalTouchPos = yPos;
+        const finalTouchPos = e.touches[0].clientY;
 
         if (Math.abs(finalTouchPos - initTouchPos) > threshold) {
           if (finalTouchPos < initTouchPos) {
@@ -110,44 +110,7 @@ export default function ClassDetailContainer({
       }
     },
     [initTouchPos, touchActive, setScrollState, setTouchActive]
-  )
-
-  const handleTouchStart = useCallback(
-    (e) => {
-      touchStart(e.touches[0].clientX, e.touches.clientY);
-    },
-    [touchStart]
   );
-
-  const handleTouchMove = useCallback(
-    (e) => {
-      touchMove(e.touches[0].clientX, e.touches[0].clientY);
-    },
-    [touchMove]
-  );
-  
-  const [mouseTouchStart, setMouseTouchStart] = useState(false);
-  const handleMouseDown = useCallback(
-    (e)=>{
-      setMouseTouchStart(true);
-      touchStart(e.clientX, e.clientY);
-    },
-    [touchStart, setMouseTouchStart]
-  );
-  const handleMouseUp = useCallback(
-    (e)=>{
-      setMouseTouchStart(false);
-    },
-    [setMouseTouchStart]
-  );
-  const handleMouseMove = useCallback(
-    (e)=>{
-      if(mouseTouchStart){
-        touchMove(e.clientX, e.clientY);
-      }
-    },
-    [mouseTouchStart, touchMove]
-  )
 
   // 버튼 클릭 및 창 닫기
   const closeModal = () => {
@@ -174,9 +137,6 @@ export default function ClassDetailContainer({
         onClick={preventClose}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
       >
         <div className={style.closeButton} onClick={closeModal}>
           <img src={Close} alt="close" />
