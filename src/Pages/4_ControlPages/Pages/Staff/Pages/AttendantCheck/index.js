@@ -18,11 +18,36 @@ function AttendantCheck(){
     const [belongings, setBelongings] = useState([]);
     useEffect(
         ()=>{
-            const belongings = (auth.userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
-            setBelongings(belongings);
-            if(Array.isArray(belongings)&&belongings.length>0){
-                setTargetDidimdolClassId(belongings[0].didimdolClass._id);
-            }
+            (
+                async ()=>{
+                    const belongings = await (
+                        async (userInfo)=>{
+                            const belongs = (userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
+                            const allClasses = userInfo?.isAdmin?
+                                await (
+                                    async ()=>{
+                                        const {data} = await request.get("/didimdolClass/allDidimdolClasses");
+                                        const didimdolClasses = data.didimdolClasses.sort((A, B)=>A.title-B.title);
+                                        return didimdolClasses.map(
+                                            (el)=>{
+                                                return {
+                                                    role: "admin",
+                                                    didimdolClass: el
+                                                }
+                                            }
+                                        );
+                                    }
+                                )():[];
+                            return [...belongs, ...allClasses];
+                        }
+                    )(auth.userInfo);
+                    
+                    setBelongings(belongings);
+                    if(Array.isArray(belongings)&&belongings.length>0){
+                        setTargetDidimdolClassId(belongings[0].didimdolClass._id);
+                    }
+                }
+            )();
         },
         [auth, setBelongings, setTargetDidimdolClassId]
     );
