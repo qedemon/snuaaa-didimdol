@@ -4,7 +4,11 @@ export default function ClassContainer({ didimdol }) {
   return (
     <div className={style.classContainer} style={didimdol?.backgroundColor?{backgroundColor: didimdol.backgroundColor}:{}}>
       <div className={style.classLogo}>
-        <img src={didimdol?.imgSrc} alt={`${didimdol?.title}조`}/>
+        {
+          didimdol?.imgSrc?
+            <img src={didimdol?.imgSrc} alt={`${didimdol?.title}조`}/>
+            :null
+        }
       </div>
       <div className={style.classDescriptionWrapper}>
         <p className={`${style.classDescription} ${style.bold}`}>
