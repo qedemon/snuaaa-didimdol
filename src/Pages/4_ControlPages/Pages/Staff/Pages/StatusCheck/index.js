@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import loadDidimdol from "./loadDidimdol";
 import SelectFilter from "./Components/SelectFilter";
 import DetailedView from "./Components/DetailedView";
+import request from "../../../../Utility/Connection";
 
 const mockData = {
     name: "김이름",
@@ -32,11 +33,36 @@ function StatusCheck(){
     )
     useEffect(
         ()=>{
-            const belongs = (auth.userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
-            setBelongs(belongs);
-            if(Array.isArray(belongs) && belongs.length>0){
-                setTargetDidimdolClassId(belongs[0].didimdolClass._id);
-            }
+            (
+                async ()=>{
+                    const belongs = await (
+                        async (userInfo)=>{
+                            const belongs = (userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
+                            const allClasses = userInfo?.isAdmin?
+                                await (
+                                    async ()=>{
+                                        const {data} = await request.get("/didimdolClass/allDidimdolClasses");
+                                        const didimdolClasses = data.didimdolClasses.sort((A, B)=>A.title-B.title);
+                                        return didimdolClasses.map(
+                                            (el)=>{
+                                                return {
+                                                    role: "admin",
+                                                    didimdolClass: el
+                                                }
+                                            }
+                                        );
+                                    }
+                                )():[];
+                            return [...belongs, ...allClasses];
+                        }
+                    )(auth.userInfo);
+
+                    setBelongs(belongs);
+                    if(Array.isArray(belongs) && belongs.length>0){
+                        setTargetDidimdolClassId(belongs[0].didimdolClass._id);
+                    }
+                }
+            )();
         },
         [auth, setBelongs, setTargetDidimdolClassId]
     )
