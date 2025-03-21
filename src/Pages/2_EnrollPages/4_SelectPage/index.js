@@ -15,10 +15,48 @@ import Button from "@/Components/Button";
 import style from "./index.module.css";
 
 import {DayColor} from "../Styles";
+import { useEnv } from "@/Hooks/useEnv";
+
+function formatTimeDifference(A, B) {
+  let seconds = Math.round((A-B)/1000);
+  const days = Math.floor(seconds / (24 * 3600));
+  seconds %= 24 * 3600;
+  
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  
+  const minutes = Math.floor(seconds / 60);
+  seconds %= 60;
+
+  // 결과 문자열 구성 (0인 값은 표시하지 않음)
+  const parts = [];
+  if (days > 0) parts.push(`${days}일`);
+  if (hours > 0) parts.push(`${hours}시간`);
+  if (minutes > 0) parts.push(`${minutes}분`);
+  if (seconds > 0) parts.push(`${seconds}초`);
+
+  return parts.length > 0 ? parts.join(" ") + " 남음" : "0초";
+}
 
 const weekTable = ["월", "화", "수", "목", "금"];
 
 export default function SelectPage() {
+  const loadedEnv = useEnv();
+  const 수강신청일시 = ((dateStr)=>dateStr?new Date(dateStr):null)(loadedEnv?.수강신청일시);
+  const [now, setNow] = useState(Date.now());
+  const 신청가능 = (수강신청일시 && now>=수강신청일시);
+  useEffect(
+    ()=>{
+      setTimeout(
+        ()=>{
+          setNow(Date.now())
+        },
+        1000
+      )
+    },
+    [now, setNow]
+  )
+
   const { user, updateUser } = useAuth();
   const { isEnrolled, handleChangePage, handleGotoNextPage } = useContext(
     EnrollPageIndexContext
@@ -47,7 +85,7 @@ export default function SelectPage() {
       const response = await axios.get("/didimdolClass/allDidimdolClasses/");
 
       if (response.data.result === 0) {
-        const responseData = response.data.didimdolClasses.filter(({freeze})=>!freeze);
+        const responseData = response.data.didimdolClasses;
         setClasses(responseData);
       }
     } catch (e) {
@@ -59,21 +97,25 @@ export default function SelectPage() {
 
   const postClasses = async (user, classes) => {
     try {
-      const body = [
-        {
-          id: user.id,
-          "didimdolClass.wants": classes.map((el) => el._id)
-        },
-      ];
+      const body = {
+        id: user.id,
+        wants: classes.map((el) => el._id)
+      };
 
-      const response = await axios.post("/user/updateUsers/", body);
+      const response = await axios.post("/user/updateDidimdolWants/", body);
+      const {message, updated} = response.data;
       const nextDidimbolClass =
-        response.data.updated.updated[0].user.didimdolClass;
+        updated.didimdolClass;
       updateUser("didimdolClass", nextDidimbolClass);
-      if (isEnrolled) {
-        handleChangePage(6);
-      } else {
-        handleGotoNextPage();
+      if(message){
+        alert(message);
+      }
+      else{
+        if ((user?.didimdolClass?.party===true) || (user?.didimdolClass?.party===false)) {
+          handleChangePage(6);
+        } else {
+          handleGotoNextPage();
+        }
       }
     } catch (e) {
       console.error(e);
@@ -182,7 +224,7 @@ export default function SelectPage() {
     },
     [classes, setClassTable, setTimeTable, makeClassTable]
   )
-
+  
   return (
     <>
       {isEnrolled && (
@@ -244,9 +286,22 @@ export default function SelectPage() {
                     classTable[timeIndex][idx] === selectedClass
                   }
                 >
-                  {classTable[timeIndex][idx] !== null
-                    ? `${classTable[timeIndex][idx].title}조`
-                    : "X"}
+                  {
+                    classTable[timeIndex][idx] !== null
+                    ? (
+                        ({title, wants, maxWant})=>{
+                          return (
+                            <>
+                              <p><span className={`${style.classTitle}`}>{`${title}조`}</span></p>
+                              <p>{`${wants}/${maxWant}`}</p>
+                            </>
+                          )
+                        }
+                      )(classTable[timeIndex][idx])
+                    : (
+                      <p><span className={`${style.classTitle}`}>X</span></p>
+                    )
+                  }
                 </button>
               </div>
             ))}
@@ -276,15 +331,25 @@ export default function SelectPage() {
                 </AnimatePresence>
               </div>
               <div className={style.confirmButtonContainer}>
-                <Button
-                  className={style.confirmButton}
-                  disabled={selectedClasses.length === 0}
-                  onClick={() => {
-                    setModalState(true);
-                  }}
-                >
-                  신청하기
-                </Button>
+              {
+                신청가능?
+                (
+                  <Button
+                    className={style.confirmButton}
+                    disabled={(selectedClasses.length === 0) || !신청가능}
+                    onClick={() => {
+                      setModalState(true);
+                    }}
+                  >
+                    신청하기
+                  </Button>
+                ):
+                (
+                  <div className={style.timeDifference}>
+                    {formatTimeDifference(수강신청일시, now)}
+                  </div>
+                )
+              }
               </div>
             </div>
           ) : (
@@ -309,9 +374,22 @@ export default function SelectPage() {
           onConfirm={() => {
             insertSelectedClasses(selectedClass);
           }}
-          inputCondition={
+          enabled={
             selectedClasses.length < 3 &&
-            !selectedClasses.includes(selectedClass)
+            !selectedClasses.includes(selectedClass) &&
+            !(selectedClass&&selectedClass.wants>=selectedClass.maxWant) &&
+            !(selectedClass?.freeze)
+          }
+          message={
+            selectedClasses.length >= 3?
+              "전부 선택함":
+              selectedClasses.includes(selectedClass)?
+                "이미 선택 중":
+                selectedClass&&selectedClass.wants>=selectedClass.maxWant?
+                  "정원 초과":
+                  selectedClass?.freeze?
+                    "잠겨있음":
+                    "신청하기"
           }
           className={selectedClass?DayColor[selectedClass?.daytime?.day]:""}
         />

@@ -3,11 +3,11 @@ import axios from "@connections/NovaConnection";
 
 async function loadEnv(){
     try{
-        const response = await axios.get("/frontendEnv/");
+        const response = await axios.get("/frontendEnv/", false);
         return response.data.values;
     }
     catch(e){
-
+        console.log(e);
     }
 }
 
@@ -18,7 +18,8 @@ function useEnv(){
             if(loadedEnv===null){
                 (
                     async()=>{
-                        setLoadedEnv(await loadEnv());
+                        const env = await loadEnv();
+                        setLoadedEnv(env);
                     }
                 )();
             }

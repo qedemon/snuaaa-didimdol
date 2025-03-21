@@ -46,7 +46,7 @@ const ContentContainerCSS = css`
     & > .content {
       position: relative;
       & > div {
-        padding: 16px;
+        padding: 16px 16px 166px 16px;
       }
     }
   }

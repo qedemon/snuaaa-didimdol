@@ -21,7 +21,7 @@ async function findId(name, email, log){
 
 async function resetPassword(id, name, email, log){
     log(`비밀번호 초기화를 요청중...`);
-    const response = await axios.post("/user/resetPassword", {id, name, email}, false);
+    const response = await axios.post("/user/remoteResetPassword", {id, name, email}, false);
     if(response?.data?.sendEmail){
         log("이메일을 보냈습니다.");
     }

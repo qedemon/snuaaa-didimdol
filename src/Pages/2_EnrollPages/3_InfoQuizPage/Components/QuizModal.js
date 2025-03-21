@@ -37,7 +37,6 @@ export default function QuizModal({ onClose, onSubmit }) {
   };
 
   const handleSubmit = () => {
-    console.log(selectedList, checkList);
     const correctCondition = selectedList.every(
       (el, index)=>el===checkList[index].valid
     )

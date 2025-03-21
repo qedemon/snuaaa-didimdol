@@ -7,6 +7,7 @@ import Button from "@components/Button";
 import Input from "@components/Input";
 
 import style from "./LoginForm.module.css";
+import { Link } from "react-router-dom";
 
 const containerAnimate = {
   before: {
@@ -90,6 +91,9 @@ function LoginForm({openFindModal}) {
       />
       <div className={style.idPasswordFind} onClick={openFindModal}>
         아이디/비밀번호 찾기
+      </div>
+      <div className={style.idPasswordFind}>
+        <Link to="/control/Register">가입하기</Link>
       </div>
       <div className={style.loginButtonContainer}>
         <Button className={style.loginButton} pending={isLoginPending}>

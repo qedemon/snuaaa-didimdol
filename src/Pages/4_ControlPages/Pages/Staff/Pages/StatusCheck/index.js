@@ -5,6 +5,8 @@ import { FilterButton, FinderInput, StatusCheckContainer, StatusCheckDidimdolCla
 import { Link } from "react-router-dom";
 import loadDidimdol from "./loadDidimdol";
 import SelectFilter from "./Components/SelectFilter";
+import DetailedView from "./Components/DetailedView";
+import request from "../../../../Utility/Connection";
 
 const mockData = {
     name: "김이름",
@@ -31,11 +33,36 @@ function StatusCheck(){
     )
     useEffect(
         ()=>{
-            const belongs = (auth.userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
-            setBelongs(belongs);
-            if(Array.isArray(belongs) && belongs.length>0){
-                setTargetDidimdolClassId(belongs[0].didimdolClass._id);
-            }
+            (
+                async ()=>{
+                    const belongs = await (
+                        async (userInfo)=>{
+                            const belongs = (userInfo?.didimdolClass?.belongs??[]).filter(({role})=>["lecturer", "assistant"].includes(role)).sort((A, B)=>A.didimdolClass.title-B.didimdolClass.title);
+                            const allClasses = userInfo?.isAdmin?
+                                await (
+                                    async ()=>{
+                                        const {data} = await request.get("/didimdolClass/allDidimdolClasses");
+                                        const didimdolClasses = data.didimdolClasses.sort((A, B)=>A.title-B.title);
+                                        return didimdolClasses.map(
+                                            (el)=>{
+                                                return {
+                                                    role: "admin",
+                                                    didimdolClass: el
+                                                }
+                                            }
+                                        );
+                                    }
+                                )():[];
+                            return [...belongs, ...allClasses];
+                        }
+                    )(auth.userInfo);
+
+                    setBelongs(belongs);
+                    if(Array.isArray(belongs) && belongs.length>0){
+                        setTargetDidimdolClassId(belongs[0].didimdolClass._id);
+                    }
+                }
+            )();
         },
         [auth, setBelongs, setTargetDidimdolClassId]
     )
@@ -128,14 +155,20 @@ function StatusCheck(){
                     const didimdol = await loadDidimdol(targetDidimdolClassId);
                     if(didimdol?.students){
                         const students = didimdol.students.map(
-                            ({name, major, colNo, attendant}, index)=>{
-
+                            (user, index)=>{
+                                const {name, major, colNo, attendant} = user;
                                 return {
                                     ...mockData,
                                     name,
                                     major,
                                     colNo,
                                     index,
+                                    userData:(
+                                        (user)=>{
+                                            user.didimdolClass.belongs=[{role: "student", didimdolClass: didimdol}]
+                                            return user;
+                                        }
+                                    )(user),
                                     ...(
                                         (attendantInfo)=>{
                                             if(!attendantInfo){
@@ -161,6 +194,23 @@ function StatusCheck(){
         [targetDidimdolClassId, setStudents, setSelectedIndex]
     )
 
+    const onSelectedStudentClick = useCallback(
+        ()=>{
+            if(selectedStudent){
+                    modalController.setChildren(
+                    {
+                        component: DetailedView,
+                        props:{
+                            user: selectedStudent.userData
+                        }
+                    }
+                );
+                modalController.open();
+            }
+        },
+        [selectedStudent, modalController]
+    )
+    
     return (
         <StatusCheckContainer>
             <StatusCheckHeader>
@@ -180,7 +230,7 @@ function StatusCheck(){
                     </StatusCheckDidimdolClassSelector>
                 ):null
             }
-            <UserStatusView user={selectedStudent}/>
+            <UserStatusView user={selectedStudent} onClick={onSelectedStudentClick}/>
             <StatusCheckStudentsViewContainer>
                 <StatusCheckStudentsViewHeader>
                     <FinderInput ref={searchInputRef} placeholder="이름으로 찾기" onChange={onSearchNameChange}/>
