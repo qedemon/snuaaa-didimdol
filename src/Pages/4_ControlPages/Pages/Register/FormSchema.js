@@ -284,7 +284,7 @@ const FormSchema = (context)=>[
         component: Input,
         property: {
             type: "text",
-            placeholder: `입금자명 ex) 신입 김이름 ${(process.env.REACT_APP_CURRENT_YEAR).slice(-2)}`,
+            placeholder: `오른쪽을 클릭하여 계좌정보 확인 ➔`,
             sideButtonLabel: "계좌 정보"
         },
         validate: ({value})=>{
@@ -310,6 +310,14 @@ const FormSchema = (context)=>[
                 openDepositWindow();
                 depositOpened = true;
                 controller.refreshValidation(key);
+            },
+            onClick: ({key}, controller)=>{
+                if(!depositOpened){
+                    const {openDepositWindow} = context;
+                    openDepositWindow();
+                    depositOpened = true;
+                    controller.refreshValidation(key);
+                }
             }
         }
     },
